@@ -1,0 +1,108 @@
+\chapter{Introducci\'on}
+\label{cap:introduccion}
+
+\section{Antecedentes y motivaci\'on}
+\label{intro:motivacion}
+
+\subsection{Motivación}
+\label{intro:motivacion:motivacion}
+
+Los desastres naturales en el país han sido frecuentes en los últimos años. Sólo por mencionar algunos de los más recientes y recordados: la erupción del volcán Chaitén (Mayo, 2008), terremoto en Tocopilla (Noviembre, 2007), terremoto Concepción (2010), incendio de las Torres del Paine (Diciembre, 2011), incendio en Valparaíso (Abril, 2014), erupción volcán Villarrica (Marzo, 2015), aluviones en el norte (Marzo, 2015) entre otros. Dependiendo de las características de la emergencia, surgen en la población diversos tipos de necesidades; alimentos, agua, luz eléctrica, refugio, rescate o comunicación. Muchas veces éstas pueden no ser detectadas por las autoridades, al menos, no de forma expedita, lo que no resulta beneficioso para las personas que intentan sobrellevar de la mejor manera posible la crisis y esto se complica aún más cuando la necesidad involucra una necesidad básica, como la falta de agua, donde la vida de los afectados puede correr riesgo. No es problema sólo para las autoridades, Imran, Castillo, Diaz y Vieweg (2014)\textbf{CITA CON BIB ACA!} señalan que el comportamiento humano ante crisis como éstas no es de quedarse esperando o huir en pánico, sino que intentan tomar decisiones rápidas en base a la información que conocen. Esto quiere decir que existe gente dispuesta a ayudar, aun siendo ellos los mismos afectados, pero no siempre disponen de la información necesaria para saber dónde apuntar sus esfuerzos. Sería útil, dado lo anterior, tener algún medio que concentre las necesidades que pueda tener una población dentro del país para acudir en su auxilio, posterior a la ocurrencia de una emergencia catastrófica como las mencionadas anteriormente.
+
+\subsection{Estado del arte}
+\label{intro:motivacion:arte}
+
+En primer lugar se estudia el actual estado del arte en temas de detección para posteriormente continuar con clasificación y finalmente, sistemas de procesamiento de streams.\\
+Referido a detección, en particular, detección de eventos en medios sociales es señalado por Nguyen \& Jung (2015) como el foco de investigación en los últimos años. Sobre la detección propiamente, los autores se refieren a una técnica común consistente en realizar paquetes de mensajes que son capturados a intervalos regulares de tiempo y luego son procesados, mencionan la existencia de un trade-off entre el intervalo y el performance del sistema al tener que procesar más o menos datos según corresponda. Una segunda alternativa es el procesamiento conforme los datos son recibidos, para ello es necesario una alternativa que permita procesar elementos en paralelo introduciendo problemas de sincronización y balance de carga.\\
+Weng \& Lee (2014) señalaron dos principales problemáticas a ser resueltas en Twitter como son el volumen de información generada y la abundancia de información que puede ser catalogada como ruido.\\
+Es por lo anterior que autores como Van De Voort (2014) señala, y es respaldado por la metodología KDD, que, antes de comenzar el proceso de detección, la información recogida ha de ser pre-procesada debido a la mencionada existencia de ruido y el hecho de que los mensajes no siempre cumplen con reglas, ya sean, gramaticales u ortográficas o, también, que, en algunos casos, remover los stopwords o las URL o Hashtag facilita la tarea de análisis a posteriori. Van De Voort también señala las dos formas de detección de eventos existente: Detección en retrospectiva, es decir, capturar los datos y procesarlos posteriormente siguiendo el modelo tradicional de batch processing. Y detección online, es decir, en tiempo real. Tanto la detección como la categorización de eventos pueden realizarse de diversas maneras, por ejemplo el uso de n-gramas, prediciendo la posible siguiente palabra para así llevar a cabo la detección, Rahmound\&Elberrichi (2007), otra forma es el uso de técnicas de aprendizaje de máquina (Machine learning, ML) para detectar cuándo un mensaje hace mención a una necesidad y ubicarla dentro de un determinado grupo por medio de un modelo generado a partir de datos de entrenamiento Kamath \& James (2011).\\
+Referido a las técnicas de aprendizaje de máquina, Maldonado (2012) presentó un modelo capaz de detectar sentimientos en tweets habiendo utilizado ML aplicando clasificadores Naïve Bayes y Support Vector Machine (SVM), los cuales diferían sólo en la complejidad en realizar la configuración. Wladdimiro \& González (2014) haciendo uso de Naïve Bayes y una bolsa de palabras fueron capaces de llevar a cabo una clasificación de necesidades dentro de determinadas categorías. Utilizaron un grupo de personas que se dedicó a clasificar, previamente, un conjunto de datos de entrenamiento para lograr validar el modelo obtenido. Wladdimiro y González propusieron un grafo para modelar el problema de detección de necesidades en tiempo real basado en cinco tareas, pero no consideraron lo mencionado por Van De Voort con respecto a la previa limpieza de datos, presentando problemas de procesamiento innecesario y dejaron pendientes problemas relacionados con la carga del sistema y cuellos de botella en su grafo.\\
+El sistema de detección y clasificación desarrollado por estos últimos fue soportado por Apache S4, framework de computación distribuida que, actualmente, se encuentra estancado y sin mantenimiento desde el año 2012. En su lugar Apache Storm se presenta como un framework de computación distribuida para computación en tiempo real distribuida y tolerante a fallas, además, éste promete, una mayor performance y simplicidad de configuración que S4. 
+
+
+\section{Descripci\'on del problema}
+\label{intro:problema}
+Se requiere hacer uso de la información generada por la población en \textit{Twitter} para que, en caso de alguna emergencia de carácter nacional, prestar apoyo a las autoridades encargadas de la toma de decisiones, por ejemplo, darles a conocer en qué lugar en particular se requiere asistir a la población con un determinado tipo de ayuda según la necesidad que se presente. ¿Cómo puede usarse la información disponible en Twitter para que, en casos de emergencia, ésta sea útil para ir en directo beneficio de la población en la que se generó satisfaciendo la necesidad específica que presentan?
+
+\section{Soluci\'on propuesta}
+\label{intro:solucion}
+Se propone una aplicación que estará recogiendo constantemente, en tiempo real, publicaciones desde \textit{Twitter} y analizando si corresponde o no a una necesidad existente en el conjunto de necesidades detectables y, en casos afirmativos, mostrarlas durante un intervalo de tiempo sobre un mapa geográfico del país haciendo uso de los metadatos asociados al tweet, en el caso en que se encuentren disponibles o hacer uso del contenido para inferir sus ubicaciones si es posible.\\
+Al tratarse de una aplicación que recogerá grandes cantidades de información, el desempeño que ésta tendrá ha de ser considerado, por ello, se hará uso de un framework de computación distribuida para procesar las grandes cantidades de tweets de la manera más eficiente posible. Lo anterior quiere decir que la aplicación tendrá, internamente, forma de grafo dirigido; cada nodo de este grafo corresponderá a un operador por el que la información fluirá. Estos operadores serán aquellos que la literatura señale como los apropiados para el caso, por ejemplo: filtro de \textit{stopwords}, filtro de \textit{spam}, corrector ortográfico, detector de sentimientos, etcétera.\\
+El grupo RESPOND de la Universidad de Santiago de Chile se ha adjudicado fondos para el desarrollo de un proyecto de dos años de duración el cual consiste en el desarrollo de una plataforma de streaming a escala nacional, enfocada en el procesamiento de datos en caso de crisis. Esta plataforma hará uso de la información generada por los usuarios en redes sociales como fuente de datos. Se espera que esta plataforma provea de herramientas para que cualquier persona pueda desarrollar nuevas aplicaciones para atender las diversas problemáticas que puedan existir cuando el país se enfrente a catástrofes.\\
+Para ayudar a difundir la plataforma se requiere construir tres aplicaciones, una que apoye la coordinación de voluntarios, una segunda que difunda noticias y mensajes y, finalmente, una que permita detectar necesidades de la población, todas ellas al presentarse escenarios de catástrofes naturales.\\
+En particular, para este trabajo, se espera atacar el problema de la detección de necesidades de la población y servir de apoyo para la construcción de la plataforma de streaming en relación a qué operadores se han de construir y cómo ha de estructurarse el sistema para operar sobre datos nacionales.
+
+
+\section{Objetivos y alcance del proyecto}
+\label{intro:objetivos}
+
+\subsection{Objetivo general}
+	Construir un sistema escalable para la detección de necesidades de la población en tiempo real para escenarios de desastre natural haciendo uso de \textit{Twitter}.
+
+\subsection{Objetivos espec\'ificos}
+\begin{enumerate}
+\item	Implementar un método encargado de la recolección de tweets generados dentro del territorio nacional haciendo uso de la API pública de Twitter.
+\item	Especificar la taxonomía de las necesidades que serán detectadas.
+\item	Diseñar e implementar el clasificador de necesidades.
+\item	Definir de los elementos de procesamiento para la construcción del sistema capaz de trabajar los datos obtenidos a gran escala.
+\item	Implementar una arquitectura escalable que soporte la aplicación.
+\item	Evaluar la aplicación bajo condiciones de alto tráfico como podría ser el caso de una emergencia nacional.
+\end{enumerate}
+
+\subsection{Alcances}
+Se utilizarán las publicaciones de \textit{Twitter} para llevar a cabo el procesamiento de la información y no se considera, en el marco de este trabajo, el uso de una red social alternativa, no porque no sea posible, sino que con el motivo de acotar el problema.\\
+Las necesidades que la aplicación detectará no serán todas del universo posible de necesidades existentes, sino de un subconjunto que se considere más importante tanto por el equipo que está trabajando en el proyecto FONDEF como por el profesor patrocinador de éste trabajo; agua, vivienda o luz eléctrica, por ejemplo. De esta forma se logra acotar el problema reduciendo la cantidad de categorías y permitir una mayor precisión en la clasificación (trabajos similares han bordeado una precisión entre el sesenta y ochenta por ciento, pero esto va de la mano con la cantidad de datos utilizados para entrenar), entendiendo la precisión como la relación de elementos clasificados correcta o incorrectamente.\\
+Se considera para la construcción del clasificador un conjunto de cuatro millones setecientos mil \textit{tweets} recogidos desde \textit{Twitter} correspondientes al terremoto ocurrido el 2010 en Chile. Este conjunto de datos contiene mensajes en distintos idiomas y ha sido filtrada llegando a aproximadamente un millón y medio de tweets; de aquel conjunto se obtendrá un subconjunto para realizar el etiquetado y ser usado como datos de entrenamiento, se han etiquetado ya de 2000 a 10000 tweets utilizados para una experiencia anterior. Para dicho etiquetado se utilizará la misma herramienta usado en aquella ocasión: una aplicación donde a voluntarios se les entrega una porción de \textit{tweets} para que sean etiquetados, se les entregan los mismos \textit{tweets} a diferentes personas para no sesgar la muestra a una sola.\\
+La aplicación podrá ser probada en cuando a su performance ante situaciones de gran carga como lo sería el caso de una emergencia, haciendo uso de \textit{JMeter}, herramienta escrita en Java diseñada para realizar tales labores que permitirá simular, entonces, condiciones de alto tráfico dentro de la aplicación por medio del envío de peticiones a la aplicación.
+
+
+
+\section{Metodolog\'ia y herramientas utilizadas}
+\label{intro:metodologia}
+
+\subsection{Metodolog\'ia}
+Este trabajo considera dos partes, la primera es la generación del clasificador y la segunda la construcción de la aplicación, donde la segunda depende de haber completado la primera, por ello la principal prioridad será desarrollar este clasificador.
+Para realizar el clasificador se tiene considerado el proceso de KDD Fayyad, Piatetsky-Shapiro, y Smyth (1996), acrónimo de Knowledge Discovery in Databases o, simplemente, Descubrimiento (o extracción) de conocimiento en bases de datos. Se refiere al “proceso no-trivial de descubrir conocimiento, patrones e información potencialmente útiles dentro de los datos contenidos en algún repositorio”. Este proceso iterativo diseñado para explorar grandes volúmenes de datos. Consta de cinco fases:
+\begin{itemize}
+\item	Selección de datos: Se determinan las fuentes de datos y el tipo de información a utilizar. Se extraen los datos útiles de las fuentes de datos.
+\item	Pre-procesamiento: Los datos se preparan y limpian. Se utilizan estrategias para rellenar los datos en blanco o con información faltante. Finalmente en esta etapa se obtiene una estructura de datos adecuada para ser transformada, posteriormente.
+\item	Transformación: Consiste en el tratamiento preliminar de datos, transformación y generación de nuevas variables a partir de las ya existentes. 
+\item	Data Mining: Fase de modelamiento propiamente tal. Se utilizan métodos para obtener o detectar patrones que están “ocultos” en los datos.
+\item	Interpretación y evaluación: Se identifican los patrones y se analizan por alguna métrica y se evalúan los resultados obtenidos.
+\end{itemize}
+En segundo lugar se tiene la aplicación propiamente tal que será dividida en dos, por un lado se tendrá la aplicación que llamaremos el núcleo que se encargará de recepcionar la información y el visualizador que la mostrará por pantalla.\\Para realizar lo anterior se hará el uso de \textit{Extreme Programming} (en adelante XP), presentando avances semanales y discutiendo cambios a realizar en la aplicación, tanto visuales como de funcionamiento interno.\\Para manejar las tareas se hará uso de un tablero kanban de cuatro columnas: "Por hacer", "Haciendo", "Por Revisar" y "Completo" donde una tarea sólo podrá considerarse completa habiendo pasado por la revisión y haber sido aceptada.
+
+\subsection{Herramientas de desarrollo}
+
+\textbf{\subsubsection{Herramientas de Software}}
+
+Se han se utilizar las siguientes herramientas de software para la construcción de la aplicación:
+\begin{itemize}
+\item Java como lenguaje de programación principal.
+\item Apache Storm (1.0.1), como \textit{framework} de computación distribuida.
+\item Apache Zookeeper (3.4.8), como herramienta para mantener la configuración
+\item Weka (3.8.0), como herramienta de \textit{Data Mining} para la construcción del clasificador.
+\item MongoDB (3.2.6), para la persistencia de datos.
+\item Play Framework (2.5.3), como \textit{framework} para el desarrollo de aplicaciones Java. En particular, la construcción de la aplicación que permitirá visualizar los datos. 
+\item Sublime Text 3 (Build 3103), como editor de textos.
+\item MiKTex (XeLaTeX), para la escritura de la memoria.
+\item PowerDesigner 16, para la elaboración de diagramas.
+\item Bitbucket (Git), como repositorio de todo lo referente al proyecto (Núcleo, Visualizador y Memoria).
+\item Windows 10 Home Edition (x64).
+\item Linux Mint 17.3 (x86).
+\item Oracle VirtualBox (5.0.14).
+\end{itemize}
+
+\textbf{\subsubsection{Herramientas de hardware}}
+Se utilizará el equipo del autor cuyas características son las siguientes:
+\begin{itemize}
+\item Procesador Intel Core i5 2.2 Ghz.
+\item 8 GB de memoria RAM.
+\item 1 TB de disco duro.
+\end{itemize}
+
+\section{Organizaci\'on del documento}
+\label{intro:organizacion}
+A continuación se presentan a grueso modo los capítulos que componen el presente documento:\\
+
+El Capítulo ~\nameref{cap:MarcTeorico} presenta una serie de definiciones detalladamente para ayudar a comprender de mejor manera el problema.

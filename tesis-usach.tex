@@ -1,0 +1,62 @@
+\documentclass{tesis-usach}
+% Opciones: propuesta
+
+\usepackage{nameref}
+
+\begin{document}
+\baselineskip 23pt
+\frontmatter								% Utiliza numeración romana
+
+% ### Cubierta de la tesis ###
+\thispagestyle{empty}
+\include{preliminares/cubierta}
+
+% ### Páginas preliminares de la tesis ###
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}		% Hace que no aparezca la línea horizontal superior al principio de estas páginas
+\fancyhead[L]{}
+\fancyhead[C]{}
+\fancyhead[R]{}
+
+{\setstretch{1.0}						% Interlineado en las páginas preliminares
+\makecopyright							% Si es propuesta no se mostrará
+
+% ### Dedicatoria y agredecimientos de la tesis ###
+\include{preliminares/dedicatoria}		% En caso de no querer agregarlos, comente esta línea
+\include{preliminares/agradecimiento}
+
+\setcounter{page}{1} 
+\include{preliminares/abstract}
+
+% ### Índices ###
+\tableofcontents							%% Tabla de contenido
+
+\listoftables							%% Indice de tablas
+\listoffigures							%% Indice de figuras
+\listofalgorithms						%% Indice de algoritmos
+\AtBeginEnvironment{algorithmic}{\setstretch{1.5}} % Interlineado de los algoritmos
+} % end \setstretch{1.0}
+
+% ### Cuerpo de la tesis ###
+\mainmatter								% Reinicia el contador de páginas para partir de 1 y usando números arábicos.
+
+% ### Capítulos de la tesis ###
+\include{chapters/1-Introduccion}
+\include{chapters/2-MarcoTeorico}
+\include{chapters/3-Conclusiones}
+
+% ### Bibliografía de la tesis ###
+{\setstretch{1.0}						% Interlineado en las páginas finales
+\bibliographystyle{apa-good}
+\bibliography{bibliografia}
+\addcontentsline{toc}{chapter}{Referencias bibliogr\'aficas} % Comando para agregar el índice a la Tabla de Contenido
+
+% ### Optativo: Anexos de la tesis ###
+\appendix
+\addappheadtotoc							% Agregar Apéndice al índice. En caso de no poseer anexos, comentar
+% ### Anexos ###
+\include{anexos/Anexo-1}
+} % end \setstretch{1.0}
+
+\end{document}
+% end
