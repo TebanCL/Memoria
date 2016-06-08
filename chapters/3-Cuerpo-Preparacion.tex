@@ -1,0 +1,36 @@
+\chapter{Construcción aplicaciones}
+\label{cap:cuerpo}
+
+Se han construido dos aplicaciones; La primera es el visualizador, el que se encarga de aplicar los filtros y mostrar la información correspondiente a los puntos donde se han detectado necesidades y la segunda corresponde a aquella que realiza la recepción del flujo de datos desde \textit{Twitter} y su paso por el clasificador. A continuación se presenta el proceso de diseño y construcción de cada una de ellas.
+
+\section{Visualizador}
+\label{sec:ReqVisualizador}
+
+En conversaciones con los profesores guía y co-guía del presente trabajo - Clientes - se señaló que se requería un visualizador en el que se mostraran las necesidades recogidas desde \textit{Twitter}. Para ello se sugirió utilizar un mapa en el cual se señalara mediante marcadores los puntos en cuestión, de modo que éste fue el punto inicial.\\
+La Tabla ~\ref{tab:ReqVi}. lista las historias de usuario que representan los requisitos identificados en el presente. Estas hisotorias tienen un ID y una descripción, donde el ID se compone de "HU-v", haciendo referencia a que corresponde al visualizador, seguido del número del requisito. 
+
+
+
+\begin{table}[]
+\centering
+\caption{Tabla de historias de usuario.}
+\label{tab:ReqVi}
+\begin{tabular}{|c|l|}
+\hline
+ID & \multicolumn{1}{c|}{Descripción} \\ \hline
+HU-v01 & \begin{tabular}[c]{@{}l@{}}Como usuario quiero visualizar las necesidades expresadas\\ como un punto en un mapa geográfico del país.\end{tabular} \\ \hline
+HU-v02 & \begin{tabular}[c]{@{}l@{}}Como usuario quiero poder filtrar qué necesidades mostrar\\  en cada momento según su categoría.\end{tabular} \\ \hline
+HU-v03 & \begin{tabular}[c]{@{}l@{}}Como usuario quiero que, según el nivel de acercamiento \\ del mapa, los puntos se agrupen.\end{tabular} \\ \hline
+HU-v04 & \begin{tabular}[c]{@{}l@{}}Como usuario quiero que el agrupamiento pueda realizarse\\ según su categoría en lugar de su proximidad.\end{tabular} \\ \hline
+HU-v05 & \begin{tabular}[c]{@{}l@{}}Como usuario quiero seleccionar un intervalo de tiempo y \\ que se muestren los puntos identificados dentro de ese \\ intervalo.\end{tabular} \\ \hline
+HU-v06 & \begin{tabular}[c]{@{}l@{}}Como usuario quiero poder especificar términos para la\\ búsqueda de necesidades.\end{tabular} \\ \hline
+HU-v07 & \begin{tabular}[c]{@{}l@{}}Como usuario quiero que los parámetros para el \\ funcionamiento del sistema sean modificables.\end{tabular} \\ \hline
+HU-v08 & \begin{tabular}[c]{@{}l@{}}Como usuario quiero que se muestre la nomenclatura de\\ los íconos que son mostrados en el mapa.\end{tabular} \\ \hline
+HU-v08 & \begin{tabular}[c]{@{}l@{}}Como usuario quiero que se visualicen estadísticas sobre\\ la cantidad de elementos procesados como por ejemplo: \\ cantidad de tweets, necesidades detectadas y cantidad de \\ usuarios diferentes.\end{tabular} \\ \hline
+\end{tabular}
+\end{table}
+
+
+\section{Clasificador}
+\label{sec:ReqClasificador}
+

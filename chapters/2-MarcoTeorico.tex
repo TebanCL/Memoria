@@ -4,13 +4,14 @@
 \section{Minería de datos}
 \label{sec:dateMine}
 A veces llamada como "descubrimiento de información o conocimiento", es el proceso de analizar información de diferentes perspectivas y transformarlo en información de utilidad. Puede ser aplicado a distintas fuentes de datos como: bases de datos, imágenes, internet, etc. Es un campo multidiciplinal que involucra el aprendizaje de máquina, la estadística, bases de datos, la inteligencia artificial y la recuperación de información.\\
-Siendo distintos los usos que pueden dársele se pueden generalizar cuatro etapas:
+Siendo distintos los usos que pueden dársele se pueden generalizar cuatro etapas:\\
 \begin{itemize}
 \item \textbf{Determinación de objetivos}: Delimitar los objetivos que se esperan alcanzar con el proceso de minado.
 \item \textbf{Preprocesamiento de datos}: Se refiere a la limpieza, reducción y transformación de las bases de datos. Es, generalmente, el subproceso que utiliza la mayor cantidad de tiempo.
 \item \textbf{Determinación del modelo}: Aplicación de algoritmos para generar un modelo que cumpla los objetivos planteados. Se genera nuevo conocimiento o se descubre un patrón.
 \item \textbf{Análisis de los resultados}: Se verifica si el conocimiento es útil.
 \end{itemize}
+
 Dentro de las tareas que pueden realizarse utilizando \textit{data mining} pueden encontrarse tales como: Aprendizaje supervisado o clasificación, no supervisado o clustering y reglas de asociación.
 
 	\subsection{Minería de la Web}
@@ -65,7 +66,8 @@ El proceso de entrenamiento y evaluación se ilustra en la Figura ~\ref{fig:entr
 Dentro de los algoritmos utilizados para la construcción de clasificadores se encuentran \textit{Naïve Bayes} y SVM (\textit{Support Vector Machine}), a continuación se realiza una descripción de ambos. 
 
 	\subsection{Naïve Bayes}
-	Está basado en el teorema de bayes. 
+	
+	Está basado en el teorema de Bayes, pero asume que independencia entre las variables. 
 
 	\subsection{SVM}
 
@@ -75,7 +77,7 @@ Dentro de los algoritmos utilizados para la construcción de clasificadores se e
 
 \subsection{Programación Extrema}
 \label{subsec:XP}
-La Programación Extrema (\textit{Extreme Programming}, XP desde ahora en adelante), comenzó como un proyecto el 6 de Marzo de 1996. Es uno de los procesos ágiles más populares y ha sido provado exitosamente en compañias e industrias de todos los tamaños.\\
+La Programación Extrema (\textit{Extreme Programming}, XP desde ahora en adelante), comenzó como un proyecto el 6 de Marzo de 1996. Es uno de los procesos ágiles más populares y ha sido provado exitosamente en compañias e industrias de todos los tamaños \cite{xP}.\\
 Su éxito se debe a que hace especial incapié en la satisfacción del cliente por sobre la entrega de todo lo el software posible.\\
 Aporta cinco formas escenciales para mejorar el proceso de desarrollo de software: Comunicación, simplicidad, retroalimentación, respeto y coraje: Constantemente se comunica al equipo de desarrollo con el cliente. Se intenta mantener el diseño lo más simple y sencillo posible. Se obtiene retroalimentación desde las pruebas desde el día uno. Se les entrega el software al cliente lo más pronto posible con los cambios solicitados. El éxito depende, en gran medida, del respeto y comunicación de los miembros del equipo y los clientes. Implementando XP el equipo puede responder a los cambios sin temor.\\
 La metodología implementa unas simples reglas de trabajo, las que se dividen en cinco grandes áreas las que se detallarán a continuación.\\
@@ -230,4 +232,38 @@ La representacíón del proceso puede verse en la Figura ~\ref{fig:procesoKDD}.
 	\end{itemize}
 
 	\subsection{MongoDB}
+
+	Base de datos no relacional (NoSQL) de código abierto escrita en C++ y está orientada al trabajo en documentos. Lo anterior quiere decir que, en lugar de guardar los datos en registros, lo hace en documentos y éstos son almacenada en una representación binaria de JSON conocida como BSON.\\
+
+	Una de las diferencias fundamentales con respecto a las bases de datos relacionales es que no es necesario que se siga un esquema; en una misma colección - concepto similar a una tabla en las bases de datos relacionales - pueden tener distintos esquemas.\\
+
+	MongoDB fue creado para brindar escalabilidad, rendimiento y disponibilidad. Puede ser utilizado en un servidor único como en múltiples. Esto se logra dado que MongoDB brinda un elevado rendimiento, tanto para lectura como para escritura, potenciando la computación en memoria.\\
+
+	Las consultas en MongoDB se realizan como si se tratase de Javascript entregando como parámetro un objeto JSON. Por ejemplo, dado el documento presentado en la Figura ~\ref{fig:MongoJsonExample}, parte de una colección llamada 'Personas' en MongoDB:
+
+	\begin{figure}[!ht]
+		\centering
+		\captionsetup{justification=centering}
+		\includegraphics[scale=0.8]{images/MongoJsonExample.png}
+		\caption[Documento en MongoDB.]{Documento en MongoDB.\\Fuente: Elaboración propia}
+		\label{fig:MongoJsonExample}
+	\end{figure}
+
+
+	Una consulta para encontrar este elemento dentro de la colección se daría de la forma aprecida en la Figura ~\ref{fig:MongoJsonQueryExample}\\
+
+	
+
+	\begin{figure}[!ht]
+		\centering
+		\captionsetup{justification=centering}
+		\includegraphics[scale=0.8]{images/MongoJsonQueryExample.png}
+		\caption[Consulta en MongoDB.]{Consulta en MongoDB.\\Fuente: Elaboración propia}
+		\label{fig:MongoJsonQueryExample}
+	\end{figure}
+
+
+	En pruebas realizando operaciones habituales dentro de las bases de datos el \cite{mongoPerformance} demostró que el tiempo de ejecución de MongoDB, como base de datos NoSQL, aventaja significativamente a las bases de datos relacionales más populares como lo son MySQL y PostgreSQL.
+
+
 	
