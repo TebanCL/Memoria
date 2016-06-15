@@ -4,7 +4,9 @@
 \section{Minería de datos}
 \label{sec:dateMine}
 A veces llamada como "descubrimiento de información o conocimiento", es el proceso de analizar información de diferentes perspectivas y transformarlo en información de utilidad. Puede ser aplicado a distintas fuentes de datos como: bases de datos, imágenes, internet, etc. Es un campo multidiciplinal que involucra el aprendizaje de máquina, la estadística, bases de datos, la inteligencia artificial y la recuperación de información.\\
+
 Siendo distintos los usos que pueden dársele se pueden generalizar cuatro etapas:\\
+
 \begin{itemize}
 \item \textbf{Determinación de objetivos}: Delimitar los objetivos que se esperan alcanzar con el proceso de minado.
 \item \textbf{Preprocesamiento de datos}: Se refiere a la limpieza, reducción y transformación de las bases de datos. Es, generalmente, el subproceso que utiliza la mayor cantidad de tiempo.
@@ -12,7 +14,7 @@ Siendo distintos los usos que pueden dársele se pueden generalizar cuatro etapa
 \item \textbf{Análisis de los resultados}: Se verifica si el conocimiento es útil.
 \end{itemize}
 
-Dentro de las tareas que pueden realizarse utilizando \textit{data mining} pueden encontrarse tales como: Aprendizaje supervisado o clasificación, no supervisado o clustering y reglas de asociación.
+Dentro de las tareas que pueden realizarse utilizando \textit{data mining} pueden encontrarse tales como: Aprendizaje supervisado o clasificación, no supervisado o clustering y reglas de asociación.\\
 
 	\subsection{Minería de la Web}
 	\label{subsec:webMine}
@@ -27,28 +29,34 @@ Dentro de las tareas que pueden realizarse utilizando \textit{data mining} puede
 
 	La información obtenida puede ser utilizara para analizar tanto el contenido de la web (\textit{Web content mining}) como sus enlaces (o relaciones) (\textit{Web  structure mining}) y/o el registro de navegación de los usuarios (\textit{Web usage mining}).\\
 
-	La primera se refiere a busqueda entre documenos \textit{web} (texto o imágenes), es decir, analiza los documentos y no la relación entre ellos.\\
+	La primera se refiere a búsqueda entre documentos \textit{web} (texto o imágenes), es decir, analiza los documentos y no la relación entre ellos.\\
 
 	La segunda se dedica a analizar la topología de los vínculos existentes y/o analizar la estructura interna de la página \textit{web} y descrbir el \textit{HTML} o el \textit{XML} de la misma.\\
 
 	En particular dentro de la minería de contenido encontramos la minería de texto o \textit{text mining}. Ésta tiene como objetivo el descubrir nueva información a partir colecciones de documentos de texto no estructurado, es decir, texto libre (lenguaje natural, generalmente), aunque también es aceptable otro tipo de información textual como un código fuente. Lo más habitual es trabajar el texto para categorizarlo (Asignar una o más categorías a un documento), clasificarlo (Asignar sólo una clase a un documento) y/o agruparlo (organizar en torno a una jerarquía basado en alguna similitud).\\
 
-	El primer paso para comenzar a trabajar haciendo uso de minería de texto es representar los datos de alguna manera para luego dárselo a los algoritmos adecuados. Algunas de estas representaciones pueden ser las siguientes:
+	El primer paso para comenzar a trabajar haciendo uso de minería de texto es representar los datos de alguna manera para luego dárselo a los algoritmos adecuados. Algunas de estas representaciones pueden ser las siguientes:\\
+
 	\begin{itemize}
 	\item Bolsas de palabras (\textit{Bag of words}): Representar el texto como un vector de largo n, donde n corresponde al número de palabras, así cada palabra corresponde a un elemento del vector.
 	\item Frases: Considera el texto, simplemente, como una frase sintáctica. Así se permite conservar el contexto.
 	\item N-gramas: Consideran la información de la posición de la palabra en el texto mediante secuencias de longitud n (n-gramas). 
 	\end{itemize}
 
-	Habiendo realizado la representación, el paso siguiente es reducir el conjunto de características. La literatura indica que los métodos más frecuentados son la eliminación de palabras que no aportan información, llevar las palabras a una palabra raíz (\textit{stemming}), entre otros.
+	Habiendo realizado la representación, el paso siguiente es reducir el conjunto de características. La literatura indica que los métodos más frecuentados son la eliminación de palabras que no aportan información, llevar las palabras a una palabra raíz (\textit{stemming}), entre otros.\\
 
 \section{Aprendizaje supervisado}
 \label{sec:aprendSuperv}
 Se caracteriza por ser un proceso de aprendizaje en el que éste se realiza mediante un entrenamiento controlado por un agente externo, el que determina qué respuesta debería generarse a partir de una entrada determinada.\\
+
 Se asocia al concepto de \textit{machine learning} con la minería de datos; la primera busca patrones conocidos y predecir en base a ellos mientras que la segunda busca patrones con anterioridad desconocidos, es decir, la primera tiene una función focalizada en la predicción mientras que la segunda realiza una función exploratoria.\\
+
 Los datos son denominados instancias, ejemplares, casos o vectores, donde una instancia corresponde a cada uno de los datos disponibles para el análisis.\\
+
 Los datos poseen atributos son los elementos dentro de las instancias. Una instancia puede tener asociado un elemento de otro conjunto de atributos llamado "Clase", correspondiente a etiquetas de identificación.\\
+
 Teniendo en cuenta los elementos vistos con anterioridad, se define el objetivo del proceso de aprendizaje como construir una función que relacione las instancias con las clases llamada modelo o, en este caso, clasificador.\\
+
 Se le llama conjunto de entrenamiento al conjunto de datos utilizado para el aprendizaje. Este conjunto es entregado como entrada al algoritmo de aprendizaje y construcción del modelo. Para realizar la evaluación de la calidad del modelo se utiliza un segundo conjunto de instancias llamado datos de validación. Se espera que estos datos no hayan sido vistos con anterioridad por máquina y así obtener la confianza, es decir, la probabilidad de acierto que calcula el sistema para cada predicción.\\
 
 Lo ventajoso de este método es que se podrá clasificar una instancia sin haberla visto nunca, pero la desventaja principal es la que han de utilizarse una gran cantidad de instancias para el proceso de entrenamiento.\\
@@ -59,17 +67,45 @@ El proceso de entrenamiento y evaluación se ilustra en la Figura ~\ref{fig:entr
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[scale=0.6]{images/trainTest.png}
-	\caption[Proceso de entrenamiento y prueba del modelo.]{Proceso de entrenamiento y prueba del modelo.\\Fuente: Elaboraci\'on propia}
+	\caption[Proceso de entrenamiento y prueba del modelo.]{Proceso de entrenamiento y prueba del modelo.}
 	\label{fig:entrenamientoEvaluacion}
 \end{figure}
 
-Dentro de los algoritmos utilizados para la construcción de clasificadores se encuentran \textit{Naïve Bayes} y SVM (\textit{Support Vector Machine}), a continuación se realiza una descripción de ambos. 
+Dentro de los algoritmos utilizados para la construcción de clasificadores se encuentra \textit{Naïve Bayes} a continuación se realiza una descripción de este. 
 
 	\subsection{Naïve Bayes}
 	
-	Está basado en el teorema de Bayes, pero asume que independencia entre las variables. 
+	La clasificación puede verse como una función \begin{math}\gamma\end{math} que asigna etiquetas a observaciones, es decir:\\ 
+	\[\gamma : (x_{1}, .... , x_{n}) \rightarrow \{1, 2, .... r_{0}\} \]
 
-	\subsection{SVM}
+	Existe una matriz de costo \begin{math} cos(r, s)\end{math} con \begin{math} r, s = 1, ...., r_{0}\end{math} en el cual se refleja el costo asociado a las clasificaciones incorrectas. En concreto \begin{math} cos(r, s) \end{math} indica el costo de clasificar un ejemplo de la clase r como de la clase s. En el caso especial de la función de pérdida 0/1, se tiene:\\
+
+	\[ cos(r, s) = \left \{ \begin{matrix} 0 & \mbox{si }r \ne s
+\\ 1 & \mbox{si }r = s \end{matrix}\right. \]
+
+	Subyacente a las observaciones suponemos la existencia de una distribución de probabilidad conjunta:\\
+
+	\[
+		p(x_{1}, ..., x_{n}, c) = p(c | x_{1}, ..., x_{n})p(x_{1}, ..., x_{n}) = p(x_{1}, ..., x_{n}|c)p(c)
+	\]
+
+	La cual es desconocida. El objetivo es construir un clasificador que miniza el coste total de los errores cometidos, y esto se consigue (Duda y Hart, 1973) por medio del clasificador de Bayes:\\
+
+	\[
+		\gamma(x) = arg min_{\substack{k}} \sum^{r_{0}}_{\substack{c = 1}} cos(k,c)p(c | x_{1}, ..., x_{n})
+	\]
+
+	En el caso que la función de pérdida sea 0/1, el clasificador de Bayes se convierte en asignar al ejemplo \begin{math} x = (x_{1}, ..., x_{n})\end{math} la clase con mayor probabilidad a posteriori. Es decir:
+
+	\[
+		\gamma(x) = arg max_{\substack{c}} p(c | x_{1}, ..., x_{n})
+	\]
+
+	En la práctica la función de distribución conjunta \begin{math} p(x_{1}, ..., x_{n}, c) \end{math} es desconocida, y puede ser estimada a partir de una muestra aleatorea simple \begin{math} \{ (x^{(1)}, c^{(1)} ), ..., (x^{(N)}, C^{(N)})\}\end{math} extraida de dicha función de distribución conjunta.\\
+
+	El paradigma clasificatorio en el que se utiliza el teorema de Bayes en conjunción con la hipótesis de independencia condicional de las variables predictorias dada la clase se conoce como naïve Bayes (Kononenko, 1990).\\
+
+	
 
 
 \section{Metodología}
@@ -78,9 +114,13 @@ Dentro de los algoritmos utilizados para la construcción de clasificadores se e
 \subsection{Programación Extrema}
 \label{subsec:XP}
 La Programación Extrema (\textit{Extreme Programming}, XP desde ahora en adelante), comenzó como un proyecto el 6 de Marzo de 1996. Es uno de los procesos ágiles más populares y ha sido provado exitosamente en compañias e industrias de todos los tamaños \cite{xP}.\\
+
 Su éxito se debe a que hace especial incapié en la satisfacción del cliente por sobre la entrega de todo lo el software posible.\\
+
 Aporta cinco formas escenciales para mejorar el proceso de desarrollo de software: Comunicación, simplicidad, retroalimentación, respeto y coraje: Constantemente se comunica al equipo de desarrollo con el cliente. Se intenta mantener el diseño lo más simple y sencillo posible. Se obtiene retroalimentación desde las pruebas desde el día uno. Se les entrega el software al cliente lo más pronto posible con los cambios solicitados. El éxito depende, en gran medida, del respeto y comunicación de los miembros del equipo y los clientes. Implementando XP el equipo puede responder a los cambios sin temor.\\
+
 La metodología implementa unas simples reglas de trabajo, las que se dividen en cinco grandes áreas las que se detallarán a continuación.\\
+
 \begin{enumerate}
 \item Planeación:
 	\begin{itemize}
@@ -141,14 +181,17 @@ El proceso de XP puede puede ser aprecido en la Figura ~\ref{fig:procesoXP}.
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[scale=0.6]{images/flowChartXP.png}
-	\caption[Diagrama de flujo de Programación Extrema.]{Diagrama de flujo de Programación Extrema\\Fuente: http://www.extremeprogramming.org/}
+	\caption[Diagrama de flujo de Programación Extrema.]{Diagrama de flujo de Programación Extrema}
 	\label{fig:procesoXP}
 \end{figure}
 
 \subsection{\textit{Knowledge Discovery in Databases} (KDD)}
+\label{subsec:kdd}
 
 Es definido por Fayyad (1996) como "El proceso no trivial de identificar patrones válidos, nuevos, potencialmente útiles y en ultima instancia comprensible en los datos", surge de la necesidad de manejar grandes cantidades de datos e involucra simultaneamente varias disciplinas de investigación tales como el aprendizaje automático, la estadística, inteligencia artificial, sistemas de gestión de bases de datos, sistemas de apoyo a la toma de desiciones, entre otras.\\
+
 Si bien puede variar el usuario, quien es aquel que determina el domino de la aplicación, es decir, cómo se utilizarán los datos, el proceso generalmente considera las siguientes etapas:
+
 \begin{enumerate}
 \item Selección de datos: Consiste en buscar el objetivo y las herramientas del proceso de minería, identificando los datos que han de ser extraídos, buscando atributos apropiados de entrada y la información de salida para representar la tarea. Esto quiere decir, primero se debe tener en cuenta lo que se sabe, lo que se quiere obtener y cuáles son los datos que nos facilitarán esa información para poder llegar a nuestra meta, antes de comenzar el proceso como tal.
 \item Limpieza de datos: En este paso se limpian los atributos sucios, incluyendo datos incompletos, el ruido y datos inconsistentes. Estos datos sucios, en algunos casos, deben ser eliminados, pues pueden contribuir a un análisis inexacto y resultados incorrectos.
@@ -166,7 +209,7 @@ La representacíón del proceso puede verse en la Figura ~\ref{fig:procesoKDD}.
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[scale=1]{images/kdd.png}
-	\caption[Proceso KDD.]{Proceso KDD\\Fuente: http://mineriadatos1.blogspot.cl/}
+	\caption[Proceso KDD.]{Proceso KDD.}
 	\label{fig:procesoKDD}
 \end{figure}
 
@@ -177,34 +220,42 @@ La representacíón del proceso puede verse en la Figura ~\ref{fig:procesoKDD}.
 	\subsection{Play Framework}
 
 	Es un \textit{framework} de código abierto para aplicaciones \textit{web} escrito en \textit{Java} y \textit{Scala}, el cual sigue el patrón de arquitectura \textit{Modelo-Vista-Controlador} (MVC). Utiliza el paradigma de diseño "Convención sobre configuración", el cual apunta a reducir la toma de desiciones que debe tomar el desarrollador sin perder flexibilidad. \\
+
 	Se enfoca en la productividad a aplicaciones \textit{RESTful}.\\
+
 	Elimina la desventaja de desarrollo al utilizar \textit{Java} dada por el continuo ciclo de compilar-empaquetamiento-despliegue. Al detectar cambios en el código realiza inmediatamente la compilación y actualiza en la JVM sin necesidad de reiniciar el servidor.\\
-	Play no utilizar sesiones en su funcionar, privilegiando el uso de almacenamiento \textit{offline} o el uso de peticiones \textit{Ajax} para resolver problemas del lado del cliente.
+
+	Play no utilizar sesiones en su funcionar, privilegiando el uso de almacenamiento \textit{offline} o el uso de peticiones \textit{Ajax} para resolver problemas del lado del cliente.\\
+
 
 	\subsection{Apache Storm}
 
 	Apache Storm es un sistema de computación en tiempo real de código abierto. Simplifica el problema de flujos (\textit{streams}), de datos sin que estos tengan fin.\\
+
 	Es escalable, tolerante a fallos y garantiza que toda la información será procesada. Presenta \textit{Benchmarks} que señalan que por nodo es capaz de procesar más de un millón de tuplas por segundo.\\
+
 	Se compone principalmente de dos partes. La primera es denominada \textit{Spout} y es la encargada de recoger el flujo de datos de entrada. La segunda es denominada \textit{Bolt} y es la encargada de la transformación o procesado de los datos.\\
-	Oficialmente es representado como puede verse en la Figura ~\ref{fig:stormBeLike}. donde los \textit{Spouts} son representados simulando ser llaves de agua desde donde fluyen los datos al sistema y los \textit{Bolts} como rayos donde se procesa el flujo.
+
+	Oficialmente es representado como puede verse en la Figura ~\ref{fig:stormBeLike}. donde los \textit{Spouts} son representados simulando ser llaves de agua desde donde fluyen los datos al sistema y los \textit{Bolts} como rayos donde se procesa el flujo.\\
 
 	\begin{figure}[!ht]
 		\centering
 		\captionsetup{justification=centering}
 		\includegraphics[scale=0.6]{images/stormBeLike.png}
-		\caption[Representación del funcionamiento de Apache Storm.]{Representación del funcionamiento de Apache Storm\\Fuente: http://storm.apache.org/}
+		\caption[Representación del funcionamiento de Apache Storm.]{Representación del funcionamiento de Apache Storm.}
 		\label{fig:stormBeLike}
 	\end{figure}
 
-	Uno de los puntos fuertes que tiene este sistema es que al crear una topología donde se instancian \textit{Bolts} y \textit{Spouts}, Storm se encarga de escalar el sistema distribuyendo los elementos en sus componentes.
+	Uno de los puntos fuertes que tiene este sistema es que al crear una topología donde se instancian \textit{Bolts} y \textit{Spouts}, Storm se encarga de escalar el sistema distribuyendo los elementos en sus componentes.\\
 
 	\subsubsection{Topología}
 
-	Una topología de Storm es similar a un grafo. Cada nodo se encarga de procesar una determinada información y le pasa el testigo al siguiente nodo. Está compuesta por \textit{Spouts} y \textit{Bolts}.
+	Una topología de Storm es similar a un grafo. Cada nodo se encarga de procesar una determinada información y le pasa el testigo al siguiente nodo. Está compuesta por \textit{Spouts} y \textit{Bolts}.\\
 
 	\subsubsection{Cluster de Storm}
 
-	Un cluster de Storm no muere, se queda siempre en espera de nuevos datos de entrada mientras el proceso siga activo.
+	Un cluster de Storm no muere, se queda siempre en espera de nuevos datos de entrada mientras el proceso siga activo.\\
+
 	La arquitectura de Storm se divide en tres componentes:
 	\begin{itemize}
 	\item Master Node: Ejecuta el demonio llamado Nimbus, el cual es responsable de distribuir el código a través del cluster. Realiza la asignación y monitorización de tareas en las distintas máquinas del cluster.
@@ -215,6 +266,7 @@ La representacíón del proceso puede verse en la Figura ~\ref{fig:procesoKDD}.
 	\subsubsection{Modos de funcionamiento}
 
 	Storm puede funcionar de dos modos: Local y Cluster. El primero es útil para el desarrollo, pues ejecuta toda la topología en una única JVM, por lo que pueden realizarse fácilmente pruebas de integración, depurar código, etcétera. Este modo simula, haciendo uso de \textit{Threads}, cada nodo del Cluster.\\
+
 	El modo Cluster es considerado el 'modo de producción' y es el modo donde el código es distribuido en máquinas diferentes dentro del Cluster.\\
 
 	\subsubsection{Stream grouping}
@@ -245,7 +297,7 @@ La representacíón del proceso puede verse en la Figura ~\ref{fig:procesoKDD}.
 		\centering
 		\captionsetup{justification=centering}
 		\includegraphics[scale=0.8]{images/MongoJsonExample.png}
-		\caption[Documento en MongoDB.]{Documento en MongoDB.\\Fuente: Elaboración propia}
+		\caption[Documento en MongoDB.]{Documento en MongoDB.}
 		\label{fig:MongoJsonExample}
 	\end{figure}
 
@@ -258,7 +310,7 @@ La representacíón del proceso puede verse en la Figura ~\ref{fig:procesoKDD}.
 		\centering
 		\captionsetup{justification=centering}
 		\includegraphics[scale=0.8]{images/MongoJsonQueryExample.png}
-		\caption[Consulta en MongoDB.]{Consulta en MongoDB.\\Fuente: Elaboración propia}
+		\caption[Consulta en MongoDB.]{Consulta en MongoDB.}
 		\label{fig:MongoJsonQueryExample}
 	\end{figure}
 
