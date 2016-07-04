@@ -43,11 +43,12 @@ Dentro de las tareas que pueden realizarse utilizando \textit{data mining} puede
 	\item N-gramas: Consideran la información de la posición de la palabra en el texto mediante secuencias de longitud n (n-gramas). 
 	\end{itemize}
 
-	Habiendo realizado la representación, el paso siguiente es reducir el conjunto de características. La literatura indica que los métodos más frecuentados son la eliminación de palabras que no aportan información, llevar las palabras a una palabra raíz (\textit{stemming}), entre otros.\\
+	Habiendo realizado la representación, el paso siguiente es reducir el conjunto de características. La literatura indica que los métodos más frecuentados son la eliminación de palabras que no aportan información, llevar las palabras a una palabra raíz (\textit{stemming}), entre otros. \cite{DMPreprocessing}.\\
 
 \section{Aprendizaje supervisado}
 \label{sec:aprendSuperv}
-Se caracteriza por ser un proceso de aprendizaje en el que éste se realiza mediante un entrenamiento controlado por un agente externo, el que determina qué respuesta debería generarse a partir de una entrada determinada.\\
+
+Se caracteriza por ser un proceso de aprendizaje en el que éste se realiza mediante un entrenamiento controlado por un agente externo, el que determina qué respuesta debería generarse a partir de una entrada determinada. \cite{AprendizajeSupervisado}.\\
 
 Se asocia al concepto de \textit{machine learning} con la minería de datos; la primera busca patrones conocidos y predecir en base a ellos mientras que la segunda busca patrones con anterioridad desconocidos, es decir, la primera tiene una función focalizada en la predicción mientras que la segunda realiza una función exploratoria.\\
 
@@ -59,11 +60,9 @@ Teniendo en cuenta los elementos vistos con anterioridad, se define el objetivo 
 
 Se le llama conjunto de entrenamiento al conjunto de datos utilizado para el aprendizaje. Este conjunto es entregado como entrada al algoritmo de aprendizaje y construcción del modelo. Para realizar la evaluación de la calidad del modelo se utiliza un segundo conjunto de instancias llamado datos de validación. Se espera que estos datos no hayan sido vistos con anterioridad por máquina y así obtener la confianza, es decir, la probabilidad de acierto que calcula el sistema para cada predicción.\\
 
-Lo ventajoso de este método es que se podrá clasificar una instancia sin haberla visto nunca, pero la desventaja principal es la que han de utilizarse una gran cantidad de instancias para el proceso de entrenamiento.\\
+Lo ventajoso de este método es que se podrá clasificar una instancia sin haberla visto nunca, pero la desventaja principal es la que han de utilizarse una gran cantidad de instancias para el proceso de entrenamiento. El proceso de entrenamiento y evaluación se ilustra en la Figura ~\ref{fig:entrenamientoEvaluacion}.\\
 
-El proceso de entrenamiento y evaluación se ilustra en la Figura ~\ref{fig:entrenamientoEvaluacion}.
-
-\begin{figure}[!ht]
+\begin{figure}[H]
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[scale=0.6]{images/trainTest.png}
@@ -71,11 +70,11 @@ El proceso de entrenamiento y evaluación se ilustra en la Figura ~\ref{fig:entr
 	\label{fig:entrenamientoEvaluacion}
 \end{figure}
 
-Dentro de los algoritmos utilizados para la construcción de clasificadores se encuentra \textit{Naïve Bayes} a continuación se realiza una descripción de este. 
+Dentro de los algoritmos utilizados para la construcción de clasificadores se encuentra \textit{Naïve Bayes} \cite{NaiveBayes2} a continuación se realiza una descripción de este. 
 
 	\subsection{Naïve Bayes}
 	
-	La clasificación puede verse como una función \begin{math}\gamma\end{math} que asigna etiquetas a observaciones, es decir:\\ 
+	La clasificación puede verse como una función \begin{math}\gamma\end{math} que asigna etiquetas a observaciones \cite{NaiveBayes1}, es decir:\\ 
 	\[\gamma : (x_{1}, .... , x_{n}) \rightarrow \{1, 2, .... r_{0}\} \]
 
 	Existe una matriz de costo \begin{math} cos(r, s)\end{math} con \begin{math} r, s = 1, ...., r_{0}\end{math} en el cual se refleja el costo asociado a las clasificaciones incorrectas. En concreto \begin{math} cos(r, s) \end{math} indica el costo de clasificar un ejemplo de la clase r como de la clase s. En el caso especial de la función de pérdida 0/1, se tiene:\\
@@ -105,7 +104,7 @@ Dentro de los algoritmos utilizados para la construcción de clasificadores se e
 
 	El paradigma clasificatorio en el que se utiliza el teorema de Bayes en conjunción con la hipótesis de independencia condicional de las variables predictorias dada la clase se conoce como naïve Bayes (Kononenko, 1990).\\
 
-	
+	\textbf{TERMINAR ESTO. FORMULAS}
 
 
 \section{Metodología}
@@ -113,7 +112,7 @@ Dentro de los algoritmos utilizados para la construcción de clasificadores se e
 
 \subsection{Programación Extrema}
 \label{subsec:XP}
-La Programación Extrema (\textit{Extreme Programming}, XP desde ahora en adelante), comenzó como un proyecto el 6 de Marzo de 1996. Es uno de los procesos ágiles más populares y ha sido provado exitosamente en compañias e industrias de todos los tamaños \cite{xP}.\\
+La Programación Extrema (\textit{Extreme Programming}, XP desde ahora en adelante), comenzó como un proyecto el 6 de Marzo de 1996. Es uno de los procesos ágiles más populares y ha sido provado exitosamente en compañias e industrias de todos los tamaños. \cite{xP}.\\
 
 Su éxito se debe a que hace especial incapié en la satisfacción del cliente por sobre la entrega de todo lo el software posible.\\
 
@@ -177,7 +176,7 @@ La metodología implementa unas simples reglas de trabajo, las que se dividen en
 
 El proceso de XP puede puede ser aprecido en la Figura ~\ref{fig:procesoXP}.
 
-\begin{figure}[!ht]
+\begin{figure}[H]
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[scale=0.6]{images/flowChartXP.png}
@@ -188,7 +187,7 @@ El proceso de XP puede puede ser aprecido en la Figura ~\ref{fig:procesoXP}.
 \subsection{\textit{Knowledge Discovery in Databases} (KDD)}
 \label{subsec:kdd}
 
-Es definido por Fayyad (1996) como "El proceso no trivial de identificar patrones válidos, nuevos, potencialmente útiles y en ultima instancia comprensible en los datos", surge de la necesidad de manejar grandes cantidades de datos e involucra simultaneamente varias disciplinas de investigación tales como el aprendizaje automático, la estadística, inteligencia artificial, sistemas de gestión de bases de datos, sistemas de apoyo a la toma de desiciones, entre otras.\\
+Es definido por \cite{KDDFayyad} como "El proceso no trivial de identificar patrones válidos, nuevos, potencialmente útiles y en ultima instancia comprensible en los datos", surge de la necesidad de manejar grandes cantidades de datos e involucra simultaneamente varias disciplinas de investigación tales como el aprendizaje automático, la estadística, inteligencia artificial, sistemas de gestión de bases de datos, sistemas de apoyo a la toma de desiciones, entre otras.\\
 
 Si bien puede variar el usuario, quien es aquel que determina el domino de la aplicación, es decir, cómo se utilizarán los datos, el proceso generalmente considera las siguientes etapas:
 
@@ -205,7 +204,7 @@ Si bien puede variar el usuario, quien es aquel que determina el domino de la ap
 
 La representacíón del proceso puede verse en la Figura ~\ref{fig:procesoKDD}.
 
-\begin{figure}[!ht]
+\begin{figure}[H]
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[scale=1]{images/kdd.png}
@@ -238,7 +237,7 @@ La representacíón del proceso puede verse en la Figura ~\ref{fig:procesoKDD}.
 
 	Oficialmente es representado como puede verse en la Figura ~\ref{fig:stormBeLike}. donde los \textit{Spouts} son representados simulando ser llaves de agua desde donde fluyen los datos al sistema y los \textit{Bolts} como rayos donde se procesa el flujo.\\
 
-	\begin{figure}[!ht]
+	\begin{figure}[H]
 		\centering
 		\captionsetup{justification=centering}
 		\includegraphics[scale=0.6]{images/stormBeLike.png}
@@ -250,7 +249,7 @@ La representacíón del proceso puede verse en la Figura ~\ref{fig:procesoKDD}.
 
 	\subsubsection{Topología}
 
-	Una topología de Storm es similar a un grafo. Cada nodo se encarga de procesar una determinada información y le pasa el testigo al siguiente nodo. Está compuesta por \textit{Spouts} y \textit{Bolts}.\\
+	Una topología de Storm es similar a un grafo. Cada nodo se encarga de procesar una determinada información y le pasa el testigo al siguiente nodo. Está compuesta por \textit{Spouts} y \textit{Bolts}. \cite{Storm}.\\
 
 	\subsubsection{Cluster de Storm}
 
@@ -265,13 +264,13 @@ La representacíón del proceso puede verse en la Figura ~\ref{fig:procesoKDD}.
 
 	\subsubsection{Modos de funcionamiento}
 
-	Storm puede funcionar de dos modos: Local y Cluster. El primero es útil para el desarrollo, pues ejecuta toda la topología en una única JVM, por lo que pueden realizarse fácilmente pruebas de integración, depurar código, etcétera. Este modo simula, haciendo uso de \textit{Threads}, cada nodo del Cluster.\\
+	Storm puede funcionar de dos modos: Local y Cluster. El primero es útil para el desarrollo, pues ejecuta toda la topología en una única JVM, por lo que pueden realizarse fácilmente pruebas de integración, depurar código, etcétera. Este modo simula, haciendo uso de \textit{Threads}, cada nodo del Cluster. \cite{Storm}.\\
 
 	El modo Cluster es considerado el 'modo de producción' y es el modo donde el código es distribuido en máquinas diferentes dentro del Cluster.\\
 
 	\subsubsection{Stream grouping}
 
-	Se refiere a la forma en la que se van a compartir los datos entre los componentes. Como modelo de datos, Storm utiliza tuplas que son listas de valores con un nombre específico. El valor puede ser cualquier tipo, para ello se ha de implementar un serializador.\\
+	Se refiere a la forma en la que se van a compartir los datos entre los componentes. Como modelo de datos, Storm utiliza tuplas que son listas de valores con un nombre específico. El valor puede ser cualquier tipo, para ello se ha de implementar un serializador. \cite{Storm}.\\
 
 	\begin{itemize}
 	\item Shuffle grouping: Storm decide de forma aleatoria la tarea a la que se va a enviar la tupla, de manera que la distribución sea equivalente entre todos los nodos.
@@ -293,7 +292,7 @@ La representacíón del proceso puede verse en la Figura ~\ref{fig:procesoKDD}.
 
 	Las consultas en MongoDB se realizan como si se tratase de Javascript entregando como parámetro un objeto JSON. Por ejemplo, dado el documento presentado en la Figura ~\ref{fig:MongoJsonExample}, parte de una colección llamada 'Personas' en MongoDB:
 
-	\begin{figure}[!ht]
+	\begin{figure}[H]
 		\centering
 		\captionsetup{justification=centering}
 		\includegraphics[scale=0.8]{images/MongoJsonExample.png}
@@ -306,7 +305,7 @@ La representacíón del proceso puede verse en la Figura ~\ref{fig:procesoKDD}.
 
 	
 
-	\begin{figure}[!ht]
+	\begin{figure}[H]
 		\centering
 		\captionsetup{justification=centering}
 		\includegraphics[scale=0.8]{images/MongoJsonQueryExample.png}
@@ -315,7 +314,7 @@ La representacíón del proceso puede verse en la Figura ~\ref{fig:procesoKDD}.
 	\end{figure}
 
 
-	En pruebas realizando operaciones habituales dentro de las bases de datos el \cite{mongoPerformance} demostró que el tiempo de ejecución de MongoDB, como base de datos NoSQL, aventaja significativamente a las bases de datos relacionales más populares como lo son MySQL y PostgreSQL.
+	En pruebas realizando operaciones habituales dentro de las bases de datos \cite{MongoPerformance} demostró que el tiempo de ejecución de MongoDB, como base de datos NoSQL, aventaja significativamente a las bases de datos relacionales más populares como lo son MySQL y PostgreSQL.
 
 
 	
