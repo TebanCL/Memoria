@@ -39,7 +39,7 @@ La tabla ~\ref{tab:ReqTotales} presenta la totalidad de requisitos, tanto de la 
 
 Estas historias de usuario se corresponden con los criterios de aceptación descritos en la tabla ~\ref{tab:criteriosAceptacion} que se presenta a continuación.
 
-CRITERIOS
+\textbf{Faltan criterios, conversarlo con profes}
 
 \section{Desiciones de diseño}
 \label{sec:Diseno}
@@ -84,12 +84,16 @@ Para hacer uso de la API descrita con anterioridad es necesario obtener cuatro c
 
 Conociendo desde donde se obtendrá la información y teniendo acceso a ella resta conocer cómo realizar la conexión. Para ello se selecciono utilizar \textit{Twitter4J}, una biblioteca no oficial de Java para las API de \textit{Twitter}. Para su funcionamiento sólo requiere del uso de Java en su version 5 o superior.\\
 
-El detalle de la implementación puede verse en la subsección ~\ref{subsec:HU-c01Implementacion} en el Capítulo ~\ref{cap:Implementacion}.
+El detalle de la implementación puede verse en la sección ~\ref{subsec:HU-c01Implementacion} en el Capítulo ~\ref{cap:Implementacion}.
 
 \subsection{Historia de usuario HU-c02}
 \label{subsec:HU-c02}
 
-Esta historia de usuario guarda relación con la HU ~\ref{subsec:HU-v04}, menciona la necesidad de incrementar los términos de búsqueda para enriquecerla y abarcar la mayor información posible dado una consulta. Para realizar esto se consideró una práctica del procesamiento de lenguaje natural como es la denominada \textit{Query Expansion} (QE). Según lo descrito por \cite{IRQE} son técnicas comunes al utilizar QE la búsqueda de sinónimos (uso de diccionarios priviamente establecidos), diccionarios basados en la minería de los elementos previamente hayados, creación de diccionadios basados en la co-ocurrencia de términos, es decir, términos que suelen venir juntos o un vocabulario mantenido por editores humanos. Para este trabajo sólo se considerarán las dos primeras: Búsqueda por diccionario de sinónimos y una implementación que encuentra los términos más frecuentes dentro de los resultados de la búsqueda.
+Esta historia de usuario guarda relación con la HU ~\ref{subsec:HU-v05}, menciona la necesidad de incrementar los términos de búsqueda para enriquecerla y abarcar la mayor información posible dado una consulta. Para realizar esto se consideró una práctica del procesamiento de lenguaje natural como es la denominada \textit{Query Expansion} (QE). Según lo descrito por \cite{IRQE} son técnicas comunes al utilizar QE la búsqueda de sinónimos (uso de diccionarios priviamente establecidos), diccionarios basados en la minería de los elementos previamente hayados, creación de diccionadios basados en la co-ocurrencia de términos, es decir, términos que suelen venir juntos o un vocabulario mantenido por editores humanos. Para este trabajo sólo se considerarán las dos primeras: Búsqueda por diccionario de sinónimos y una implementación que encuentra los términos más frecuentes dentro de los resultados de la búsqueda.\\
+
+El diccionario de sinónimos es básicamente una bolsa de palabras asociadas a una semilla, es decir, dado un término de búsqueda agregar todos los términos asociados a el en el diccionario.\\
+
+En el caso de la búsqueda de términos frecuentes....
 
 \subsection{Historia de usuario HU-v00}
 \label{subsec:HU-v00}
@@ -125,9 +129,9 @@ Para el segundo caso sólo se definieron dos reglas de funcionamiento las cuales
 \item Mostrar categoría: Para cada categoría mostrar sólo los elementos de aquella categoría. 
 \end{enumerate}
 
-Al combinar ambos tipos de filtros se tienen potencialmente seis modos de funcionamiento, pero considerando las categorías descritas en al subsección ~\ref{subsec:categorias} ese número se expande a veintiún modos de funcionamiento del visualizador.\\
+Al combinar ambos tipos de filtros se tienen potencialmente seis modos de funcionamiento, pero considerando las categorías descritas en al sección ~\ref{subsec:categorias} ese número se expande a veintiún modos de funcionamiento del visualizador.\\
 
-El detalle sobre la implementación puede verse en la subsección ~\ref{subsec:HU-v02Implementacion} en el Capítulo ~\ref{cap:Implementacion}.\\
+El detalle sobre la implementación puede verse en la sección ~\ref{subsec:HU-v02Implementacion} en el Capítulo ~\ref{cap:Implementacion}.\\
 
 \subsection{Historia de usuario HU-v03}
 \label{subsec:HU-v03}
@@ -139,6 +143,38 @@ Se solicitó que la interfaz no se recargue cada vez que se produzca un cambio d
 
 Al hacer referencia a información pasada se infiere la necesidad de la implementación de un sistema de persistencia de datos.\\
 
+Para ello se consideraron los principales sistemas de bases de datos utilizados y conocidos por el autor, dentro de los cuales se encontraban herramientas como: MySQL, PostgreSQL, SQL Server, MongoDB, entre otras. Dadas las características y las condiciones con las cuales operará el sistema de detección se requiere de un DBMS con rápido tiempo de respuesta en operaciones lectura/escritura; la desición se tomó en base a los datos que se manejaran, pues no se apreció necesidad de implementar una base de datos relacional (véase sección \cite{subsec:BaseDeDatos}), de esta forma y teniendo en cuenta los resultados presentados en pruebas empíricas realizadas por \cite{MongoPerformance} en las cuales mostró que el tiempo de respuesta (en operaciones de lectura) es significativamente menor en MongoDB que en dos de los DBMS más conocidos como MySQL y PostgreSQL. Lo anterior, sumado al hecho de la capacidad de escalar de MongoDB reportada en fuentes oficiales o por diversos desarrolladores como \cite{MongoDBScalability} que han compartido sus experiencias en la \textit{web}, llevaron a decidir que mongo debiera ser el sistema de gestión de base de datos que se utilizase en el sistema.\\
+
+Volviendo al punto; la necesidad de visualizar eventos pasados que involucró la participación de un sistema para persistir los datos, habiendo resuelto lo anterior la siguiente problemática se presenta como ¿qué datos han de guardarse? Según la definición de la historia en la que se señalan "eventos pasados dentro de un intervalo de tiempo", se infiera que ha de guardarse tanto el contenido visible del dato, la clasificación que se le asignó y la fecha en que se identificó, para ello y dado que se seleccionó MongoDB, y aunque no es necesario, se especificó un esquema para los documentos de la colección, pero ¿qué colección? dados los datos que se almacenarán sólo restaría tener la información correspondiente a la ubicación, por lo que el esquema se definió como se presenta en la Figura ~\nameref{fig:esquemaMarker1} correspondiente a la colección "Markers".
+
+\begin{figure}[H]
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=0.8]{images/Marker1.png}
+	\caption[Ejemplo de documento en la colección Markers.]{Ejemplo de documento en la colección Markers.}
+	\label{fig:esquemaMarker1}
+\end{figure}
+
+Parte de esta historia corresponde a la selección de un intervalo, los detalles de la implementación y la desición del diseño definitivo adoptado en la construcción se abordará la sección ~\ref{subsec:HU-v04Implementacion}.
+
+\subsection{Historia de usuario HU-v05}
+\label{subsec:HU-v05}
+
+\textit{Twitter4J}, la herremienta que se mencionó en la sección ~\ref{subsec:HU-v01} como aquella que permitiría obtener el flujo de información desde \textit{Twitter} implementa una forma de filtrado mediante el uso de palabras clave, pero posee la limitante al momento de modificar la búsqueda, deben instanciarse nuevamente los objetos con los cuales se realiza la conexión a la API de \textit{Twitter}, eso se traduce en tiempo de procesamiento perdido, para solucionar este inconveniente se decidió implementar un operador, adicional a los apreciables en la sección ~\ref{subsec:definicionOperadores}, el cual estará encargado de realizar el filtrado de acuerdo a términos y llevar a cabo la operación descrita en la sección ~\ref{subsec:HU-c02} referente a la expansión de la consulta, pero siendo un operador significa que sea paralelizado y no exista una sola instancia ¿Cómo comunicar el estado de una consulta y que todos los operadores utilicen el mismo filtro?.\\
+
+Nuevamente la respuesta consistió en recurrir a la base de datos; almacenar la consulta y asignar un estado para controlar el comportamiento del operador. Así el esquema en la base de datos queda tal y como se presenta en la Figura ~\nameref{fig:esquemaQuery}, documento de la colección "Queries".
+
+\begin{figure}[H]
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=0.8]{images/Query.png}
+	\caption[Ejemplo de documento en la colección queries.]{Ejemplo de documento en la colección queries.}
+	\label{fig:esquemaQuery}
+\end{figure}
+
+Donde la propiedad "estado" puede tomar dos valores: "actual" o "antiguo", reflejan si una consulta se está llevando a cabo o no. Estos valores son asignados por la aplicación responsable de la interfaz la responsable de recibir los términos de búsqueda por parte del usuario.
+
+La implementación tanto de este operador como de las soluciones descritas en la sección ~\ref{subsec:HU-c02} pueden verse en la sección ~\ref{subsec:HU-c02Implementacion} y ~\ref{subsec:HU-v05Implementacion}.
 
 
 

@@ -12,19 +12,34 @@ Los desastres naturales en el país han sido frecuentes en los últimos años. S
 \subsection{Estado del arte}
 \label{intro:motivacion:arte}
 
-En primer lugar se estudia el actual estado del arte en temas de detección para posteriormente continuar con clasificación y finalmente, sistemas de procesamiento de streams.\\
+Los tópicos que se tratan en esta sección son variados, se comenzará señalando desde donde inicia este trabajo, seguido de las impresiones de distintos autores respecto al trabajo en redes sociales (\textit{Twitter} específicamente), continuando con sistemas de procesamiento para flujos de información para concluir con la construcción de clasificadores para etiquetado de datos.\\
 
-Referido a detección, en particular, detección de eventos en medios sociales es señalado por Nguyen \& Jung (2015) como el foco de investigación en los últimos años. Sobre la detección propiamente, los autores se refieren a una técnica común consistente en realizar paquetes de mensajes que son capturados a intervalos regulares de tiempo y luego son procesados, mencionan la existencia de un trade-off entre el intervalo y el performance del sistema al tener que procesar más o menos datos según corresponda. Una segunda alternativa es el procesamiento conforme los datos son recibidos, para ello es necesario una alternativa que permita procesar elementos en paralelo introduciendo problemas de sincronización y balance de carga.\\
+En el marco de las jornadas chilenas de la computación \cite{paperWladdimiroGonzales} propusieron un modelo, desarrollado para el proyecto PMI USA1024, para detectar necesidades de la población ante escenarios de desastres naturales. En se propone un modelo basado en \textit{Yahoo! S4} donde haciendo uso del paradigma de procesamiento de \textit{streams} de datos se forma un grafo cuyos nodos (Elementos de procesamiento o PE, por sus siglas en inglés), dividen el procesamiento en pequeñas tareas fácilmente replicables para paralelizar el \textit{pepeline}. En esa ocación desarrollaron distintos tipos de operadores mencionados a continuación:
 
-Weng \& Lee (2014) señalaron dos principales problemáticas a ser resueltas en Twitter como son el volumen de información generada y la abundancia de información que puede ser catalogada como ruido.\\
+\begin{itemize}
+\item Recolector: Haciedo uso de la API de \textit{Twitter} obtiene el \textit{stream} de datos del mismo. 
+\item \textit{Scheduler}: discrimina cada \textit{tweet} según la categoría que pertenece (Información, agua, electricidad o alimento), mediante el uso de una bolsa de palabras y la distancia \textit{Hamming}.
+\item Filtrado: Utiliza un clasificador \textit{Naïve Bayes} para identificar si un \textit{tweet} es subjetivo o no.
+\item Relevancia: Identificar si una información es o no confiable haciendo uso de la cantidad de publicaciones del usuario, sus seguidores y a quienes sigue para estimar una reputación del autor.
+\item Ranking: Hace uso de la información anterior, decidiendo a qué le entrega mayor importancia.
+\end{itemize}
 
-Es por lo anterior que autores como Van De Voort (2014) señala, y es respaldado por la metodología KDD, que, antes de comenzar el proceso de detección, la información recogida ha de ser pre-procesada debido a la mencionada existencia de ruido y el hecho de que los mensajes no siempre cumplen con reglas, ya sean, gramaticales u ortográficas o, también, que, en algunos casos, remover los stopwords o las URL o Hashtag facilita la tarea de análisis a posteriori. Van De Voort también señala las dos formas de detección de eventos existente: Detección en retrospectiva, es decir, capturar los datos y procesarlos posteriormente siguiendo el modelo tradicional de batch processing. Y detección online, es decir, en tiempo real. Tanto la detección como la categorización de eventos pueden realizarse de diversas maneras, por ejemplo el uso de n-gramas, prediciendo la posible siguiente palabra para así llevar a cabo la detección, Rahmound\&Elberrichi (2007), otra forma es el uso de técnicas de aprendizaje de máquina (Machine learning, ML) para detectar cuándo un mensaje hace mención a una necesidad y ubicarla dentro de un determinado grupo por medio de un modelo generado a partir de datos de entrenamiento Kamath \& James (2011).\\
+Los autores concluyeron basándose en la carga computacional la importancia de una replicación adecuada para distribuirla entre los PE, pero no fueron concluyentes en cuánto o qué nivel de replicación sería el adecuado o cuándo replicar.\\
 
-Referido a las técnicas de aprendizaje de máquina, Maldonado (2012) presentó un modelo capaz de detectar sentimientos en tweets habiendo utilizado ML aplicando clasificadores Naïve Bayes y Support Vector Machine (SVM), los cuales diferían sólo en la complejidad en realizar la configuración. Wladdimiro \& González (2014) haciendo uso de Naïve Bayes y una bolsa de palabras fueron capaces de llevar a cabo una clasificación de necesidades dentro de determinadas categorías. Utilizaron un grupo de personas que se dedicó a clasificar, previamente, un conjunto de datos de entrenamiento para lograr validar el modelo obtenido. Wladdimiro y González propusieron un grafo para modelar el problema de detección de necesidades en tiempo real basado en cinco tareas, pero no consideraron lo mencionado por Van De Voort con respecto a la previa limpieza de datos, presentando problemas de procesamiento innecesario y dejaron pendientes problemas relacionados con la carga del sistema y cuellos de botella en su grafo.\\
+Diversos autores, entre los que podemos mencionar a \cite{VanDeVoort}, \cite{EventDetectionInTwitter}, \cite{Maldonado}, han señalado las dificultades que se presentan al trabajar utilizando como entradas los estados públicos (\textit{tweet}) de los usuarios de \textit{Twitter}, dentro de las dificultades señaladas se encuentran, por ejemplo, el acceso a la información; si bien existen accesos públicos a la información éstos son restringidos tanto en cantidad como en tiempo: Este punto de acceso permite acceder a un 1\% de la información generada en un instante, es decir, por cada cien \textit{tweets} sólo podra accederse a uno de ellos. Sólo se permite realizar 180 consultas cada quince minutos (aproximadamente 12 consultas por minuto) y, en el caso de ser un usuario identificado, se aumenta a 450 consultas dentro del mismo intervalo de tiempo (aproximadamente 30 consultas por minuto). Por otro lado existe un punto de acceso pagado denominado \textit{FireHose} el cual entrega libre acceso a la información.\\
 
-El sistema de detección y clasificación desarrollado por estos últimos fue soportado por Apache S4, framework de computación distribuida que, actualmente, se encuentra estancado y sin mantenimiento desde el año 2012. En su lugar Apache Storm se presenta como un framework de computación distribuida para computación en tiempo real distribuida y tolerante a fallas, además, éste promete, una mayor performance y simplicidad de configuración que S4.\\
+Por otro lado \cite{VanDeVoort} señalan que la dificultad radica en el hecho de que cualquier persona puede realizar publicaciones en esta red social, induciendo ruido en la información (considerando el ruido como toda información que aparece junto a la deseada, pero no aporta nueva), además de, al ser publicaciones de máximo 140 caracteres es complejo contextualizar el contenido.\\ 	
+\textbf{Falta agregar parte de SPS}
 
+Se consideraron tres \textit{frameworks} de computación distribuida: \textit{Apache Storm}, \textit{Apache Spark} y \textit{Apache S4}. El primero presenta una solución basado en el modelo \textit{MapReduce} que toma datos estructurados de la forma (clave, valor) para llevaros a una lista de valores y se usa típicamente para procesar grandes cantidades de datos en distintos nodos que pueden o no estar cercanos físicamente. Los otros dos presentan un modelo basado en el procesamiento de eventos en tiempo real. El problema particular que presenta \textit{S4} es la falta de avances en su desarrollo, el cual ha estado paralizado desde el año 2013.\\ 
 
+\textit{Storm} es un \textit{framework} de computación distribuida para trabajar datos en tiempo real de múltiples fuentes de manera distribuida, tolerante a fallos y de alta disponibilidad. Su funcionamiento se divide en dos elementos: Por un lado existen los \textit{Spout}, encargados de recoger el flujo de entrada de datos, y en segundo, los denominados \textit{bolts}, encajados de procesamiento o transformación de los datos. Por recomendación un \textit{bolt} sólo ha de realizar una tarea. \textit{Storm} puede funcionar de dos formas: En modo \textit{cluster} o modo local; en este último se simula un \textit{thread} por nodo y es utilizado para realizar pruebas locales.\\
+
+\textbf{Falta agregar parte de clasificacion}
+
+\textbf{Mencionar desde donde se obtiene la taxonomia de necesidades (la de chato)}
+
+	
 \section{Descripción del problema}
 \label{intro:problema}
 
@@ -129,4 +144,8 @@ A continuación se presentan a grueso modo los capítulos que componen el presen
 
 El Capítulo ~\nameref{cap:MarcTeorico} presenta una serie de definiciones detalladamente para ayudar a comprender de mejor manera el problema y los elementos utilizados para su resolución.\\
 
-El capítulo ~\nameref{cap:Construccion} detalla los aspectos de toma de requerimientos y diseño de la aplicación detallando las desiciones que se tomaron para solucionar los problemas encontrados en el desarrollo del la aplicación.\\
+El capítulo ~\nameref{cap:Construccion} detallan tanto los aspectos de toma de requerimientos y diseño de la aplicación detallando las desiciones que se tomaron para solucionar los problemas encontrados en el desarrollo del la aplicación como el proceso de implementación.\\
+
+El capítulo de ~\nameref{cap:Evaluacion} detalla cómo se evaluó la solución y el por qué se decidió una topología en particular y su nivel de replicación de operadores.\\
+
+Finalmente en el capítulo ~\nameref{cap:Conclusiones} presenta las conclusiones del trabajo realizado, el cumplimiento de objetivos y trabajo futuro.\\

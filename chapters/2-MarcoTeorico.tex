@@ -88,7 +88,7 @@ Dentro de los algoritmos utilizados para la construcción de clasificadores se e
 		p(x_{1}, ..., x_{n}, c) = p(c | x_{1}, ..., x_{n})p(x_{1}, ..., x_{n}) = p(x_{1}, ..., x_{n}|c)p(c)
 	\]
 
-	La cual es desconocida. El objetivo es construir un clasificador que miniza el coste total de los errores cometidos, y esto se consigue (Duda y Hart, 1973) por medio del clasificador de Bayes:\\
+	La cual es desconocida. El objetivo es construir un clasificador que miniza el coste total de los errores cometidos, y esto se consigue, \cite{NaiveBayes3} por medio del clasificador de Bayes:\\
 
 	\[
 		\gamma(x) = arg min_{\substack{k}} \sum^{r_{0}}_{\substack{c = 1}} cos(k,c)p(c | x_{1}, ..., x_{n})
@@ -102,10 +102,29 @@ Dentro de los algoritmos utilizados para la construcción de clasificadores se e
 
 	En la práctica la función de distribución conjunta \begin{math} p(x_{1}, ..., x_{n}, c) \end{math} es desconocida, y puede ser estimada a partir de una muestra aleatorea simple \begin{math} \{ (x^{(1)}, c^{(1)} ), ..., (x^{(N)}, C^{(N)})\}\end{math} extraida de dicha función de distribución conjunta.\\
 
-	El paradigma clasificatorio en el que se utiliza el teorema de Bayes en conjunción con la hipótesis de independencia condicional de las variables predictorias dada la clase se conoce como naïve Bayes (Kononenko, 1990).\\
+	El paradigma clasificatorio en el que se utiliza el teorema de Bayes en conjunción con la hipótesis de independencia condicional de las variables predictorias dada la clase se conoce como Naïve Bayes \cite{NaiveBayes3}.\\
 
-	\textbf{TERMINAR ESTO. FORMULAS}
+	Finalmente el Teorema de Bayes está representado por la expresión \cite{NaiveBayes4}:
 
+	\[
+		P(c_{i}|d_{j}) = \frac{P(d_{j}|c_{i}) · P(c_{i})}{P(d_{j})}
+	\]
+
+	Donde \begin{math} c_{i} \end{math} corresponde al atributo Clase y \begin{math} d_{j} \end{math} al conjunto de documentos. El término \begin{math} P(d_{j}) \end{math} suele omitirse, pues no aporta mucha información para la clasificación. Habiendo realizado lo anterior y tomando en cuenta la hipótesis de independencia se obtiene:
+
+	\[
+		P(d_{j}|c_{i}) = P(c_{i})\prod_{j=1}^n P(a_{j}|c_{i})
+	\]
+
+	Pero siempre se considera la mayor probabilidad de \begin{math} c_{i} \end{math}, por ello podemos añadir un nuevo elemento llegando a la fórmula de Naïve Bayes:
+
+	\[
+		P(d_{j}|c_{i}) = ArgMax{\substack{k}^n P(c_{i})}\prod_{j=1}^n P(a_{j}|c_{i})
+	\]
+
+	En términos simples el crear un modelo de clasificación Naïve Bayes se puede resumir en el siguiente algoritmo:
+
+	\textbf{Escribir algoritmo con la sintaxis de latex: http://rosapolis.net/2008/04/21/escribir-algoritmos-en-latex/}
 
 \section{Metodología}
 \label{sec:MetodologiaDetalle}
