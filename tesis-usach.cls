@@ -87,8 +87,16 @@
 \renewcommand{\algorithmcfname}{Algoritmo}
 \RequirePackage{algorithmic}
 \setlength{\algomargin}{1.5em}
+\renewcommand{\baselinestretch}{1.5} 
 \renewcommand{\algorithmicrequire}{\textbf{Entrada:}}
 \renewcommand{\algorithmicensure}{\textbf{Salida:}}
+\renewcommand{\algorithmicif}{\textbf{Si}}
+\renewcommand{\algorithmicelse}{\textbf{Sino:}}
+\renewcommand{\algorithmicthen}{\textbf{entonces:}}
+\renewcommand{\algorithmicend}{\textbf{Fin}}
+\renewcommand{\algorithmicfor}{\textbf{Para}}
+\renewcommand{\algorithmicdo}{\textbf{Hacer:}}
+\renewcommand{\algorithmicreturn}{\textbf{Retornar}}
 \renewcommand{\algorithmiccomment}[1]{//#1}
 \RequirePackage{etoolbox}										% Interlineado
 

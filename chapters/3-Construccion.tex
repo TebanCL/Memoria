@@ -1,7 +1,7 @@
 \chapter{Construcción del sistema}
 \label{cap:Construccion}
 
-Este capítulo detalla la fase de construcción de la aplicación, comenzando con la toma de requistos, la toma de desiciones de diseño y culmina con la implementación.
+Este capítulo detalla la fase de construcción de la aplicación, comenzando con la toma de requistos, la toma de desiciones de diseño en todo ámbito y culmina con como se realizó la implementación.
 
 \section{Toma de requisitos}
 \label{sec:Requisitos}
@@ -12,8 +12,7 @@ Esta sección detallará los requisitos de las aplicaciones, descritos como hist
 
 Estos requisitos tendrán la siguiente nomenclatura para su identificación: Aquellos que guarden relación con la aplicación de detección se identificarán como 'HU-cXX' donde XX corresponderá al número del requisito; 'HU-vYY' para aquellas que correspondan a la aplicación interfáz donde, al igual que en el caso anterior, YY corresponderá al número del requisito.\\
 
-La tabla ~\ref{tab:ReqTotales} presenta la totalidad de requisitos, tanto de la aplicación visualizador como del detector de necesitades.\\
-
+La tabla \ref{tab:ReqTotales} presenta la totalidad de requisitos, tanto de la aplicación visualizador como del detector de necesitades.\\
 
 \begin{table}[H]
 \centering
@@ -37,14 +36,16 @@ La tabla ~\ref{tab:ReqTotales} presenta la totalidad de requisitos, tanto de la 
 \end{tabular}
 \end{table}
 
-Estas historias de usuario se corresponden con los criterios de aceptación descritos en la tabla ~\ref{tab:criteriosAceptacion} que se presenta a continuación.
+Estas historias de usuario se corresponden con los criterios de aceptación descritos en la tabla \ref{tab:criteriosAceptacion} que se presenta a continuación.
 
 \textbf{Faltan criterios, conversarlo con profes}
 
 \section{Desiciones de diseño}
 \label{sec:Diseno}
 
-El desarrollo de la aplicación, entonces, será guiado por cumplir las historias de usuario descritas en la tabla ~\ref{tab:ReqTotales}. Para ello se trata cada historia como un problema individual que luego han de ser constituidas en la aplicación final. A continuación se presenta cómo se abordó cada historia desde el punto de vista del diseño para llevarla a su implementación descrita en el capítulo siguiente. Además se entrega una visión de la arquitectura final del sistema.\\
+El desarrollo de la aplicación, entonces, será guiado por cumplir las historias de usuario descritas en la tabla \ref{tab:ReqTotales}. Para ello se trata cada historia como un problema individual que luego han de ser constituidas en la aplicación final.\\
+
+A continuación se presenta cómo se abordó cada historia desde el punto de vista del diseño para llevarla a su implementación descrita en el capítulo siguiente. Además al final de esta sección se entrega una visión de la arquitectura final del sistema.
 
 \subsection{Historia de usuario HU-c00}
 \label{subsec:HU-c00}
@@ -53,9 +54,11 @@ Dado el contexto del funcionamiento del sistema, éste ha de entregar respuestas
 
 En primer lugar se consideraron sistemas de procesamiento distribuido; estos sistemas tienen la particularidad de ser una red de computadores (nodos, en general), que el usuario percibe como un solo gran sistema. Estos sistemas pueden ser de diversos tamaños, y suelen ser confiables, pues si un componente (nodo) falla, otro será capaz de reemplazarlo. \cite{DefSPD}. En un inicio se consideraron tres plataformas sobre las cuales podría construirse un sistema que pudiese cumplir con lo solicitado; dichas plataformas fueron Apache S4, Apache Storm y Apache Spark.\\
 
-Apache S4, pese a su simplicidad, no continuó con su desarrollo luego del año 2013 y nunca tuvo una versión estable 1.0, razones por las cuales se dejó como segunda opción. Apache Spark, pese a contar con continuos \textit{releases}, una comunidad de desarrolladores no menor y permitir la elaboración de sistemas escalables no era lo que se buscaba en aquel momento como herramienta de desarrollo. Por ello finalmente se optó por Apache Storm; Storm permite construir sistemas que cumplan con las características de un sistema distribuido, como lo son: Escalabilidad (Tanto horizontal como vertical) y tolerancia a fallos (como la capacidad de un sistema para realizar correctamente y en todo momento aquello para lo que fue diseñado). Estos sistemas estan compuestos por dos tipos de elementos: Spout y Bolt, que fueron descritos en el Capítulo ~\ref{cap:MarcTeorico}. Al combinar esos elementos se da origen a un grafo dirigido, como el presentado en la Figura ~\ref{fig:stormBeLike} en la página ~\pageref{fig:stormBeLike}, donde cada elemento de procesamiento (\textit{bolt}), cumple con una determinada tarea utilizando como entrada la salida del elemento anterior.\\
+Apache S4, pese a su simplicidad, no continuó con su desarrollo luego del año 2013 y nunca tuvo una versión estable 1.0, razones por las cuales se dejó como segunda opción. Apache Spark, pese a contar con continuos \textit{releases}, una comunidad de desarrolladores no menor y permitir la elaboración de sistemas escalables no era lo que se buscaba en aquel momento como herramienta de desarrollo. Por ello finalmente se optó por Apache Storm; Storm permite construir sistemas que cumplan con las características de un sistema distribuido, como lo son: Escalabilidad (Tanto horizontal como vertical) y tolerancia a fallos (como la capacidad de un sistema para realizar correctamente y en todo momento aquello para lo que fue diseñado). Estos sistemas estan compuestos por dos tipos de elementos: Spout y Bolt, que fueron descritos en el capítulo \ref{cap:MarcTeorico}. Al combinar esos elementos se da origen a un grafo dirigido, como el presentado en la Figura \ref{fig:stormBeLike} en la página ~\pageref{fig:stormBeLike}, donde cada elemento de procesamiento (\textit{bolt}), cumple con una determinada tarea utilizando como entrada la salida del elemento anterior.\\
 
 Teniendo ya en consideración lo anterior el problema se traducía en cuál debería ser el procesamiendo que ha de aplicarse a los datos de entrada para capturar las necesidades. En primer lugar habrá que definir cuál y cómo será o serán las entradas del sistema para continuar la definición de los elementos con posterioridad.\\
+
+La definición de las entradas del sistema se especificarán en la sección \ref{subsec:HU-c01}, mientras que el detalle de los elementos necesarios para cumplir esta historia de usuario se detallarán en la sección \ref{subsec:operadores}.
 
 \subsection{Historia de usuario HU-c01}
  \label{subsec:HU-c01}
@@ -80,20 +83,48 @@ Sitio   & Versión multi-usuario de la anterior.                                
 
 Para esta aplicación la adecuada corresponde a la API pública. Es ésta, a la vez, existen, básicamente, dos puntos de acceso: el público y \textit{firehose}. El acceso público es gratuito y permite el acceso a un 1\% de la información que se genera en tiempo real y para acceder a el basta con crear una aplicación dentro de \textit{Twitter}. En cambio para acceder a \textit{firehose}, el cual permite acceso total a la información, debe comprarse el acceso. Dadas estas condiciones se seleccionó, previo acuerdo con los clientes, el uso de la API pública.\\
 
-Para hacer uso de la API descrita con anterioridad es necesario obtener cuatro claves de acceso: \textit{Access Token}, \textit{Access Token Secret}, \textit{Consumer Key (API Key)} y \textit{Consumer Secret (API Secret)}. Para más información sobre cómo conseguir estas claves consulte el Anexo ~\ref{anexo:TwitterKeys}.\\
+Para hacer uso de la API descrita con anterioridad es necesario obtener cuatro claves de acceso: \textit{Access Token}, \textit{Access Token Secret}, \textit{Consumer Key (API Key)} y \textit{Consumer Secret (API Secret)}. Para más información sobre cómo conseguir estas claves consulte el Anexo \ref{anexo:TwitterKeys}.\\
 
 Conociendo desde donde se obtendrá la información y teniendo acceso a ella resta conocer cómo realizar la conexión. Para ello se selecciono utilizar \textit{Twitter4J}, una biblioteca no oficial de Java para las API de \textit{Twitter}. Para su funcionamiento sólo requiere del uso de Java en su version 5 o superior.\\
 
-El detalle de la implementación puede verse en la sección ~\ref{subsec:HU-c01Implementacion} en el Capítulo ~\ref{cap:Implementacion}.
+El detalle de la implementación puede verse en la sección \ref{subsec:HU-c01Implementacion} en el Capítulo \ref{cap:Implementacion}.
 
 \subsection{Historia de usuario HU-c02}
 \label{subsec:HU-c02}
 
-Esta historia de usuario guarda relación con la HU ~\ref{subsec:HU-v05}, menciona la necesidad de incrementar los términos de búsqueda para enriquecerla y abarcar la mayor información posible dado una consulta. Para realizar esto se consideró una práctica del procesamiento de lenguaje natural como es la denominada \textit{Query Expansion} (QE). Según lo descrito por \cite{IRQE} son técnicas comunes al utilizar QE la búsqueda de sinónimos (uso de diccionarios priviamente establecidos), diccionarios basados en la minería de los elementos previamente hayados, creación de diccionadios basados en la co-ocurrencia de términos, es decir, términos que suelen venir juntos o un vocabulario mantenido por editores humanos. Para este trabajo sólo se considerarán las dos primeras: Búsqueda por diccionario de sinónimos y una implementación que encuentra los términos más frecuentes dentro de los resultados de la búsqueda.\\
+Esta historia de usuario guarda relación con la HU \ref{subsec:HU-v05}, menciona la necesidad de incrementar los términos de búsqueda para enriquecerla y abarcar la mayor información posible dado una consulta. Para realizar esto se consideró una práctica del procesamiento de lenguaje natural como es la denominada \textit{Query Expansion} (QE). Según lo descrito por \cite{IRQE} son técnicas comunes al utilizar QE la búsqueda de sinónimos (uso de diccionarios priviamente establecidos), diccionarios basados en la minería de los elementos previamente hayados, creación de diccionadios basados en la co-ocurrencia de términos, es decir, términos que suelen venir juntos o un vocabulario mantenido por editores humanos. Para este trabajo sólo se considerarán las dos primeras: Búsqueda por diccionario de sinónimos y una implementación que encuentra los términos más frecuentes dentro de los resultados de la búsqueda.\\
 
 El diccionario de sinónimos es básicamente una bolsa de palabras asociadas a una semilla, es decir, dado un término de búsqueda agregar todos los términos asociados a el en el diccionario.\\
 
-En el caso de la búsqueda de términos frecuentes....
+En el caso de la búsqueda de términos frecuentes se sugirió integrar un proyecto \textit{storm} ya desarrollado el cuál tiene por finalidad la búsqueda de los denominados \textit{thrending topics}, es decir, aquellos términos de los que se realizan más menciones en un determinado instante, pero aquella implementación sólo consideraba los denominados \textit{hashtag}, un marcador de palabras concatenadas que inician por el caracter "\#". Siendo ese el caso el uso de esta topología storm no sería del todo util. En su lugar se desarrolló un contador de frecuencias para palabras con un funcionamiento similar, dicha implementación se aprecia en el algoritmo \ref{alg:TT}.\\
+
+\begin{algorithm}[H]\setstretch{1.5}
+	\begin{algorithmic}[numeracion_lineas]
+		\REQUIRE Estados $E=\{e_{1}, \dots, e_{n} \}$.
+		\ENSURE Terminos frecuentados $T=\{t_{1}, \dots, t_{10} \}$.
+		\STATE Lista de terminos: $l$.
+		\FOR{Estado: $e_{i}$}
+			\STATE Dividir estado por palabra.
+			\STATE Eliminar \textit{stopword} de las palabras.
+			\FOR{Palabra: $w_{i}$ en $e_{i}$}
+				\IF{ $w_{i}$ está en  $l_{i}$}
+					\STATE aumentar contador de $w_{i}$ en $l_{i}$.
+				\ELSE
+					\STATE agregar $w_{i}$ a $l_{i}$ con contador en 1.
+				\ENDIF		
+			\ENDFOR
+		\ENDFOR
+		\IF{$l_{i}$ tiene menos de 10 elementos}
+			\RETURN $l_{i}$
+		\ELSE
+			\RETURN los 10 primeros elementos de $l_{i}$.
+		\ENDIF
+	\end{algorithmic}
+	\caption{Algoritmos de términos recurrentes.}
+	\label{alg:TT}
+\end{algorithm}\vphantom\\
+
+Dado que el operador puede estar replicado no llegarán los mismos estados a todas las instancias del nodo, por ello este proceso se realizará de manera única para cada instancia en función de los estados que hayan llegado a él. El algoritmo \ref{alg:TT} agregará a los términos de búsqueda de cada instancia las palabras más frecuentes y, siguiendo el ejemplo de \textit{Twitter} con sus \textit{thrending topics} tendrá un máximo de diez nuevas palabras.
 
 \subsection{Historia de usuario HU-v00}
 \label{subsec:HU-v00}
@@ -102,12 +133,19 @@ Dado que una topología de Apache Storm debe ser ejecutada de una forma particul
 
 Teniendo en consideración la característica del desarrollo de esta aplicación como un proyecto ágil con un mínimo de personal para desarrollar se requería de un \textit{framework} que contribuyera a acelerar la construcción de la aplicación. Tras considerar las alternativas más conocidas como \textit{Spring}, \textit{Hibernate} o \textit{JSF} que tienen una curva de aprendizaje elevada, se optó por utilizar un cuarto \textit{framework} que aunque desconocido, prometía una simplicidad en su uso. \textit{Play Framework}, construido haciendo uso de Scala y Java permite construir aplicaciones ligeras (tamaño en disco), sin estado (no guarda configuraciones de una sesión para ser utilizadas luego) y por defecto RESTful, ideal para la comunicación entre aplicaciones. Éste \textit{framework} sigue el patrón de arquitectura Modelo-vista-controlador (MVC). Cuenta con un compilador en tiempo real (compila y realiza el despliegue de la aplicación cuando detecta un cambio en el código), lo que agiliza en gran medida el desarrollo, pues al automatizar este proceso mantiene la atención en lo que se está desarrollando.\\
 
-Para visualizar los puntos encontrados por el detector de necesidades se decidió utilizar la API de \textit{Google Maps} la que permite la colocación de los denominados 'marcadores' en un punto específico del mapa y asociar a ellos algún tipo de información.\\
+Para visualizar los puntos encontrados por el detector de necesidades se decidió utilizar la API de \textit{Google Maps} la que permite la colocación de los denominados 'marcadores' en un punto específico del mapa y asociar a ellos algún tipo de información.
 
 \subsection{Historia de usuario HU-v01}
 \label{subsec:HU-v01}
 
-Tal como se menciono con respecto a la historia de usuario anterior con el uso de \textit{Google Maps}, ésta historia se completará haciendo uso de los marcadores provistos por esta API.\\
+Tal como se menciono con respecto a la historia de usuario anterior con el uso de \textit{Google Maps}, ésta historia se completará haciendo uso de los marcadores provistos por esta API. Estos marcadores tendrán asociado un cuadro de texto donde se especificarán los siguientes campos:
+
+\begin{itemize}
+\item Contenido del \textit{tweet} que lo generó.
+\item Categoría asignada por el sistema
+\end{itemize}
+
+De esta manera y dado que la técnica de etiquetado que se utilizó no es del todo precisa permitirá al usuario final discriminar si se ha llegado a un resultado es del todo correcto.
 
 \subsection{Historia de usuario HU-v02}
 \label{subsec:HU-v02}
@@ -129,21 +167,21 @@ Para el segundo caso sólo se definieron dos reglas de funcionamiento las cuales
 \item Mostrar categoría: Para cada categoría mostrar sólo los elementos de aquella categoría. 
 \end{enumerate}
 
-Al combinar ambos tipos de filtros se tienen potencialmente seis modos de funcionamiento, pero considerando las categorías descritas en al sección ~\ref{subsec:categorias} ese número se expande a veintiún modos de funcionamiento del visualizador.\\
+Al combinar ambos tipos de filtros se tienen potencialmente seis modos de funcionamiento, pero considerando las categorías descritas en al sección \ref{subsec:categorias} ese número se expande a veintiún modos de funcionamiento del visualizador.\\
 
-El detalle sobre la implementación puede verse en la sección ~\ref{subsec:HU-v02Implementacion} en el Capítulo ~\ref{cap:Implementacion}.\\
+El detalle sobre la implementación puede verse en la sección \ref{subsec:HU-v02Implementacion} en el Capítulo \ref{cap:Implementacion}.
 
 \subsection{Historia de usuario HU-v03}
 \label{subsec:HU-v03}
 
-Se solicitó que la interfaz no se recargue cada vez que se produzca un cambio dado por un nuevo evento detectado o el modificación en el intervalo de visualización. Para ello se utilizaron las facultados de Javascript y AJAX capturando los cambios en la línea temporal, descita en la HU-v04, y verificando la nueva información agregada.
+Se solicitó que la interfaz no se recargue cada vez que se produzca un cambio dado por un nuevo evento detectado o el modificación en el intervalo de visualización. Para ello se utilizaron las facultados de Javascript y AJAX capturando los cambios en la línea temporal, descrita en la sección \ref{subsec:HU-v04} y detallada en su implementación en \ref{subsec:HU-v04Implementacion}, y actualizando a la nueva información agregada.
 
 \subsection{Historia de usuario HU-v04}
 \label{subsec:HU-v04}
 
 Al hacer referencia a información pasada se infiere la necesidad de la implementación de un sistema de persistencia de datos.\\
 
-Para ello se consideraron los principales sistemas de bases de datos utilizados y conocidos por el autor, dentro de los cuales se encontraban herramientas como: MySQL, PostgreSQL, SQL Server, MongoDB, entre otras. Dadas las características y las condiciones con las cuales operará el sistema de detección se requiere de un DBMS con rápido tiempo de respuesta en operaciones lectura/escritura; la desición se tomó en base a los datos que se manejaran, pues no se apreció necesidad de implementar una base de datos relacional (véase sección \cite{subsec:BaseDeDatos}), de esta forma y teniendo en cuenta los resultados presentados en pruebas empíricas realizadas por \cite{MongoPerformance} en las cuales mostró que el tiempo de respuesta (en operaciones de lectura) es significativamente menor en MongoDB que en dos de los DBMS más conocidos como MySQL y PostgreSQL. Lo anterior, sumado al hecho de la capacidad de escalar de MongoDB reportada en fuentes oficiales o por diversos desarrolladores como \cite{MongoDBScalability} que han compartido sus experiencias en la \textit{web}, llevaron a decidir que mongo debiera ser el sistema de gestión de base de datos que se utilizase en el sistema.\\
+Para ello se consideraron los principales sistemas de bases de datos utilizados y conocidos por el autor, dentro de los cuales se encontraban herramientas como: MySQL, PostgreSQL, SQL Server, MongoDB, entre otras. Dadas las características y las condiciones con las cuales operará el sistema de detección se requiere de un DBMS con rápido tiempo de respuesta en operaciones lectura/escritura; la desición se tomó en base a los datos que se manejaran, pues no se apreció necesidad de implementar una base de datos relacional, de esta forma y teniendo en cuenta los resultados presentados en pruebas empíricas realizadas por \cite{MongoPerformance} en las cuales mostró que el tiempo de respuesta (en operaciones de lectura) es significativamente menor en MongoDB que en dos de los DBMS más conocidos como MySQL y PostgreSQL. Lo anterior, sumado al hecho de la capacidad de escalar de MongoDB reportada en fuentes oficiales o por diversos desarrolladores como \cite{MongoDBScalability} que han compartido sus experiencias en la \textit{web}, llevaron a decidir que mongo debiera ser el sistema de gestión de base de datos que se utilizase en el sistema.\\
 
 Volviendo al punto; la necesidad de visualizar eventos pasados que involucró la participación de un sistema para persistir los datos, habiendo resuelto lo anterior la siguiente problemática se presenta como ¿qué datos han de guardarse? Según la definición de la historia en la que se señalan "eventos pasados dentro de un intervalo de tiempo", se infiera que ha de guardarse tanto el contenido visible del dato, la clasificación que se le asignó y la fecha en que se identificó, para ello y dado que se seleccionó MongoDB, y aunque no es necesario, se especificó un esquema para los documentos de la colección, pero ¿qué colección? dados los datos que se almacenarán sólo restaría tener la información correspondiente a la ubicación, por lo que el esquema se definió como se presenta en la Figura ~\nameref{fig:esquemaMarker1} correspondiente a la colección "Markers".
 
@@ -155,12 +193,12 @@ Volviendo al punto; la necesidad de visualizar eventos pasados que involucró la
 	\label{fig:esquemaMarker1}
 \end{figure}
 
-Parte de esta historia corresponde a la selección de un intervalo, los detalles de la implementación y la desición del diseño definitivo adoptado en la construcción se abordará la sección ~\ref{subsec:HU-v04Implementacion}.
+Parte de esta historia corresponde a la selección de un intervalo, los detalles de la implementación y la desición del diseño definitivo adoptado en la construcción se abordará la sección \ref{subsec:HU-v04Implementacion}.
 
 \subsection{Historia de usuario HU-v05}
 \label{subsec:HU-v05}
 
-\textit{Twitter4J}, la herremienta que se mencionó en la sección ~\ref{subsec:HU-v01} como aquella que permitiría obtener el flujo de información desde \textit{Twitter} implementa una forma de filtrado mediante el uso de palabras clave, pero posee la limitante al momento de modificar la búsqueda, deben instanciarse nuevamente los objetos con los cuales se realiza la conexión a la API de \textit{Twitter}, eso se traduce en tiempo de procesamiento perdido, para solucionar este inconveniente se decidió implementar un operador, adicional a los apreciables en la sección ~\ref{subsec:definicionOperadores}, el cual estará encargado de realizar el filtrado de acuerdo a términos y llevar a cabo la operación descrita en la sección ~\ref{subsec:HU-c02} referente a la expansión de la consulta, pero siendo un operador significa que sea paralelizado y no exista una sola instancia ¿Cómo comunicar el estado de una consulta y que todos los operadores utilicen el mismo filtro?.\\
+\textit{Twitter4J}, la herremienta que se mencionó en la sección \ref{subsec:HU-v01} como aquella que permitiría obtener el flujo de información desde \textit{Twitter} implementa una forma de filtrado mediante el uso de palabras clave, pero posee la limitante al momento de modificar la búsqueda, deben instanciarse nuevamente los objetos con los cuales se realiza la conexión a la API de \textit{Twitter}, eso se traduce en tiempo de procesamiento perdido, para solucionar este inconveniente se decidió implementar un operador, descrito en la sección \ref{subsec:operadores}, el cual estará encargado de realizar el filtrado de acuerdo a términos y llevar a cabo la operación descrita en la sección \ref{subsec:HU-c02} referente a la expansión de la consulta, pero siendo un operador significa que sea paralelizado y no exista una sola instancia ¿Cómo comunicar el estado de una consulta y que todos los operadores utilicen el mismo filtro?.\\
 
 Nuevamente la respuesta consistió en recurrir a la base de datos; almacenar la consulta y asignar un estado para controlar el comportamiento del operador. Así el esquema en la base de datos queda tal y como se presenta en la Figura ~\nameref{fig:esquemaQuery}, documento de la colección "Queries".
 
@@ -174,15 +212,434 @@ Nuevamente la respuesta consistió en recurrir a la base de datos; almacenar la 
 
 Donde la propiedad "estado" puede tomar dos valores: "actual" o "antiguo", reflejan si una consulta se está llevando a cabo o no. Estos valores son asignados por la aplicación responsable de la interfaz la responsable de recibir los términos de búsqueda por parte del usuario.
 
-La implementación tanto de este operador como de las soluciones descritas en la sección ~\ref{subsec:HU-c02} pueden verse en la sección ~\ref{subsec:HU-c02Implementacion} y ~\ref{subsec:HU-v05Implementacion}.
+La implementación tanto de este operador como de las soluciones descritas en la sección \ref{subsec:HU-c02} pueden verse en la sección \ref{subsec:HU-c02Implementacion} y \ref{subsec:HU-v05Implementacion}.
+
+\subsection{Historia de usuario HU-v06}
+\label{subsec:HU-v06}
+
+Las categorías mencionadas a continuación son descritas en la sección \ref{subsec:categorias}. Los iconos correspondientes a las categorías que soporta el programa se definieron mediante la combinación de dos imágenes para cada categoría: un marcador de mapa, similar a los definidos en la API de Google Maps y una que sugiriera al usuario el tipo al cual se refería. Los diseños finales son presentados en las figuras de la \ref{fig:agua} a la \ref{fig:seguridad}.\\
+
+\begin{figure}[!htb]
+	\minipage{0.32\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/categorias/agua.png}
+	\caption[Icono categoría agua.]{Icono categoría agua.}
+	\label{fig:agua}
+	\endminipage\hfill
+	\minipage{0.32\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/categorias/alimento.png}
+	\caption[Icono categoría alimento.]{Icono categoría alimento.}
+	\label{fig:alimento}
+	\endminipage\hfill
+	\minipage{0.32\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/categorias/electricidad.png}
+	\caption[Icono categoría electricidad.]{Icono electricidad agua.}
+	\label{fig:electricidad}
+	\endminipage\hfill
+\end{figure}
+
+\begin{figure}[!htb]
+	\minipage{0.32\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/categorias/comunicacion.png}
+	\caption[Icono categoría comunicacion.]{Icono categoría comunicacion.}
+	\label{fig:comunicacion}	
+	\endminipage\hfill
+	\minipage{0.32\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/categorias/personas.png}
+	\caption[Icono categoría personas.]{Icono categoría personas.}
+	\label{fig:personas}
+	\endminipage\hfill
+	\minipage{0.32\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/categorias/seguridad.png}
+	\caption[Icono categoría seguridad.]{Icono categoría seguridad.}
+	\label{fig:seguridad}
+	\endminipage\hfill
+\end{figure}
+
+Se consideró apropiado, además, diseñar un icono que representara la densidad de marcadores al momento de realizar el agrupamiento por categorías descrito en la sección \ref{subsec:HU-v02} para ello y siguiendo la combinación de colores descrita en la sección \ref{subsec:HU-v02Implementacion} se prepararon tres iconos adicionales a cada categoría como pueden verse en las figuras \ref{fig:aguaS}. a la \ref{fig:seguridadL}.\\
+
+\begin{figure}[!htb]
+	\minipage{0.32\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/categorias/aguaS.png}
+	\caption[Icono categoría agua para cluster pequeño.]{Icono categoría agua para cluster pequeño.}
+	\label{fig:aguaS}
+	\endminipage\hfill
+	\minipage{0.32\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/categorias/aguaM.png}
+	\caption[Icono categoría agua para cluster medio.]{Icono categoría agua para cluster medio.}
+	\label{fig:aguaM}
+	\endminipage\hfill
+	\minipage{0.32\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/categorias/aguaL.png}
+	\caption[Icono categoría agua para cluster grande.]{Icono categoría agua para cluster grande.}
+	\label{fig:aguaL}
+	\endminipage\hfill
+\end{figure}
+
+\begin{figure}[!htb]
+	\minipage{0.32\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/categorias/alimentoS.png}
+	\caption[Icono categoría alimento para cluster pequeño.]{Icono categoría alimento para cluster pequeño.}
+	\label{fig:alimentoS}
+	\endminipage\hfill
+	\minipage{0.32\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/categorias/alimentoM.png}
+	\caption[Icono categoría alimento para cluster medio.]{Icono categoría alimento para cluster medio.}
+	\label{fig:alimentoM}
+	\endminipage\hfill
+	\minipage{0.32\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/categorias/alimentoL.png}
+	\caption[Icono categoría alimento para cluster grande.]{Icono categoría alimento para cluster grande.}
+	\label{fig:alimentoL}
+	\endminipage\hfill
+\end{figure}
+
+\begin{figure}[!htb]
+	\minipage{0.32\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/categorias/electricidadS.png}
+	\caption[Icono categoría electricidad para cluster pequeño.]{Icono categoría electricidad para cluster pequeño.}
+	\label{fig:electricidadS}
+	\endminipage\hfill
+	\minipage{0.32\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/categorias/electricidadM.png}
+	\caption[Icono categoría electricidad para cluster medio.]{Icono categoría electricidad para cluster medio.}
+	\label{fig:electricidadM}
+	\endminipage\hfill
+	\minipage{0.32\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/categorias/electricidadL.png}
+	\caption[Icono categoría electricidad para cluster grande.]{Icono categoría electricidad para cluster grande.}
+	\label{fig:electricidadÑ}
+	\endminipage\hfill
+\end{figure}
+
+\begin{figure}[!htb]
+	\minipage{0.32\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/categorias/comunicacionS.png}
+	\caption[Icono categoría comunicación para cluster pequeño.]{Icono categoría comunicación para cluster pequeño.}
+	\label{fig:comunicacionS}
+	\endminipage\hfill
+	\minipage{0.32\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/categorias/comunicacionM.png}
+	\caption[Icono categoría comunicación para cluster medio.]{Icono categoría comunicación para cluster medio.}
+	\label{fig:comunicacionM}
+	\endminipage\hfill
+	\minipage{0.32\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/categorias/comunicacionL.png}
+	\caption[Icono categoría comunicación para cluster grande.]{Icono categoría comunicación para cluster grande.}
+	\label{fig:comunicacionL}
+	\endminipage\hfill
+\end{figure}
+
+\begin{figure}[!htb]
+	\minipage{0.32\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/categorias/personasS.png}
+	\caption[Icono categoría personas para cluster pequeño.]{Icono categoría personas para cluster pequeño.}
+	\label{fig:personasS}
+	\endminipage\hfill
+	\minipage{0.32\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/categorias/personasM.png}
+	\caption[Icono categoría personas para cluster medio.]{Icono categoría personas para cluster medio.}
+	\label{fig:personasM}
+	\endminipage\hfill
+	\minipage{0.32\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/categorias/personasL.png}
+	\caption[Icono categoría personas para cluster grande.]{Icono categoría personas para cluster grande.}
+	\label{fig:personasL}
+	\endminipage\hfill
+\end{figure}
+
+\begin{figure}[!htb]
+	\minipage{0.32\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/categorias/seguridadS.png}
+	\caption[Icono categoría seguridad para cluster pequeño.]{Icono categoría seguridad para cluster pequeño.}
+	\label{fig:seguridadS}
+	\endminipage\hfill
+	\minipage{0.32\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/categorias/seguridadM.png}
+	\caption[Icono categoría seguridad para cluster medio.]{Icono categoría seguridad para cluster medio.}
+	\label{fig:seguridadM}
+	\endminipage\hfill
+	\minipage{0.32\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/categorias/seguridadL.png}
+	\caption[Icono categoría seguridad para cluster grande.]{Icono categoría seguridad para cluster grande.}
+	\label{fig:seguridadL}
+	\endminipage\hfill
+\end{figure}
+
+Estos iconos ocuparán el lugar del marcador por defecto de Google Maps y de los iconos correspondientes a los \textit{clusters} de marcadores. Para mas detalle refiérase a la sección \ref{subsec:HU-v06Implementacion}.
+
+\subsection{Historia de usuario HU-v07}
+\label{subsec:HU-v07}
+
+Específicamente se solicitaron tres tipos de estadísticasa ser mostradas por consulta, estas se definen a continuación:
+
+\begin{enumerate}
+\item Cantidad de eventos detectados, es decir, \textit{tweets} que fueron clasificados.
+\item Cantidad de usuarios distintos identificados en aquellos eventos.
+\item Cantidad total de \textit{tweets} que han pasado por el sistema desde el inicio de la consulta actual.
+\end{enumerate}
+
+Para cumplir lo solicitado hacía falta añadir elementos no considerados en la base de datos; hace falta conocer al usuario y contar los \textit{tweets} ingresados desde \textit{Twitter4J}.\\
+
+Para completar esta historia se realizaron modificaciones al esquema previamente definido en la sección \ref{subsec:HU-v04}, este de por si era suficiente para cumplir con la estadística número uno, pero incapáz de realizar las otras dos. Para la segunda estadística se consideró que bastaba con guardar al usuario junto con la colección de marcadores. De acuerdo a \cite{TwitterAgreement} en su sección F. \textit{Be a Good Partner to Twitter}, se insta a los desarrolladores que almacenen contenido \textit{offline} de \textit{Twitter}, a almacenar sólo el ID del usuario o del \textit{tweet}, por ello y siguiendo estos lineamientos se agregará el campo "userID" al esquema marcadores, pasando a quedar como se aprecia en la figura \ref{fig:esquemaMarker2}.
+
+\begin{figure}[H]
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=0.8]{images/Marker2.png}
+	\caption[Ejemplo de documento en la colección Markers.]{Ejemplo de documento en la colección Markers.}
+	\label{fig:esquemaMarker2}
+\end{figure}
+
+Para la tercera estadística la colección de marcadores no sería útil, pues no reflejaría la cantidad de tweets procesados, para ello sería necesario implementar una tercera colección de documentos en la base de datos y almacenarlos antes de la aplicación de cualquier tipo de filtro. Esta colección tendrá el esquema presente en la figura \ref{fig:esquemaTweet}.
+
+\begin{figure}[H]
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=0.8]{images/status.png}
+	\caption[Ejemplo de documento en la colección Status.]{Ejemplo de documento en la colección Status.}
+	\label{fig:esquemaTweet}
+\end{figure}
+
+Al almacenar sólo el contenido del texto no viola las políticas de uso descritas de \textit{Twitter}, sólo es necesario la fecha para la estadística realizar la estadística, pero resulta útil almacenar el contenido para realizar la expansión de la consulta descrita en la sección \ref{HU-c02} y no aumentar la latencia almacenando el ID y realizando una nueva consulta a la API de \textit{Twitter}.\\
+
+En general la obtención de estas estadísticas se dará utilizando el algoritmo \ref{alg:estadisticas} descrito a continuación.\\
+
+\begin{algorithm}[H]\setstretch{1.5}
+	\begin{algorithmic}[numeracion_lineas]
+		\REQUIRE Colección $c$ 
+		\REQUIRE Fecha de la consulta actual $f$ 
+		\ENSURE Contador de eventos $counter$  
+		\STATE $counter = 0$
+		\FOR{Documento $d_{i}$ en la colección $c$}
+			\IF{ fecha de $d_{i}$ es posterior a $f$}
+				\STATE $counter = counter + 1$
+			\ENDIF	
+		\ENDFOR
+		\RETURN $counter$
+	\end{algorithmic}
+	\caption{Algoritmos de generación de primera y tercera estadística.}
+	\label{alg:estadisticas}
+\end{algorithm}\vphantom\\
+
+Este algoritmo, como se mencionó, es de uso general y permitirá cumplir tanto la primera como la tercera estadística, para el caso de la segunda se requiere una modificación, pues se solicitó conocer los usuarios diferentes, el algoritmo \ref{alg:estadisticas2} presenta el algoritmo modificado para la segunda estadística.\\
+
+\begin{algorithm}[H]\setstretch{1.5}
+	\begin{algorithmic}[numeracion_lineas]
+		\REQUIRE Colección $c$ 
+		\REQUIRE Fecha de la consulta actual $f$ 
+		\ENSURE Lista de usuarios vacía $list$  
+		\FOR{Documento $d_{i}$ en la colección $c$}
+			\IF{ fecha de $d_{i}$ es posterior a $f$}
+				\IF{ID del usuario de $d_{i}$ no está en $list$ o $list$ es vacía}
+					\STATE Añadir $d_{i}$ a $list$
+				\ENDIF
+			\ENDIF	
+		\ENDFOR
+		\RETURN Cantidad de elementos en $list$
+	\end{algorithmic}
+	\caption{Algoritmos de generación de segunda estadísticas.}
+	\label{alg:estadisticas2}
+\end{algorithm}\vphantom\\
+
+La implementación de estos algoritmos se detalla en la sección \ref{subsec:HU-c07Implementacion} correspondiente a la implementación de esta historia de usuario en el sistema.
+
+\subsection{Historia de usuario HU-v08}
+\label{subsec:HU-v08}
+
+\textbf{TO BE DETAILED}
+
+\subsection{Operadores}
+\label{subsec:operadores}
+
+Como se mencionó en la sección \ref{subsec:HU-c00} la historia de usuario ahí cubierta se encuentra incompleta; Sólo se describió con qué herramienta se apoyará el procesamiento del flujo de información generada al tratarse de un asunto de caracter nacional, pero no se ha definido cómo se capturarán aquellas necesidades.\\
+
+La entrada del sistema se definió en la \ref{subsec:HU-c01} como estados procedentes del flujo de estados desde \textit{Twitter}, pero no se ha hecho mención a la función que tendrá el sistema sobre sobre estos.\\
+
+Tal y como se mencionó en el capítulo \ref{cap:MarcTeorico} una topología \textit{storm} funciona estableciendo un grafo donde cada nodo corresponde a un operador o \textit{bolt}, la figura \ref{fig:stormBeLike} muestra como los \textit{bolt} se unen con el propósito de procesar las entradas entregadas por los \textit{spout} que, en este caso y tal como se señaló en el sección \ref{subsec:HU-c01} corresponderá a aquel que recibe la información desde el \textit{stream} de \textit{Twitter}, pero ¿cuál será la función de cada uno de los \textit{bolts}?\\
+
+La pregunta anteriormente planteada abre un nuevo abanico de problemas, para cada uno de los cuales se desarrollará un operador y éstos, trabajando en conjunto, producirán la información necesaria para ser almacenada como un documento 'marcador' en la colección 'Markers' descrita en la figura \ref{fig:esquemaMarker2}.
+
+\subsubsection{Operador filtro de idioma}
+\label{subsubsec:1op}
+
+La primera de las problemáticas a tratar es el idioma. De acuerdo a \cite{TwitterActiveUsers}, existen actualmente 310 millones de usuarios activos en \textit{Twitter} (a enero del 2016), de los cuales 65 millones pertenecen a los Estados Unidos según \cite{TwitterStats1}, y se estima que este año, en latino américa, Brasil alcance los 15 millones de usuarios según \cite{TwitterStats2}, sin considerar paises árabes o asiáticos ya se tiene cerca del 30\% de los usuarios activos de \textit{Twitter} hablan, en general, idiomas distintos al Español. Dado que el sistema está pensado para operar dentro de Chile donde el idioma oficial es el Español hace necesario que uno de los operadores, el primero, se el filtrado por idioma, ¿Por qué el primero? Para no realizar procesamiento innecesario con datos que no se utilizarán.\\
+
+\cite{languageDetector} desarrolló, haciendo uso de un clasificador \textit{Naïve Bayes} un módulo escrito en Java el cual es capaz de detectar con éxito 49 idiomas dentro del texto con un 99.8\% de precisión y fue la primera opción para resolver el problema del idioma, pero al analizar el cuerpo de un estado de \textit{Twitter} se encontró que uno de sus campos, precisamente, correspondía al idioma en el que estaba escrito el \textit{tweet}, por ello, y con objeto de no realizar cálculos innecesarios, se optó por utilizar este campo. De esta manera el primer operador es completado, implementado en la sección \ref{subsec:operadoresImplementacion}, y sólo dejará continuar en la línea de procesamiento aquellos estados escritos en español.
+
+\subsubsection{Operador filtro de consultas}
+\label{subsubsec:2op}
+
+El segundo problema corresponde a que aunque se tengan los mensajes en el idioma correcto existen mensajes que el usuario desea que sean priorizados, para ello, y como se definió en la sección \ref{subsec:HU-v05}, son entregados términos de búsqueda. Es así como el segundo nivel de operadores corresponderá a aplicar los filtros de búsqueda ingresados por el usuario, si existiesen, aplicando el algoritmo descrito anteriormente y discriminando aquellos estados que contengan las palabras buscadas.
+
+\subsubsection{Operador normalizador de texto}
+\label{subsubsec:3op}
+
+El tercer problema es inherente a \textit{Twitter}: En esta red social es común referenciar un estado a un determinado tema, he ahí el uso de los conocidos \textit{Hashtag} que, como se mencionó en la sección \ref{subsec:HU-c02} corresponden a palabras concatenadas antecedidas por el caracter \#. Otro problema común corresponde a la mención de usuarios, ésta corresponde a un llamado al nombre de usuario dentro de la aplicación, antecedida por el caracter \@, usualmente usada para el envío de mensajes entre pares. Diversos autores, entre ellos, \cite{NLPaccuracy}, \cite{NLPaccuracy1} y \cite{NLPaccuracy2}, han señalado que la existencia de estos elementos significan una disminución en la precisión de los elementos descritos en la sección \ref{subsec:clasificacion}. Por ello él tercer operador corresponderá a normalizador de texto, el cual reemplazará menciones a usuarios, \textit{hashtags} y URLs, todas ellas variables, por palabras constantes, el reemplazo a realizarse se muestra en la tabla \ref{tab:reemplazosDeEntidades}. Esto se fundamenta en los resultados descritos en el capítulo \ref{cap:experimentos}.\\
+
+\begin{table}[H]
+\centering
+\caption{Reemplazo de entidades en texto}
+\label{tab:reemplazosDeEntidades}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Entidad} & \textbf{Reemplazo} \\ \hline
+@usuario         & USUARIO            \\ \hline
+\#hashtag        & HASHTAG            \\ \hline
+http://var.foo/  & URL                \\ \hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Operador geolocalizador}
+\label{subsubsec:4op}
+
+El cuarto y mayor problema presentado tiene relación, principalmente, con la historia HU-v01. Si bien se mencionó cómo se realizaría la visualización, no se señaló cómo es que se obtendrían tanto la coordenadas geográficas, latitud y longitud, para ubicar geográficamente un evento.\\
+
+Ha sido señalado por \cite{ChatoSurvey} que menos del 1\% de los \textit{tweets} contienen datos en sus campos correspondientes a geolocalización. En un experimento (véase anexo \ref{anexo:xcentajeGeo}) realizado utilizando la herramienta \textit{RapidMiner} se obtuvo una muestra de 67.789 \textit{tweets} directamente desde el \textit{stream} sin utilizar filtros de búsqueda, de esos \textit{tweets} 67.475 no contaban con los datos correspondientes a la ubicación geográfica, es decir, el 0.46\% de los datos de aquella muestra cuentan con la información requerida, lo que hace creer que lo presentado por los autores, antes mencionados, está en lo correcto.\\
+
+Siendo la geolocalización un elemento de suma importancia para el funcionamiento de la aplicación, se ha de intentar obtener este dato de alguna forma. Así es como surge la posibilidad de usar el contenido del \textit{tweet} para obtener la ubicación, para ello se preparó un diccionario con las comunas del país y sus coordenadas geográficas, \cite{ubicacionesChile} y se diseñó el algoritmo \ref{alg:geolocalizacion}. De esta manera existe una aproximación para detectar la ubicación a la que un \textit{tweet} hace referencia.\\
 
 
+\begin{algorithm}[H]\setstretch{1.5}
+	\begin{algorithmic}[numeracion_lineas]
+		\REQUIRE Lista de ciudades $C=\{c_{1}, \dots, c_{n} \}$.
+		\REQUIRE Tweet $t$.
+		\ENSURE Coordenadas geográficas $P=\{latitud, longitud\}$.
+		\IF{$t$ está geolocalizado}
+			\IF{Está dentro del territorio chileno}
+				\RETURN Coordenadas del $t$.
+			\ELSE
+				\RETURN Fuera de Chile.
+			\ENDIF
+		\ELSE
+			\IF{El texto de $t$ contiene elementos presentes en $C$}
+				\RETURN Coordenadas de $c_{i}$.
+			\ELSE
+				\RETURN No geolocalizable.
+			\ENDIF
+		\ENDIF
+	\end{algorithmic}
+	\caption{Algoritmos de ubicación geoográfica.}
+	\label{alg:geolocalizacion}
+\end{algorithm}\vphantom\\
+
+Para detectar cuándo una ubicación está en Chile, se generó un cuadro en el mapa donde se delimita todo el territorio Chileno, incluyendo Isla de Pascua.\\
+
+Haciendo uso del algoritmo desarrollado es posible aumentar la cantidad de elementos que continuarán en la línea de procesamiento. En el capítulo \ref{cap:experimentos} realiza una evaluación sobre la efectividad del operador.\\
+
+Los operadores descritos en las secciones \ref{subsubsec:5op} y \ref{subsubsec:6op} tienen relación con la labor del señalado en \ref{subsubsec:7op}, las razones que llevan a la construcción de estos tres serán expuestan en la sección \ref{subsec:clasificacion}, mientras tanto, al igual que los operadores anteriores se detallará el cómo fueron diseñados.
+
+\subsubsection{Operador removedor de \textit{stopword}}
+\label{subsubsec:5op}
+
+Éste operador hará uso de una lista de palabras denominadas \textit{stopwords} o palabras vacías, éstas corresponden a palabras sin significado, como artículos, pronombres, preposiciones, etcétera. Éstas palabras serán eliminadas del texto que se está procesando, para ello se utilizará el algoritmo presentado a continuación.\\
+
+\begin{algorithm}[H]\setstretch{1.5}
+	\begin{algorithmic}[numeracion_lineas]
+		\REQUIRE Lista de \textit{stopwords} $S=\{s_{1}, \dots, s_{n} \}$.
+		\REQUIRE Texto $T$.
+		\ENSURE Texto $T'$.
+		\STATE $T'$ = $T$
+		\FOR{cada palabra de $T$, $t_{i}$}
+			\IF{$t_{i}$ está contenida en $S$}
+			\STATE $T'$ = $T'$ - $t_{i}$. 
+			\ENDIF
+		\ENDFOR
+		\RETURN $T'$
+	\end{algorithmic}
+	\caption{Algoritmos de eliminiación de \textit{stopwords}.}
+	\label{alg:stopwords}
+\end{algorithm}\vphantom\\
+
+\subsubsection{Operador raíz de texto}
+\label{subsubsec:6op}
+
+Este operador hace uso del algoritmo de \cite{Porter}, para extraer prefijos y sufijos de palabras y llevarlas a una raíz común, \cite{StemmingLema}, son ejemplos de este proceso, denominada \textit{stemming}, las palabras presentadas en la tabla \ref{tab:ejstemming}
+
+\begin{table}[H]
+\centering
+\caption{Ejemplo de \textit{stemming} para la palabra 'presentar'}
+\label{tab:ejstemming}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Palabra} & \textbf{Combinaciones de Sufijos} \\ \hline
+Presentarla      & arla                              \\ \hline
+Presentarlas     & arlas                             \\ \hline
+Presentarle      & arle                              \\ \hline
+Presentarles     & arles                             \\ \hline
+Presentarlo      & arlo                              \\ \hline
+Presentarlos     & arlos                             \\ \hline
+Presentarse      & arse                              \\ \hline
+Presentase       & ase                               \\ \hline
+Presentásemos    & ásemos                            \\ \hline
+Presente         & e                                 \\ \hline
+Presentémonos    & émonos                            \\ \hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Operador etiquetador}
+\label{subsubsec:7op}
+
+Este operador hace uso del clasificador generado mediante las técnicas descritas en la sección \ref{subsec:categorias}, para etiquetar el texto de acuerdo a la categoría a la que corresponda. Una vez realizado este proceso se cuenta con todos los datos necesarios para generar completamente un documento de la colección 'Markers', presentada en la figura \ref{fig:esquemaMarker2}.
+
+\subsubsection{Operador persistencia}
+\label{subsubsec:8op}
+
+Este operador se encargará de conectarse a la base de datos y almacenar el nuevo marcador. Para ello hará uso de \textit{Jongo} para realizar la transformación, desde objeto Java a documento BSON para almacenar en MongoDB.
+
+\subsection{Clasificación}
+\label{subsec:clasificacion}
 
 
+\subsection{Categorías de clasificación}
+\label{subsec:categorias}
 
-
-
-
-
-
-
+\section{Implementación}
+\label{sec:implementacion}
