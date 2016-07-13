@@ -3,12 +3,12 @@
 
 Con el sistema construido resta someterlo a evaluaciones. En especial se evaluará el sistema de detección de necesidades, pues es el corazón del sistema y ha de operar con un flujo de datos constante.
 
-\section{Topología y paralelismo}
+\section{Topología y replicación}
 \label{sec:topYPar}
 
 En la sección \ref{subsec:topologiaSistema} se explicitó cómo estarían dispuestos los operadores en la topología, pero se ha de recordar que el sistema está pensado para operar en casos de emergencia y ha de ser capáz de escalar de acuerdo a las necesidades de la situación.\\
 
-\textit{Apache Storm} es capaz de realizar lo anterior, pero se ha de especificar el máximo número de nodos que tendrá un nivel de operadores. Para explicar lo anterior se utilizarán las figuras \ref{fig:Implementacion1} y \ref{fig:Implementacion1p2} que muestran la implementación del la topología y una esquematización de cómo funcionaría en la peor situación, es decir, cuando el sistema determine que el paralelismo debería ser máximo.
+\textit{Apache Storm} es capaz de realizar lo anterior, pero se ha de especificar el máximo número de nodos que tendrá un nivel de operadores. Para explicar lo anterior se utilizarán las figuras \ref{fig:Implementacion1} y \ref{fig:Implementacion1p2} que muestran la implementación del la topología y una esquematización de cómo funcionaría en la peor situación, es decir, cuando el sistema determine que el nivel de replicación debería ser máximo.
 
 \begin{figure}[H]
 	\centering
