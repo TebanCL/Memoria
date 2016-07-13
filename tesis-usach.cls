@@ -482,7 +482,7 @@
 				\hspace{6.8cm}
 				{\normalsize
 				\begin{tabular}{p{5.5cm}}
-					Tesis de grado presentada en conformidad a los requisitos \mbox{para obtener el grado de} \@grado
+					Tesis de grado presentada en conformidad a los requisitos \mbox{para obtener el título de} \@grado
 				\end{tabular}
 				}
 			\end{flushleft}
@@ -509,7 +509,7 @@
 		\vfill\par
         \begin{flushleft}
 			\copyright\ 
-			\@autor \; - \@annoexamen \\ 
+			\@autor \;, \@annoexamen \\ 
 			\includegraphics[height=12pt]{images/licences/cc_by.png}
 				~$\bullet$~~ Algunos derechos reservados. Esta obra est\'a bajo una Licencia Creative Commons Atribuci\'on-Chile 3.0. Sus condiciones de uso pueden ser revisadas en: \url{http://creativecommons.org/licenses/by/3.0/cl/}.      
         \end{flushleft}

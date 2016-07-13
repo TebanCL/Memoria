@@ -267,6 +267,48 @@ La representacíón del proceso puede verse en la Figura ~\ref{fig:procesoKDD}.
 
 	Uno de los puntos fuertes que tiene este sistema es que al crear una topología donde se instancian \textit{Bolts} y \textit{Spouts}, Storm se encarga de escalar el sistema distribuyendo los elementos en sus componentes.
 
+	Al trabajar con \textit{Apache Storm}, como ya se ha descrito, se han de construir dos elementos: \textit{spout} y \textit{bolt}. Éstos elementos se construyen realizando heredando desde desde \textit{BaseRichSpout}, para el caso de \textit{spout} e implementando \textit{IRichBolt} para los \textit{bolt}. La descripción de los elementos de éstas clases se presentan en las secciones \ref{subsubsec:Spout} y \ref{subsubsec:Bolt}.
+
+	\subsubsection{Spout}
+	\label{subsubsec:Spout}
+
+	\begin{figure}[H]
+		\centering
+		\captionsetup{justification=centering}
+		\includegraphics[scale=0.8]{images/SpoutBase.png}
+		\caption[Construcción de un Spout.]{Construcción de un Spout.}
+		\label{fig:spoutbase}
+	\end{figure}
+
+	En la figura \ref{fig:spoutbase} muestra la base para la implementación de un \textit{spout}. Cuenta con tres métodos:
+
+	\begin{itemize}
+	\item \textit{declareOutputFields}: declara nombres para las etiquetas que tendrá el objeto emitido.
+	\item \textit{open}: Inicializa todos los elementos utilizados en el spout.
+	\item \textit{nextTuple}: es llamado desde storm al recibir una nueva tupla para realizar una tarea.
+	\end{itemize}	
+
+	\subsubsection{Bolt}
+	\label{subsubsec:Bolt}
+
+	\begin{figure}[H]
+		\centering
+		\captionsetup{justification=centering}
+		\includegraphics[scale=0.8]{images/BoltBase.png}
+		\caption[Construcción de un Bolt.]{Construcción de un Bolt.}
+		\label{fig:boltbase}
+	\end{figure}
+
+	La figura \ref{fig:boltbase} presenta la base para la implementación de un \textit{bolt}. Sus métodos se explican a continuación:
+
+	\begin{itemize}
+	\item \textit{prepare}: Similar al método \textit{open} para los \textit{spout}, realiza la misma función.
+	\item \textit{execute}: Cumple la misma función que el método \textit{nextTuple}.
+	\item \textit{cleanup}: Al finalizar una topología se llama este método para cerrar el \textit{bolt}.
+	\item \textit{declareOutputFields}: declara nombres para las etiquetas que tendrá el objeto emitido.
+	\item \textit{getComponentConfiguration}: Usado al querer cambiar una configuración del sistema.
+	\end{itemize}
+
 	\subsubsection{Topología}
 	\label{subsubsec:topologia}
 
@@ -297,7 +339,7 @@ La representacíón del proceso puede verse en la Figura ~\ref{fig:procesoKDD}.
 	Se refiere a la forma en la que se van a compartir los datos entre los componentes. Como modelo de datos, Storm utiliza tuplas que son listas de valores con un nombre específico. El valor puede ser cualquier tipo, para ello se ha de implementar un serializador. \cite{Storm}.\\
 
 	\begin{itemize}
-	\item Shuffle grouping: Storm decide de forma aleatoria la tarea a la que se va a enviar la tupla, de manera que la distribución sea equivalente entre todos los nodos.
+	\item Shuffle grouping: Storm decide de forma \textit{round robin} la tarea a la que se va a enviar la tupla, de manera que la distribución sea equivalente entre todos los nodos.
 	\item Fields gruoping: Se agrupan los \textit{streams} por un determinado campo de manera que se distribuyen los valores que cumplen una determinada condición a la misma tarea.
 	\item All grouping: El \textit{stream} pasa por todas las tareas haciendo multicast.
 	\item Grobal grouping: El \textit{stream} se envía al \textit{bolt} con ID más bajo.
