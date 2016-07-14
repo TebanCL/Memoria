@@ -6,7 +6,7 @@ Con el sistema construido resta someterlo a evaluaciones. En especial se evaluar
 \section{Topología y replicación}
 \label{sec:topYPar}
 
-En la sección \ref{subsec:topologiaSistema} se explicitó cómo estarían dispuestos los operadores en la topología, pero se ha de recordar que el sistema está pensado para operar en casos de emergencia y ha de ser capáz de escalar de acuerdo a las necesidades de la situación.\\
+En la sección \ref{subsubsec:topologiaSistema} se explicitó cómo estarían dispuestos los operadores en la topología, pero se ha de recordar que el sistema está pensado para operar en casos de emergencia y ha de ser capáz de escalar de acuerdo a las necesidades de la situación.
 
 \textit{Apache Storm} es capaz de realizar lo anterior, pero se ha de especificar el máximo número de nodos que tendrá un nivel de operadores. Para explicar lo anterior se utilizarán las figuras \ref{fig:Implementacion1} y \ref{fig:Implementacion1p2} que muestran la implementación del la topología y una esquematización de cómo funcionaría en la peor situación, es decir, cuando el sistema determine que el nivel de replicación debería ser máximo.
 
@@ -28,11 +28,11 @@ Cada elemento de procesamiento, \textit{bolt}, es instanciado, el valor que acom
 	\label{fig:Implementacion1p2}
 \end{figure}
 
-Cada línea de este esquema señala comunicación de izquierda a derecha. En el caso de que el sistema trabaje al máximo de su capacidad cada nodo enviará, \textit{round robin}, estados al siguiente nivel.\\
+Cada línea de este esquema señala comunicación de izquierda a derecha. En el caso de que el sistema trabaje al máximo de su capacidad cada nodo enviará, \textit{round robin}, estados al siguiente nivel.
 
-Esta implementación y diagrama reflejan la solución inicial la cual fue decidida arbitrariamente para probar el sistema.\\
+Esta implementación y diagrama reflejan la solución inicial la cual fue decidida arbitrariamente para probar el sistema.
 
-Tempranamente se detectó que el hecho de tener dos \textit{spout} resultaba contraproducente, pues enviaba, en repetidas ocaciones, el mismo estado al sistema, es decir, cuando el \textit{spout} A enviaba el estado $e_{0}$, probablemente el \textit{spout} B enviase el mismo estado $e_{0}$. Por ello se decidió eliminar el segundo \textit{spout} y limitarlo sólo a uno.\\
+Tempranamente se detectó que el hecho de tener dos \textit{spout} resultaba contraproducente, pues enviaba, en repetidas ocaciones, el mismo estado al sistema, es decir, cuando el \textit{spout} A enviaba el estado $e_{0}$, probablemente el \textit{spout} B enviase el mismo estado $e_{0}$. Por ello se decidió eliminar el segundo \textit{spout} y limitarlo sólo a uno.
 
 Se utilizó el tiempo de ejecución para 1000, 2000, 4000 y 8000 estados, pertenecientes al terremoto de Concepción el año 2010 para seleccionar cuán numeroso debería ser un nivel de nodos. Sus resultados son expuestos en la tabla \ref{tab:estadisticas}.
 
