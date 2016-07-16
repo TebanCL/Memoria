@@ -8,9 +8,7 @@ Yendo desde lo general a lo particular se presenta la arquitectura del sistema p
 \section{Arquitectura del sistema}
 \label{sec:Arquitectura}
 
-Ya se ha mencionado que el sistema completo constará de dos aplicaciones: el visualizador que, además permitirá actualizar el clasificador, y la aplicación detectora de necesidades. Considerando lo anterior se presenta la arquitectura del sistema en la Figura \ref{fig:arquitecturaSistema}. En ella se aprecia que los datos llegan al sistema desde \textit{Twitter} y, utilizando Apache Storm para soportarlo, además del clasificador, son clasificados, detectando necesidades y almacenando, en la base de datos, los nuevos marcadores, luego, en la aplicación visualizadora, haciendo uso de Google Maps, son mostrados en el cliente \textit{web} por medio de su navegador.
-
-El sistema de detección de necesidades, en su conjunto, constará de dos aplicaciones independientes que trabajarán unidas para realizar el proceso de detección de eventos. Estas aplicaciones corresponden, por un lado, a aquella que estará encargada de realizar el proceso de clasificación propiamente tal la que se denominará "Detector de eventos", éste detector hará uso de \textit{Apache Storm} para transformar el \textit{stream} de \textit{Twitter} a marcadores dispuestos en un mapa geográfico del país.
+El sistema de detección de necesidades, en su conjunto, constará de dos aplicaciones independientes que trabajarán unidas para realizar el proceso de detección de eventos. 
 
 \begin{figure}[H]
 	\centering
@@ -20,17 +18,19 @@ El sistema de detección de necesidades, en su conjunto, constará de dos aplica
 	\label{fig:arquitecturaSistema}
 \end{figure}
 
-La figura \ref{fig:arquitecturaSistema} presenta la arquitectura del sistema. Éste, como se mencionó, está compuesto de dos aplicaciones. Todo el sistema es alimentado por el \textit{stream} provisto por el servicio de \textit{streaming} de \textit{Twitter}, este \textit{stream} ingresa, por medio de un \textit{spout}, a la aplicación detectora de necesidades la que clasifica cada \textit{tweet} del \textit{stream} y lo transforma, de ser posible, en un marcador almacenado en la base de datos, desde donde es leído por la aplicación visualizadora la que, utilizando la API de \textit{Google Map} y \textit{Highcharts} para mostrarlos al usuario por medio de su navegador \textit{web}.
+La figura \ref{fig:arquitecturaSistema} presenta la arquitectura del sistema. Éste está compuesto de dos aplicaciones. La arquitectura del sistema pasa a describirse a continuación.
 
-Se hizo referencia a que un \textit{tweet} puede no terminar como un marcador en la base de datos, ésto es producto de la serie de filtros que implementala aplicación de detección, los cuales se detallan en las siguientes secciones.
+Todo el sistema es alimentado por el \textit{stream} provisto por el servicio de \textit{streaming} de \textit{Twitter}, pues ésta red social genera más de 140 millones de \textit{tweets} diariamente, \cite{StormIBM}, y su uso se dispara en períodos de crisis, \cite{TaxonomiaChato}, por ello es una buena fuente de información primaria, es decir, que la información viene desde la misma población afectada.
 
-Para realizar el etiquetado de los datos, es decir, la categorización del texto, se utiliza un clasificador \textit{Naïve Bayes}, el cual está almacenado en un fichero que permite ser modificado, siempre y cuando, se haga entrega de un archivo de entrada con un formáto específico para realizar un entrenamiento del clasificador.
+Para ser capaz de procesar el flujo de información que llega de manera continua se hace uso \textit{Apache Storm}, el sistema de procesamiento de \textit{streams} que fue presentado en la sección \ref{subsubsec:ApacheStorm}, el cual divide el procesamiento en pequeñas tareas, en el caso del flujo desde \textit{Twitter}, éste ingresa, por medio de un \textit{spout}, a la aplicación detectora de necesidades la que procesa y clasifica cada \textit{tweet} del \textit{stream}, ésto se hace por medio de una serie de operadores denominados \textit{bolts} y lo transforma, de ser posible, en un marcador almacenado en la base de datos. La serie de pasos o \textit{bolts} por los que pasará un un \textit{tweet} son descritos en la sección \ref{subsec:detectorNecesidades}.
 
-La base de datos presta una función escencial al funcionamiento del sistema. Es aquí donde se almacenan las consultas realizadas, con las cuales filtran, según las necesidades del usuario, el \textit{stream}, además almacena los elementos que son mostrados por el visualizador en el mapa. Resumiendo lo anterior, la base de datos presta servicios de comunicación al sistema.
+Los datos almacenados en la base de datos son leídos por la visualizadora la que se encarga de mostrar al usuario, mediante su navegador \textit{web}, la ubicación y cantidad de eventos tanto en tiempo real, como históricos. La visualización de éstos últimos se realiza por medio de las API proporcionadas por \textit{Google Maps} y \textit{Highcharts}. El primero se utiliza para obtener un mapa geográfico con la capacidad de ubicar geográficamente puntos por medio de marcadores y modificarlos a voluntad, mientras que el segundo para transformar los datos a una línea temporal que muestre al usuario la cantidad de eventos por cada período.
 
-El sistema descrito está diseñado para operar de forma continua en condiciones de alto tráfico como lo es al ocurrir una emergencia del tipo catastrófica en el país.
+Para realizar el etiquetado de los datos, es decir, la categorización del texto, se utiliza un clasificador \textit{Naïve Bayes}, el cual está almacenado en un fichero que permite ser modificado, siempre y cuando, se haga entrega de un archivo de entrada con un formáto específico para realizar un entrenamiento del clasificador. La elaboración de éste clasificador se detalla en la sección \ref{sec:diseno:clasificador}.
 
-Se asume la existencia un sistema externo encargado de detectar cuándo se produce una situacion de las características antes mencionadas e inicie el sistema de detección, pues no está dentro de los alcances de este trabajo el que se detecte cuándo es que se ha producido un evento y la población comience a producir nuevos estados en las redes sociales.
+La base de datos presta una función escencial al funcionamiento del sistema. Es aquí donde se almacenan las consultas realizadas, con las cuales filtran, según las necesidades del usuario, el \textit{stream}, además almacena los elementos que son mostrados por el visualizador en el mapa. Resumiendo lo anterior, la base de datos presta servicios de comunicación al sistema. Las aplicaciónes y justificación del uso de esta base de datos se presenta en la sección \ref{sec:diseno:comunicacion}.
+
+El sistema descrito está diseñado para operar de forma continua en condiciones de alto tráfico como lo es al ocurrir una emergencia del tipo catastrófica en el país. A pesar de lo anterior, se asume la existencia un sistema externo encargado de detectar cuándo se produce una situacion de las características antes mencionadas e inicie el sistema de detección, pues no está dentro de los alcances de este trabajo el que se detecte cuándo es que se ha producido un evento y la población comience a producir nuevos estados en las redes sociales.
 
 El desarrollo de la aplicación se guia por el cumplimiento de las historias de usuario descritas en la Tabla \ref{tab:ReqTotales}. Para ello se trata cada historia como un problema individual que luego han de ser constituidas en la aplicación final.
 
@@ -53,7 +53,7 @@ Esta sección presenta las decisiones tomadas por el autor al momento de diseña
 \subsection{Comunicación}
 \label{sec:diseno:comunicacion}
 
-Se ha de justificar lo expuesto hasta ahora, al hacer mención de la existencia de dos aplicaciones que componen el sistema de detección de necesidades. El uso del sistema de procesamiento distribuido, \textit{storm}, dificultaba en su momento la integración con un \textit{framework} para aplicaciones Java y, dado que el sistema ha de poseer una interfáz donde el usuario pueda visualizar los eventos detectados, por ello se decidió construir ambos módulos; detección y visualización en aplicaciones separadas. En un primer momento se pensó comunicar ambas aplicaciones por medio de peticiones REST cuyo contenido fuesen tanto las consultas ingresadas por el usuario para realizar una búsqueda más exhaustiva, como los datos correspondientes a marcadores ubicados en el mapa del visualizador. Esta aproximación de solución se esquematiza en la Figura \ref{fig:primeraComunicacion} presentada a continuación.
+Se ha de justificar lo expuesto hasta ahora al hacer mención de la existencia de dos aplicaciones que componen el sistema de detección de necesidades. El uso del sistema de procesamiento distribuido, \textit{storm}, dificultaba en su momento la integración con un \textit{framework} para aplicaciones Java y, dado que el sistema ha de poseer una interfáz donde el usuario pueda visualizar los eventos detectados, por ello se decidió construir ambos módulos; detección y visualización en aplicaciones separadas. En un primer momento se pensó comunicar ambas aplicaciones por medio de peticiones REST cuyo contenido fuesen tanto las consultas ingresadas por el usuario para realizar una búsqueda más exhaustiva, como los datos correspondientes a marcadores ubicados en el mapa del visualizador. Esta aproximación de solución se esquematiza en la Figura \ref{fig:primeraComunicacion}, presentada a continuación.
 
 \begin{figure}[H]
 	\centering
@@ -73,10 +73,10 @@ Esta aproximación no consideraba la existencia de un sistema de persistencia de
 	\label{fig:comunFinal}
 \end{figure}
 
+En la historia de usuario HU-v04, al hacer referencia a información pasada, se infiere la necesidad de la implementación de un sistema de persistencia de datos. Es, principalmente, por esta razón que llevó a que modificara la primera forma de comunicación.
+
 \subsection{Persistencia}
 \label{sec:diseno:persistencia}
-
-Al hacer referencia a información pasada en la historia de usuario HU-v04 se infiere la necesidad de la implementación de un sistema de persistencia de datos. Es, principalmente, por esta razón que se modificó la forma de comunicación inicial presentada en la sección \ref{sec:diseno:comunicacion}. 
 
 Si bien está decidida la implementación de un sistema de persistencia en la aplicación, no se ha definido cuál ha de ser el sistema de gestión de base de datos que se utilizará, es por ello que en ésta sección se presenta la decisión tomada con respecto a este tema.
 
@@ -99,11 +99,13 @@ Volviendo a la historia de usuario que originó la necesidad de contar con un si
 
 Ya se mencionó que se seleccionó storm para construir el detector de necesidades, pero no se ha especificado el porqué de ello. Por este motivo en los siguientes párrafos se exponen las razones por las cuales se tomó esta decisión.
 
-Dado el contexto del funcionamiento del sistema, éste ha de entregar respuestas rápidas ante una emergencia; para ello, y como es descrito en esta historia de usuario, se requiere de un sistema capaz de procesar eventos en tiempo real que, dado el \textit{peak} de información que recibirá el sistema deberá ser escalable. El problema en este punto es el cómo construir un sistema que cumpla capáz de identificar necesidades y que posea esta, no menor, característica.
+Dado el contexto del funcionamiento del sistema, éste ha de entregar respuestas rápidas ante una emergencia; para ello, y como es descrito en la historia de usuario HU-c00, se requiere de un sistema capaz de procesar eventos en tiempo real que, dado el \textit{peak} de información que recibirá el sistema deberá ser escalable. El problema en este punto es el cómo construir un sistema que cumpla capáz de identificar necesidades y que posea esta, no menor, característica.
 
 Se consideraron sistemas de procesamiento distribuido; estos sistemas tienen la particularidad de ser una red de computadores (nodos, en general), que el usuario percibe como un solo gran sistema. Estos sistemas pueden ser de diversos tamaños, y suelen ser confiables, pues si un componente (nodo) falla, otro será capaz de reemplazarlo. \cite{DefSPD}. En un inicio se consideraron tres plataformas sobre las cuales podría construirse un sistema que pudiese cumplir con lo solicitado; dichas plataformas fueron Apache S4, Apache Storm y Apache Spark.
 
-Apache S4, pese a su simplicidad, no continuó con su desarrollo luego del año 2013 y nunca tuvo una versión estable 1.0, razones por las cuales se dejó como segunda opción. Apache Spark, pese a contar con continuos \textit{releases}, una comunidad de desarrolladores no menor y permitir la elaboración de sistemas escalables no era lo que se buscaba en aquel momento como herramienta de desarrollo, al momento de consultar con los, en este caso, clientes, éstos esperaban que el sistema, internamente, se comportara según el paradigma de procesamiento de \textit{streams}, por medio de operadores dispuestos en un grafo. Por ello finalmente se optó por \textit{Apache Storm}; \textit{Storm} permite construir sistemas que cumplan con las características de un sistema distribuido, como lo son: Escalabilidad (Tanto horizontal como vertical) y tolerancia a fallos (como la capacidad de un sistema para realizar correctamente y en todo momento aquello para lo que fue diseñado). Estos sistemas estan compuestos por dos tipos de elementos: \textit{Spout} y \textit{Bolt}, que fueron descritos en el capítulo \ref{cap:MarcTeorico}. Al combinar esos elementos se da origen a un grafo dirigido, como el presentado en la Figura \ref{fig:stormBeLike} en la página ~\pageref{fig:stormBeLike}, donde cada elemento de procesamiento (\textit{bolt}), cumple con una determinada tarea utilizando como entrada la salida del elemento anterior.
+Apache S4, pese a su simplicidad, no continuó con su desarrollo luego del año 2013 y nunca tuvo una versión estable 1.0, razones por las cuales se dejó como segunda opción. Apache Spark, pese a contar con continuos \textit{releases}, una comunidad de desarrolladores no menor y permitir la elaboración de sistemas escalables no era lo que se buscaba en aquel momento como herramienta de desarrollo, al momento de consultar con los, en este caso, clientes, éstos esperaban que el sistema, internamente, se comportara según el paradigma de procesamiento de \textit{streams}, por medio de operadores dispuestos en un grafo. Por ello finalmente se optó por \textit{Apache Storm}.
+
+\textit{Storm} permite construir sistemas que cumplan con las características de un sistema distribuido, como lo son: Escalabilidad (Tanto horizontal como vertical) y tolerancia a fallos (como la capacidad de un sistema para realizar correctamente y en todo momento aquello para lo que fue diseñado). Estos sistemas estan compuestos por dos tipos de elementos: \textit{Spout} y \textit{Bolt}, que fueron descritos en el capítulo \ref{cap:MarcTeorico}. Al combinar esos elementos se da origen a un grafo dirigido, como el presentado en la Figura \ref{fig:stormBeLike} en la página ~\pageref{fig:stormBeLike}, donde cada elemento de procesamiento (\textit{bolt}), cumple con una determinada tarea utilizando como entrada la salida del elemento anterior.
 
 \subsection{Obtención de datos para el funcionamiento del sistema}
 \label{sec:diseno:obtenerDatos}
@@ -182,7 +184,7 @@ Al combinar ambos tipos de filtros se tienen potencialmente seis modos de funcio
 
 La definición de las categorías es un punto importante dentro de la construcción de la aplicación. Teóricamente en función a la cantidad de clases (categorías), el tamaño del conjunto de entrenamiento ha de ser mayor o menor.
 
-Inicialmente se consideró la taxonomía definida por \cite{TaxonomiaChato}, pero el equipo del proyecto FONDEF estableció que no era conveniente utilizar, pues presentaba gran cantidad de categorías y era demasiado específica, se sugirió en su lugar utilizar la clasificación realizada por \cite{Alvarado} en la que se presentaba una categorización de cinco categorías, ellas eran:
+Inicialmente se consideró la taxonomía definida por \cite{TaxonomiaChato}, pero el equipo del proyecto FONDEF IDeA estableció que no era conveniente utilizar, pues presentaba gran cantidad de categorías y era demasiado específica, se sugirió en su lugar utilizar la clasificación realizada por \cite{Alvarado} en la que se presentaba una categorización de cinco categorías, ellas eran:
 
 \begin{enumerate}
 \item Necesidades básicas: \textit{Tweet} que entregara o solicitara información sobre serviciós básicos: Agua potable, electricidad y abastecimiento de alimentos.
@@ -207,7 +209,7 @@ Tras haber realizado pruebas con ellas se decidió utilizar Mallet por su simpli
 
 La sección \ref{sec:caracteristicasSistema} ya hace referencia a la inconveniencia de utilizar un clasificador estático para el etiquetado de nuevos eventos, al tratarse de un aprendizaje supervisado, donde se requiere de una persona entregue la respuesta esperada para realizar el entrenamiento, no es posible realizar este proceso de manera automática.
 
-Al no poder automatizar el proceso antes señalado se consultó con el equipo del proyecto FONDEF si es que era factible la implementación de un actualizador manual del clasificador, lo cual fue aceptado.
+Al no poder automatizar el proceso antes señalado se consultó con el equipo del proyecto FONDEF IDeA si es que era factible la implementación de un actualizador manual del clasificador, lo cual fue aceptado.
 
 Segun la metodologia KDD, los pasos que se siguen para construir un nuevo clasificador son los siguientes:
 
@@ -257,14 +259,14 @@ La implementación del visualizador de eventos se realizó haciendo uso del \tex
 \item Vista o presentación: muestra las interfaces \textit{web} diseñadas para que el usuario interactúe con el sistema.
 \end{itemize}
 
-\subsubsection{Filtrado de marcadores}
+\subsubsection*{Filtrado de marcadores}
 \label{subsubsec:filtradoMarcadores}
 
 Dentro del nivel de presentación se encuentra el mapa, proporcionado por la API de Google Maps como se mencionó en la sección \ref{sec:diseno:interfaz}. Allí, también, se señaló que existirán filtros para la visualización de eventos de manera que se la presentación de éstos se apegue a las necesidades del usuario. Para implementar estos filtros, internamente, la aplicación hace uso de $n + 1$ \textit{clusters}, donde $n$ corresponde al al número de categorías y el cluster extra es para agruparlos a todos. Así, en el caso de querer ver los eventos agrupados, y dependiendo si se quiere o no agruparlos sin discriminación de categoría, se llenan los \textit{clusters} pertenecientes a la visualización general o a la visualización por categoría. Para el caso de querer mostrar sólo una categoría en particular, sólo se permite que los \textit{cluster} se llenen con los elementos de la categoría seleccionada.
 
 Lo anteriormente descrito es presentado a continuación en el Algoritmo \ref{alg:filtroMarcadores} para facilitar la comprensión de la lógica interna de los filtros presentados.\\
 
-\begin{algorithm}[H]\setstretch{1.5}
+\begin{algorithm}[!htb]\setstretch{1.5}
 	\begin{algorithmic}[numeracion_lineas]
 		\REQUIRE Tipo de agrupamiento $A$.
 		\REQUIRE Discriminador de categoría $K$.
@@ -272,7 +274,7 @@ Lo anteriormente descrito es presentado a continuación en el Algoritmo \ref{alg
 		\STATE Lista de marcadores $L$.
 		\STATE \textit{Clusters} de marcadores $C = \{c_{0}, \dots, c_{n+1} \}$.
 		\FOR{cada $m_{i}$ perteneciente a $M$}
-			\IF{la categoría de $m_{i}$ no es "irrelevante" y la categoría de $m_{i}$ es igual a $K$ y $K$ no es "todas las categorías"}
+			\IF{la categoría de $m_{i}$ no es "irrelevante" y la categoría de $m_{i}$ es igual a $K$}
 				\STATE añadir el marcador a $L$.
 			\ELSIF{$K$ es "todas las categorías"}
 				\STATE añadir el marcador a $L$.
@@ -300,7 +302,7 @@ Lo anteriormente descrito es presentado a continuación en el Algoritmo \ref{alg
 	\label{alg:filtroMarcadores}
 \end{algorithm}\vphantom\\
 
-Para realizar la selección del intervalo mencionado en la HU-v04 se solicitó, por parte del equipo FONDEF, el uso de una línea de tiempo con intervalo deslizante que, además, mostrase la cantidad de eventos detectados por fecha por medio de un histograma. Para ello se utilizó, inicialmente, se utilizó \textit{JDateRangeSlider}, de la biblioteca Javascript JQRangeSlider, \cite{JQRangeSlider}. Ésta biblioteca era suficiente para seleccionar el intervalo de fechas y detectar cambios producidos en la línea de tiempo para actualizar los valores, mas no permitía la implementación de un histograma externo.
+Para realizar la selección del intervalo mencionado en la HU-v04 se solicitó, por parte del equipo FONDEF IDeA, el uso de una línea de tiempo con intervalo deslizante que, además, mostrase la cantidad de eventos detectados por fecha por medio de un histograma. Para ello se utilizó, inicialmente, se utilizó \textit{JDateRangeSlider}, de la biblioteca Javascript JQRangeSlider, \cite{JQRangeSlider}. Ésta biblioteca era suficiente para seleccionar el intervalo de fechas y detectar cambios producidos en la línea de tiempo para actualizar los valores, mas no permitía la implementación de un histograma externo.
 
 \begin{figure}[H]
 	\centering
@@ -845,7 +847,7 @@ El concepto que involucra la construcción de un clasificador es el de "aprendiz
 
 Según la metodología KDD existen cinco pasos en la búsqueda de conocimiento en bases de datos, estos fueron descritos en la sección \ref{subsec:kdd}.
 
-La selección de datos se ha llevado a cabo. Se cuenta con más de 2000 estados recogidos desde \textit{Twitter} previo, durante y posterior al terremoto de Concepción el año 2010. Éstos datos se han etiquetado por el autor, dándoles la categoría a la que hacen referencia.
+La selección de datos se ha llevado a cabo, se contó con más de 2000 estados recogidos desde \textit{Twitter} previo, durante y posterior al terremoto de Concepción el año 2010. Éstos datos se han etiquetado por el autor, dándoles la categoría a la que hacen referencia.
 
 El siguiente paso a realizarse según la metodología es realizar un preprocesamiento. Según lo descrito por \cite{IRQE}, se sugiere emplear una serie de técnicas tanto para preprocesar como transformar los datos, éstas son:
 
