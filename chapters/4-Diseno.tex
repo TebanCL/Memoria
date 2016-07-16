@@ -201,11 +201,11 @@ Los elementos clasificados como "Irrelevantes" no se mostrarán en el mapa de ev
 \subsection{Clasificador}
 \label{sec:diseno:clasificador}
 
-El proyecto PMI realizado por \cite{WladdimiroPMI}, como se mencionó en en el capítulo \ref{cap:introduccion}, abordó una solución inicial para el problema de la detección de necesidades. En aquella oportunidad se utilizó una bolsa de palabras con términos asociados a las categorías para etiquetar los estados de \textit{Twitter}. Este trabajo busca mejorar aquello realizando la clasificación mediante una técnica de clasificación más poderosa.
+El proyecto PMI realizado por \cite{WladdimiroPMI}, abordó una solución inicial para el problema de la detección de necesidades. En aquella oportunidad se utilizó una bolsa de palabras con términos asociados a las categorías para etiquetar los estados de \textit{Twitter}. Este trabajo busca mejorar aquello realizando la clasificación mediante una técnica de clasificación más poderosa.
 
 En su libro, \textit{Introduction to Information Retrival}, \cite{IRQE}, proponen el uso de \textit{Naïve Bayes}, para realizar clasificación de texto. Esto se logra realizando una implementación del algoritmo descrito en la sección \ref{subsec:naiveBayes}. Este ya ha sido implementado en diversas herramientas como: RapidMiner, Weka (acrónimo de \textit{Waikato Envoirment for Knowledge Analysis}), Mallet (acrónimo de \textit{MAchine Learning for LanguagE Toolkit }).
 
-Tras haber realizado pruebas con ellas se decidió utilizar Mallet por su simplicidad de implementación junto con la mayor precisión de sus resultados.
+Tras haber realizado pruebas con ellas, enfocándo la atención en  se decidió utilizar Mallet por su simplicidad de implementación junto con la mayor precisión de sus resultados.
 
 La sección \ref{sec:caracteristicasSistema} ya hace referencia a la inconveniencia de utilizar un clasificador estático para el etiquetado de nuevos eventos, al tratarse de un aprendizaje supervisado, donde se requiere de una persona entregue la respuesta esperada para realizar el entrenamiento, no es posible realizar este proceso de manera automática.
 
@@ -213,7 +213,7 @@ Al no poder automatizar el proceso antes señalado se consultó con el equipo de
 
 Segun la metodologia KDD, los pasos que se siguen para construir un nuevo clasificador son los siguientes:
 
-Los datos son seleccionados por el usuario, estos datos se agruparan en un archivo de texto, un archivo CSV en el cual los elementos se separarán utilizando el caracter punto y coma (;). El formato que se utiliza para el archivo de entrada se muetra en la Figura \ref{fig:formatoFig} , así cualquier archivo que cumpla con el formato permitirá la creación de un nuevo modelo clasificador.
+Los datos son seleccionados por el usuario, estos datos se agruparan en un archivo de texto, un archivo CSV en el cual los elementos se separaran utilizando el caracter punto y coma (;). El formato que se utiliza para el archivo de entrada se muetra en la Figura \ref{fig:formatoFig} , así cualquier archivo que cumpla con el formato permite la creación de un nuevo modelo clasificador.
 
 \begin{figure}[H]
 	\centering
@@ -838,29 +838,24 @@ Este operador hace uso del clasificador generado mediante las técnicas descrita
 
 Este operador se encargará de conectarse a la base de datos y almacenar el nuevo marcador. Los datos recibidos desde la cadena de procesamiento se llevarán a una instancia de objeto Java, llamado "Marker", el cual contiene los mismos elementos descritos para un documento de la colección "Markers", a un objeto JSON utilizando \textit{Jackson} y finalmente, utilizando \textit{Jongo}, lo transformará en BSON para almacenarlo en la base de datos en MongoDB.
 
-\subsubsection{Clasificación}
+\subsubsection{Construcción del clasificador}
 \label{subsubsec:clasificacion}
 
 Hasta ahora se han tocado, prácticamente, todos los temas que se relacionan con el funcionamiento del sistema de detección, desde donde se obtendrán los datos, cómo se procesaran e incluso cómo se almacenaran, pero no se ha especificado cómo se realizará la clasificación, es decir, cómo dado un texto de entrada se conseguirá discriminar en qué categoría encaja. Ésta sección especifica lo que se contextualizó en la sección \ref{subsubsec:7op}.
 
-El concepto que involucra la construcción de un clasificador es el de "aprendizaje supervizado", que fue mencionado en la sección \ref{sec:aprendSuperv}, en este tipo de aprendizaje se requiere de un conjunto de datos de entrada, denominados conjunto de entrenamiento, que ha de pasar por el algormito, en este caso \textit{Naïve Bayes}, que ha de conocer previamente, la salida esperada para cada elemento del conjunto. El resultado esperado es un clasificador capáz de predecir, en este caso, a qué categoría pertenece un texto sometido a su evaluación.
+El concepto que involucra la construcción de un clasificador es el de "aprendizaje supervizado", que fue mencionado en la sección \ref{sec:aprendSuperv}, en este tipo de aprendizaje se requiere de un conjunto de datos de entrada, denominados conjunto de entrenamiento, que ha de pasar por el algoritmo, en este caso \textit{Naïve Bayes}, que ha de conocer previamente, la salida esperada para cada elemento del conjunto. El resultado esperado es un clasificador capáz de predecir, en este caso, a qué categoría pertenece un texto sometido a su evaluación.
 
-Según la metodología KDD existen cinco pasos en la búsqueda de conocimiento en bases de datos, estos fueron descritos en la sección \ref{subsec:kdd}.
+Según la metodología KDD existen subprocesos en la búsqueda de conocimiento en bases de datos, estos fueron descritos en la sección \ref{subsec:kdd}, para este caso particular se describe cómo fue realizado cada uno de estos subprocesos para la construcción del clasificador con el que cuenta el sistema.
 
-La selección de datos se ha llevado a cabo, se contó con más de 2000 estados recogidos desde \textit{Twitter} previo, durante y posterior al terremoto de Concepción el año 2010. Éstos datos se han etiquetado por el autor, dándoles la categoría a la que hacen referencia.
+El subproceso de selección de datos se llevó a cabo extrayendo un subconjunto del \textit{dataset} mencionado en la sección \ref{subsec:alcances}. Éste conjunto, de exactamente 2234 \textit{tweets} correspondientes al del terremoto de Concepción el año 2010, todos ellos en español, pero no todos hacen referencia al evento, pues éste coincidió con la realización de la LI versión del Festival Internacional de la Canción de Viña del Mar y muchos de estos \textit{tweets} hacen referencia a este último. Los datos en este punto de proceso cuentan con los campos correspondientes a un \textit{tweet} de la época, es decir: "ID\_unit", "day", "date", "time\_zone", "time", "tweet\_it", "user\_id", "name", "screen\_name", "friends\_count", "follower\_count", "text" y "value". Todos ellos separados por coma (,).
 
-El siguiente paso a realizarse según la metodología es realizar un preprocesamiento. Según lo descrito por \cite{IRQE}, se sugiere emplear una serie de técnicas tanto para preprocesar como transformar los datos, éstas son:
+En cuanto al subproceso de preprocesamiento de datos, el primer paso corresponde a la limpieza de los datos, en conjunto de datos que se está utilizando contenía elementos incompletos que no presentaban texto, estos fueron eliminados, pues no resultaban útiles sin el componente texto, quedando así un total de 2187 \textit{tweets} con datos útiles.
 
-\begin{itemize}
-\item Tokenización: Dada una secuencia de carácteres y una unidad definida (una palabra en este caso), la tarea es cortar esa secuencia en \textit{Tokens} y, a la vez, eliminar ciertos carácteres (por ejemplo, signos de puntuacion).
-\item Eliminación de stopwords: Son elementos que no aportan a la selección en el proceso de clasificación, usualmente se mantienen en una lista y son eliminados de la secuencia.
-\item Normalización: Incluye los procesos de llevar todo el texto a minúsculas o mayúsculas, llevar términos a equivalencias, seleccionar el idioma, etcétera.
-\item \textit{Stemming}: Llevar los términos a una raíz común.
-\end{itemize}
+El siguiente paso, correspondiente al suproceso de transformación de datos, del conjunto de datos útiles se extrajo el texto y se eliminaron todos los demás componentes. Llegados a este punto sólo se contaba con una lista de textos de \textit{tweets} en español. Lo siguiente a realizar corresponde al proceso de etiquetado, para ello se leyó cada texto y según su contenido se ubicó en alguna de las categorías descritas en la sección \ref{sec:diseno:categorias}, además se asignó un identificador a cada texto, basado en su número, para ser ingresados a la herramienta Mallet, encargada de la construcción del clasificador, así se obtuvo un archivo con los datos formateados según lo descrito en la sección \ref{sec:diseno:clasificador}, es decir, con los campos "Identificador", "Etiqueta", "Contenido". En este punto los datos fueron ingresados al sistema para la aplicación de los operadores descritos en la sección \ref{subsec:detectorNecesidades}, en particular la eliminación de \textit{stopwords}, normalización de texto y \textit{stemming}.
 
-Estas transformaciones han sido descritas por los operadores anteriores con excepción de aquellos que tienen que ver con el filtrado de consultas, la ubicación de \textit{tweets}, el etiquetado propiamente tal y la persistencia.
+El cuarto subproceso es automatizado por Mallet y corresponde al minado de datos en sí, para entregarle los datos a Mallet primero han de construirse como un objeto "\textit{Instance}", lo cual se realiza entregándole cada uno de los elementos preparados en la sección anterior: el identificador, etiqueta y contenido que ya ha pasado por las operaciones que componene el subproceso de transformación. Como resultado de este proceso se obtiene un objeto \textit{Classifier}, el cual puede ser serializado y almacenado como un archivo denominado, en este caso, "classifier.dene". 
 
-Para la construcción del clasificador, descrita en la sección \ref{subsec:detectorNecesidades}, cada conjunto de datos pasará obligatoriamente por todos estos procesos.
+Finalmente el subproceso de evaluación también es llevado a cabo por la herramienta Mallet, que implementa un objeto denominado "\textit{Trial}" el cual, utilizando un clasificador y un conjunto de datos de prueba. Como resultado de este subproceso se obtienen las métricas comunes de evaluación: \textit{accuracy}, \textit{recall} y \textit{F-1 score}. La evaluación del clasificador construido se presenta en la sección \ref{} del Capítulo \ref{sec:EvalClassificador}. 
 
 \subsubsection{Topología del sistema}
 \label{subsubsec:topologiaSistema}

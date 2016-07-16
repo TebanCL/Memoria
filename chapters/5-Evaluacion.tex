@@ -1,14 +1,36 @@
 \chapter{Evaluación del sistema}
 \label{cap:experimentos}
 
-Con el sistema construido resta someterlo a evaluaciones. En especial se evaluará el sistema de detección de necesidades, pues es el corazón del sistema y ha de operar con un flujo de datos constante.
+Con el sistema construido resta someterlo a evaluaciones. En especial se evalúa el sistema de detección de necesidades, pues es el corazón del sistema y ha de operar con un flujo de datos constante.
+
+\section{Evaluación del clasificador}
+\label{sec:EvalClassificador}
+
+Las métricas resultados de la construcción del clasificador en la sección \ref{subsubsec:clasificacion}, correspondientes al clasificador actual se presentan a continuación en la Figura \ref{fig:metricasClass} 
+\begin{figure}[H]
+        \centering
+        \captionsetup{justification=centering}
+        \includegraphics[scale=0.8]{images/MetricasClasificador.png}
+        \caption[Métricas del clasificador.]{Métricas del clasificador.}
+        \label{fig:metricasClass}
+\end{figure}
+
+Los valores expuestos anteriormente son interpretados, respectivamente, como sigue a continuación.
+
+\begin{itemize}
+\item \textit{Accuracy}: Este valor quiere decir qué con, aproximadamente, un 87\% al decir que un elemento pertenece a una determinada clase esa predicción es correcta.
+\item \textit{Recall}: Este valor quiere decir que para una clase en particular, es posible identificar es posible identificar en un determinado porcentaje $p$, correspondiente al valor presentado en la Figura \ref{fig:metricasClass}, de los elementos pertenecientes a aquella clase.
+\item \textit{F-1 Score}: Corresponde al \textit{trade-off} entre \textit{accuracy} y \textit{recall}, al incrementar uno, el otro disminuirá en un $F$\% descrito por los valores en la Figura \ref{fig:metricasClass}.
+\end{itemize}
+
+En particular este clasificador cuenta con alta precisión y bajo \textit{recall}, eso significa que el es preciso para clasificar, pero no es capaz de clasificar algunos de los casos particulares de cada clase. Esto se debe al conjunto de entrenamiento utilizado, los datos no están balanceados para cada clase, es decir, la clase A, no tiene los mismos elementos que la clase B, ésto repercute en que debido a las pocas instancias que tiene el algoritmo para aprender no es capaz de reconocer elementos de la clase con menos elementos. En particular el caso de la clase "Alimentos", los datos que se utilizaron son del periodo inmediato al evento, por ello no se encontraron demasiados elementos que hagan referencia a la falta de alimento en una población.
 
 \section{Topología y replicación}
 \label{sec:topYPar}
 
-En la sección \ref{subsubsec:topologiaSistema} se explicitó cómo estarían dispuestos los operadores en la topología, pero se ha de recordar que el sistema está pensado para operar en casos de emergencia y ha de ser capáz de escalar de acuerdo a las necesidades de la situación.
+En la sección \ref{subsubsec:topologiaSistema} se explicitó cómo están dispuestos los operadores en la topología, pero se ha de recordar que el sistema está pensado para operar en casos de emergencia y ha de ser capáz de escalar de acuerdo a las necesidades de la situación.
 
-\textit{Apache Storm} es capaz de realizar lo anterior, pero se ha de especificar el máximo número de nodos que tendrá un nivel de operadores. Para explicar lo anterior se utilizarán las figuras \ref{fig:Implementacion1} y \ref{fig:Implementacion1p2} que muestran la implementación del la topología y una esquematización de cómo funcionaría en la peor situación, es decir, cuando el sistema determine que el nivel de replicación debería ser máximo.
+\textit{Apache Storm} es capaz de realizar lo anterior, pero se ha de especificar el máximo número de nodos que tendrá un nivel de operadores. Para explicar lo anterior se utilizarán las figuras \ref{fig:Implementacion1} y \ref{fig:Implementacion1p2} que muestran la implementación del la topología y una esquematización de cómo se comporta en la peor situación, es decir, cuando el sistema determine que el nivel de replicación debe ser máximo.
 
 \begin{figure}[H]
 	\centering
@@ -63,11 +85,11 @@ Se utilizó el tiempo de ejecución para 1000, 2000, 4000 y 8000 estados, perten
 \end{tabular}
 \end{table}
 
-Con estos resultados se busca definir los balores para la cantidad de nodos por cada nivel de bolts, de la tabla podemos concluir lo siguiente:
+Con estos resultados se busca definir los valores para la cantidad de nodos por cada nivel de \textit{bolts}, de la tabla podemos concluir lo siguiente:
 
 \begin{itemize}
-\item En relación al normalizador, eliminador y stemmer (no se incluyó en la tabla pues su comportamiento es idéntico a las dos anteriores), la entrada y salida es 1 a 1, es decir, por cada elemento que entra, saldrá un elemento. Por ello, y para no originar cuellos de botella, tendrán la misma cantidad de nodos que el \textit{bolt} anterior. 
-\item Para un aumento exponencial de datos, el filtro de idioma es, aproximadamente, constante en permitir el paso del 40\% de los estados. Esto quiere decir que el filtro siguiente, debería contener el 40\% de los \textit{bolts} del filtro de idioma.
+\item En relación al normalizador, eliminador y stemmer (no se incluyó en la tabla pues su comportamiento es idéntico a las dos anteriores), la entrada y salida es 1 a 1, es decir, por cada elemento que entra, sale un elemento. Por ello, y para no originar cuellos de botella, debe la misma cantidad de nodos que el \textit{bolt} anterior. 
+\item Para un aumento exponencial de datos, el filtro de idioma es, aproximadamente, constante en permitir el paso del 40\% de los estados. Esto quiere decir que el filtro siguiente, debe contener el 40\% de los \textit{bolts} del filtro de idioma.
 \item Para un aumento exponencial de datos, el filtro por ubicación, aproximadamente, permite el paso del 50\% de los datos. Es decir, el \textit{bolt} siguiente debería tener el 50\% de los nodos que tiene el nivel de ubicación.
 \item El tiempo de ejecución del filtro de ubicación es el más alto de todos, debido a ello pueden producirse cuellos de botella, es recomendable, entonces, aumentar el número de elementos de procesamiento.
 \end{itemize}

@@ -4,3 +4,4 @@ bibtex tesis-usach
 xelatex tesis-usach
 xelatex tesis-usach
 tesis-usach.pdf
+exit
