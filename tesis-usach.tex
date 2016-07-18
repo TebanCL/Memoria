@@ -63,7 +63,8 @@
 
 % ### Optativo: Anexos de la tesis ###
 \appendix
-\addappheadtotoc							% Agregar Apéndice al índice. En caso de no poseer anexos, comentar
+\renewcommand{\thechapter}{A}
+\addcontentsline{toc}{chapter}{Apéndices}							% Agregar Apéndice al índice. En caso de no poseer anexos, comentar
 % ### Anexos ###
 \include{anexos/Anexo-1}
 } % end \setstretch{1.0}

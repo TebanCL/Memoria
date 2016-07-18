@@ -276,20 +276,21 @@
 \renewcommand\captionsenglish{}
 
 \renewcommand{\contentsname}{\centerline{Tabla de contenido}}
-\renewcommand{\listtablename}{\centerline{\'Indice de tablas}}
-\renewcommand{\listfigurename}{\centerline{\'Indice de ilustraciones}}
-\renewcommand{\listalgorithmcfname}{\centerline{\'Indice de algoritmos}}
+\renewcommand{\listtablename}{\centerline{Índice de tablas}}
+\renewcommand{\listfigurename}{\centerline{Índice de ilustraciones}}
+\renewcommand{\listalgorithmcfname}{\centerline{Índice de algoritmos}}
 
-\renewcommand{\bibname}{Referencias bibliogr\'aficas}
+\renewcommand{\bibname}{Referencias bibliográficas}
 
-\renewcommand{\appendixname}{Anexo}
-\renewcommand{\appendixtocname}{Anexos}
-\renewcommand{\appendixpagename}{Anexo}
+
+\renewcommand{\appendixname}{Apéndice}
+\renewcommand{\appendixtocname}{Apéndices}
+\renewcommand{\appendixpagename}{Apéndice}
 
 \renewcommand{\tablename}{Tabla}
 \renewcommand{\figurename}{Figura}
-\renewcommand{\lstlistingname}{C\'odigo}
-\renewcommand{\chaptername}{Cap\'itulo}
+\renewcommand{\lstlistingname}{Código}
+\renewcommand{\chaptername}{Capítulo}
 
 % Header de los capítulos
 \usepackage[compact]{titlesec}
@@ -305,22 +306,22 @@
 
 \titleformat{\section}
 {\bfseries\large\vspace{2pt}}
-{\large\MakeUppercase\thesection\ \vspace{2pt} } % 3 espacios luego del titulo de una seccion
+{\large\MakeUppercase\thesection\ \vspace{0pt} } % 3 espacios luego del titulo de una seccion
 {0pt}
 {\MakeUppercase}
 [\vspace*{0.5cm}]
 
 \titleformat{\subsection}
-{\bfseries\normalsize\vspace{2pt}}
+{\bfseries\normalsize\vspace{0pt}}
 {\normalsize\thesubsection\ }
 {0pt}
-{\vspace*{0.5cm}}
+{\vspace*{0.3cm}}
 
 \titleformat{\subsubsection}
-{\itshape\normalsize\vspace{1.0cm}}
+{\itshape\normalsize}%\vspace{1.0cm}}
 {\itshape\thesubsubsection\ }
 {0pt}
-{\vspace*{0.5cm}\itshape}
+{\itshape}
 
 \titlespacing*{\chapter} {0pt}{85pt}{20pt} 
 \titlespacing*{\section} {0pt}{6.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}

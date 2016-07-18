@@ -6,7 +6,7 @@ Con el sistema construido resta someterlo a evaluaciones. En especial se evalúa
 \section{Cumplimiento de requerimientos}
 \label{seC:cumpRequerimientos}
 
-En cuanto a la construcción del \textit{software}, se identificador 12 historias de usuario y se especificaron cada uno de sus criterios de aceptación. Se pasará a detallar por cada historia si ésta fue cumplida o no.
+En cuanto a la construcción del \textit{software}, se identificador 12 historias de usuario y se especificaron cada uno de sus criterios de aceptación. Se pasa a detallar por cada historia si ésta fue cumplida o no.
 
 \begin{itemize}
 \item HU-c00: Mediante la construcción de un operador, \textit{spout}, que haciendo uso del \textit{stream} de datos proporcionado por \textit{Twitter} recogiese los datos en tiempo real y la contrucción de un clasificador de texto es que se completo esta historia.
@@ -40,7 +40,7 @@ Los valores expuestos anteriormente son interpretados, respectivamente, como sig
 \begin{itemize}
 \item \textit{Accuracy}: Este valor quiere decir qué con, aproximadamente, un 87\% al decir que un elemento pertenece a una determinada clase esa predicción es correcta.
 \item \textit{Recall}: Este valor quiere decir que para una clase en particular, es posible identificar es posible identificar en un determinado porcentaje $p$, correspondiente al valor presentado en la Figura \ref{fig:metricasClass}, de los elementos pertenecientes a aquella clase.
-\item \textit{F-1 Score}: Corresponde al \textit{trade-off} entre \textit{accuracy} y \textit{recall}, al incrementar uno, el otro disminuirá en un $F$\% descrito por los valores en la Figura \ref{fig:metricasClass}.
+\item \textit{F-1 Score}: Corresponde al \textit{trade-off} entre \textit{accuracy} y \textit{recall}, al incrementar uno, el otro disminuye en un $F$\% descrito por los valores en la Figura \ref{fig:metricasClass}.
 \end{itemize}
 
 En particular este clasificador cuenta con alta precisión y bajo \textit{recall}, eso significa que el es preciso para clasificar, pero no es capaz de clasificar algunos de los casos particulares de cada clase. Esto se debe al conjunto de entrenamiento utilizado, los datos no están balanceados para cada clase, es decir, la clase A, no tiene los mismos elementos que la clase B, ésto repercute en que debido a las pocas instancias que tiene el algoritmo para aprender no es capaz de reconocer elementos de la clase con menos elementos. En particular el caso de la clase "Alimentos", los datos que se utilizaron son del periodo inmediato al evento, por ello no se encontraron demasiados elementos que hagan referencia a la falta de alimento en una población.
@@ -70,7 +70,7 @@ Cada elemento de procesamiento, \textit{bolt}, es instanciado, el valor que acom
 	\label{fig:Implementacion1p2}
 \end{figure}
 
-Cada línea de este esquema señala comunicación de izquierda a derecha. En el caso de que el sistema trabaje al máximo de su capacidad cada nodo enviará, \textit{round robin}, estados al siguiente nivel.
+Cada línea de este esquema señala comunicación de izquierda a derecha. En el caso de que el sistema trabaje al máximo de su capacidad cada nodo envía, \textit{round robin}, estados al siguiente nivel.
 
 Esta implementación y diagrama reflejan la solución inicial la cual fue decidida arbitrariamente para probar el sistema.
 
@@ -80,7 +80,7 @@ Se utilizó el tiempo de ejecución para 1000, 2000, 4000 y 8000 estados, perten
 
 \begin{table}[H]
 \centering
-\caption[Estadísticas de los operadores para 1000, 2000, 4000 y 8000 estados.]{Estadísticas de los operadores para 1000, 2000, 4000 y 8000 estados.\\Fuente: Elaboración Propia, (2016)}
+\caption[Estadísticas de los operadores diversos estados.]{Estadísticas de los operadores diversos estados.\\Fuente: Elaboración Propia, (2016)}
 \label{tab:estadisticas}
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
@@ -119,7 +119,7 @@ Estos resultados muestran el comportamiento individual de cada uno de éstos bol
 \centering
 \caption[Prueba sistema completo utilizando 1000 estados.]{Prueba sistema completo utilizando 1000 estados.\\Fuente: Elaboración Propia, (2016)}
 \label{PruebaSistFull1000}
-\begin{tabular}{|c|l|l|}
+\begin{tabular}{|c|c|c|}
 \hline
 \textbf{Cantidad} & \multicolumn{2}{c|}{\textbf{1000}} \\ \hline
 \textbf{Operador} & \multicolumn{1}{c|}{\textbf{Estados recibidos}} & \multicolumn{1}{c|}{\textbf{Estados emitidos}} \\ \hline
@@ -139,7 +139,7 @@ Persistencia & 0 & 0 \\ \hline
 \centering
 \caption[Prueba sistema completo utilizando 2000 estados.]{Prueba sistema completo utilizando 2000 estados.\\Fuente: Elaboración Propia, (2016)}
 \label{PruebaSistFull2000}
-\begin{tabular}{|c|l|l|}
+\begin{tabular}{|c|c|c|}
 \hline
 \textbf{Cantidad} & \multicolumn{2}{c|}{\textbf{2000}} \\ \hline
 \textbf{Operador} & \multicolumn{1}{c|}{\textbf{Estados recibidos}} & \multicolumn{1}{c|}{\textbf{Estados emitidos}} \\ \hline
@@ -159,7 +159,7 @@ Persistencia & 0 & 0 \\ \hline
 \centering
 \caption[Prueba sistema completo utilizando 4000 estados.]{Prueba sistema completo utilizando 4000 estados.\\Fuente: Elaboración Propia, (2016)}
 \label{PruebaSistFull4000}
-\begin{tabular}{|c|l|l|}
+\begin{tabular}{|c|c|c|}
 \hline
 \textbf{Cantidad} & \multicolumn{2}{c|}{\textbf{4000}} \\ \hline
 \textbf{Operador} & \multicolumn{1}{c|}{\textbf{Estados recibidos}} & \multicolumn{1}{c|}{\textbf{Estados emitidos}} \\ \hline
@@ -179,7 +179,7 @@ Persistencia & 0 & 0 \\ \hline
 \centering
 \caption[Prueba sistema completo utilizando 8000 estados.]{Prueba sistema completo utilizando 8000 estados.\\Fuente: Elaboración Propia, (2016)}
 \label{PruebaSistFull8000}
-\begin{tabular}{|c|l|l|}
+\begin{tabular}{|c|c|c|}
 \hline
 \textbf{Cantidad} & \multicolumn{2}{c|}{\textbf{8000}} \\ \hline
 \textbf{Operador} & \multicolumn{1}{c|}{\textbf{Estados recibidos}} & \multicolumn{1}{c|}{\textbf{Estados emitidos}} \\ \hline
@@ -199,9 +199,9 @@ Las Tablas \ref{PruebaSistFull1000}, \ref{PruebaSistFull2000}, \ref{PruebaSistFu
 
 \begin{table}[H]
 \centering
-\caption[Prueba sistema completo utilizando 30000 estados.]{Prueba sistema completo utilizando 30000 estados.\\Fuente: Elaboración Propia, (2016)}
+\caption[Prueba sistema utilizando 30000 estados.]{Prueba sistema utilizando 30000 estados.\\Fuente: Elaboración Propia, (2016)}
 \label{tab:PruebaSistFull30000}
-\begin{tabular}{|c|l|l|}
+\begin{tabular}{|c|c|c|}
 \hline
 \textbf{Cantidad} & \multicolumn{2}{c|}{\textbf{30000}} \\ \hline
 \textbf{Operador} & \multicolumn{1}{c|}{\textbf{Estados recibidos}} & \multicolumn{1}{c|}{\textbf{Estados emitidos}} \\ \hline
@@ -221,7 +221,7 @@ Persistencia & 0 & 0 \\ \hline
 
  \begin{table}[H]
 \centering
-\caption[Resultado esperado de un estado válido para el operador ubicación.]{Resultado esperado de un estado válido para el operador ubicación.\\Fuente: Elaboración Propia, (2016)}
+\caption[Resultado esperado del operador de ubicación.]{Resultado esperado del operador de ubicación.\\Fuente: Elaboración Propia, (2016)}
 \label{tab:resultadoEsperadoUbicacio}
 \begin{tabular}{lllll}
 \cline{1-3}
@@ -236,7 +236,7 @@ La solución a ésto fue reescribir el código del \textit{bolt} de ubicación, 
 
 \begin{table}[H]
 \centering
-\caption[Prueba al sistema completo y corregido utilizando 30000 estados.]{Prueba al sistema completo y corregido utilizando 30000 estados.\\Fuente: Elaboración Propia, (2016)}
+\caption[Nueva prueba al sistema con 30000 estados.]{Nueva prueba al sistema con 30000 estados.\\Fuente: Elaboración Propia, (2016)}
 \label{tab:sistemaCompletoEstadosCorregidos}
 \begin{tabular}{|c|l|l|}
 \hline
@@ -257,8 +257,8 @@ Persistencia & 743 & 743 \\ \hline
 Estos resultados distan de los realizados para los operadores individuales y muestran que el flujo de información en el sistema haciendo uso de datos reales. Teniendo en cuenta estos resultados se modifica la topología inicial presentada en la figura \ref{fig:Implementacion1p2} y pasa a utilizarse la presentada en la Tabla \ref{tab:topologiaFinal}, sus valores se basan en el porcentaje de datos capaces de pasar el operador, siendo estos representados en la Tabla \ref{tab:topologiaFinal2}.
 
 \begin{table}[H]
+\caption[Nivel general de replicación de la topología.]{Nivel general de replicación de la topología.\\Fuente: Elaboración Propia, (2016)}
 \centering
-\caption[Generalización del nivel máximo de replicación de la topología.]{Generalización del nivel máximo de replicación de la topología.\\Fuente: Elaboración Propia, (2016)}
 \label{tab:topologiaFinal2}
 \begin{tabular}{|l|c|}
 \hline
@@ -277,7 +277,7 @@ Persistencia & S \\ \hline
         
 Donde $N$ es un valor arbitrario determinado por el desarrollador. Para determinar un nivel de replicación para el sistema se determinó $N = 10$, así el sistema se entrega como el siguiente nivel de replicación máximo en sus operadores:
 
-\begin{table}[]
+\begin{table}[H]
 \centering
 \caption[Nivel máximo de replicación de la topología.]{Nivel máximo de replicación de la topología.\\Fuente: Elaboración Propia, (2016)}
 \label{tab:topologiaFinal}
@@ -299,7 +299,7 @@ Persistencia & 1 \\ \hline
 \section{Funcionamiento en alto tráfico}
 \label{sec:AltoTrafico}
 
-La siguiente gráfica presentada en la Figura \ref{fig:graficoDeTweets} presenta el flujo de mensajes de \textit{Twitter} entre las fechas 16 de febrero y 2 de marzo del año 2010, en ella se aprecia que se produjo un \textit{peak} de \textit{tweets} al momento de producirse el evento terremoto.
+La siguiente gráfica presentada en la Figura \ref{fig:graficoDeTweets} presenta el flujo de mensajes de \textit{Twitter} entre las fechas 16 de febrero y 2 de marzo del año 2010 perteneciente al conjunto de datos utilizado, en ella se aprecia que se produjo un \textit{peak} de \textit{tweets} al momento de producirse el evento terremoto.
 
 \begin{figure}[H]
         \centering
@@ -321,6 +321,26 @@ Teniendo en consideración lo anterior en cuanto a la cantidad de mensajes, se r
         \label{fig:graficoAcumulado}
 \end{figure}
 
-Haciendo uso de éstos resultados se simuló la llegada de los estados contenidos dentro de los datos de prueba durante una hora sobre el sistema. Los resultados de esta simulación del comportamiento de la aplicación al operar como si fuese un evento real se muestran en las Figuras \ref{}. La máquina para realizar estas pruebas fue la descrita en la sección \ref{subsec:HerrDesarrollo} y se utilizó la herramienta YourKit.
+Haciendo uso de éstos resultados se simuló la llegada de los estados contenidos dentro de los datos de prueba sobre el sistema. Los resultados de esta simulación del comportamiento de la aplicación al operar como si fuese un evento real se muestran a continuación. La máquina para realizar estas pruebas fue la descrita en la sección \ref{subsec:HerrDesarrollo} y se utilizó la herramienta YourKit. Se utilizaron 100.000 datos para realizar esta simulación y no se limitó la cantidad de estados por segundo para probar el comportamiento del sistema con una carga de trabajo mayor a la habitual.
+
+\begin{figure}[H]
+        \centering
+        \captionsetup{justification=centering}
+        \includegraphics[scale=1.2]{images/CPUUsageN.png}
+        \caption[Uso de CPU durante la simulación.]{Uso de CPU durante la simulación.\\Fuente: Elaboración Propia, (2016)}
+        \label{fig:cpuUsage}
+\end{figure}
+
+La gráfica presentada en la Figura \ref{fig:cpuUsage} muestra el uso de la CPU del proceso \textit{DeNe-Core} durante la simulación realizada, se ve gran variación del uso de CPU al comienzo de la operación, ésto se debe al uso de un segundo \textit{spout} encargado de emitir los \textit{tweets} almacenados en un archivo del tipo JSON correspondientes al evento del año 2010, esto se aprecia en la Figura \ref{fig:fileOpenClose} que muestra la cantidad de archivos abiertos en el tiempo. Posterior a la carga de los datos al sistema, sin considerar el primer segmento, el uso de CPU se mantiene constante al rededor del 49\% hasta aproximadamente 10 minutos después de comenzar que terminan de procesarse todos los datos. Teniendo en consideración que se entregaron 100.000 datos se procesan alrededor de 166 estados por minuto en esta prueba, eso es aproximadamente un 400\% más de lo que es posible recoger desde el \textit{stream} de \textit{Twitter}, por lo que se espera que en condiciones normales de operación, y dada la limitante del tiempo real, el uso del CPU sea menor al presentado en esta prueba. Siempre teniendo en cuenta que la cantidad de mensajes que alcanzan la mayor parte del sistema están dados por qué halla especificado el usuario en sus términos de búsqueda. Para éste caso, se utilizaron los mismos términos especificados anteriormente: "terremoto", "Chile" y "Concepción."
+
+\begin{figure}[H]
+        \centering
+        \captionsetup{justification=centering}
+        \includegraphics[scale=1.2]{images/FileOpenedClosed.png}
+        \caption[Archivos abiertos durante la simulación.]{Archivos abiertos durante la simulación.\\Fuente: Elaboración Propia, (2016)}
+        \label{fig:fileOpenClose}
+\end{figure}
+
+
 
 

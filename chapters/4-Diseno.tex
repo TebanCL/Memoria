@@ -22,7 +22,7 @@ La figura \ref{fig:arquitecturaSistema} presenta la arquitectura del sistema. É
 
 Todo el sistema es alimentado por el \textit{stream} provisto por el servicio de \textit{streaming} de \textit{Twitter}, pues ésta red social genera más de 140 millones de \textit{tweets} diariamente, \cite{StormIBM}, y su uso se dispara en períodos de crisis, \cite{TaxonomiaChato}, por ello es una buena fuente de información primaria, es decir, que la información viene desde la misma población afectada.
 
-Para ser capaz de procesar el flujo de información que llega de manera continua se hace uso \textit{Apache Storm}, el sistema de procesamiento de \textit{streams} que fue presentado en la sección \ref{subsubsec:ApacheStorm}, el cual divide el procesamiento en pequeñas tareas, en el caso del flujo desde \textit{Twitter}, éste ingresa, por medio de un \textit{spout}, a la aplicación detectora de necesidades la que procesa y clasifica cada \textit{tweet} del \textit{stream}, ésto se hace por medio de una serie de operadores denominados \textit{bolts} y lo transforma, de ser posible, en un marcador almacenado en la base de datos. La serie de pasos o \textit{bolts} por los que pasará un un \textit{tweet} son descritos en la sección \ref{subsec:detectorNecesidades}.
+Para ser capaz de procesar el flujo de información que llega de manera continua se hace uso \textit{Apache Storm}, el sistema de procesamiento de \textit{streams} que fue presentado en la sección \ref{subsubsec:ApacheStorm}, el cual divide el procesamiento en pequeñas tareas, en el caso del flujo desde \textit{Twitter}, éste ingresa, por medio de un \textit{spout}, a la aplicación detectora de necesidades la que procesa y clasifica cada \textit{tweet} del \textit{stream}, ésto se hace por medio de una serie de operadores denominados \textit{bolts} y lo transforma, de ser posible, en un marcador almacenado en la base de datos. La serie de pasos o \textit{bolts} por los que pasa un un \textit{tweet} son descritos en la sección \ref{subsec:detectorNecesidades}.
 
 Los datos almacenados en la base de datos son leídos por la visualizadora la que se encarga de mostrar al usuario, mediante su navegador \textit{web}, la ubicación y cantidad de eventos tanto en tiempo real, como históricos. La visualización de éstos últimos se realiza por medio de las API proporcionadas por \textit{Google Maps} y \textit{Highcharts}. El primero se utiliza para obtener un mapa geográfico con la capacidad de ubicar geográficamente puntos por medio de marcadores y modificarlos a voluntad, mientras que el segundo para transformar los datos a una línea temporal que muestre al usuario la cantidad de eventos por cada período.
 
@@ -43,7 +43,7 @@ En primer lugar, es necesario hacer hincapié en el contexto en que el sistema o
 
 En segundo, y como se explicó en la sección \ref{subsec:HerrDesarrollo}, el funcionamiento interno de las aplicaciones construidas con \textit{storm} se puede esquematizar por medio de un grafo dirigido donde los nodos se corresponden con los operadores definidos en la topología y que pueden tener diferente cantidad de elementos por procesar y tardar tiempos distintos en realizar su labor. Lo anterior sugiere que pueden existir niveles en los que se producen cuellos de botella en el \textit{pipeline} de procesamiento. Considerando lo anteriormente expuesto el sistema ha de estar preparado para responder de la mejor forma posible cuando se produzcan estas obstrucciones en el proceso.
 
-En tercer lugar, el uso de un clasificador de texto involucra que la calidad del etiquetado está dada por el cómo éste se construyó. La construcción está dada por los datos de entrenamiento; mientras más datos se entreguen, probablemente, la calidad del clasificador sea mayor. Esto quiere decir que el clasificador puede ser mejorado y que constituirá una limitante el mantener éste estático.
+En tercer lugar, el uso de un clasificador de texto involucra que la calidad del etiquetado está dada por el cómo éste se construyó. La construcción está dada por los datos de entrenamiento; mientras más datos se entreguen, probablemente, la calidad del clasificador sea mayor. Esto quiere decir que el clasificador puede ser mejorado y que consituye una limitante el mantener éste estático.
 
 \section{Decisiones de diseño}
 \label{sec:decDiseno}
@@ -130,7 +130,7 @@ Sitio   & Versión multi-usuario de la anterior.                                
 
 Para esta aplicación la adecuada corresponde a la API pública. En ésta, a la vez, existen dos puntos de acceso; el público y \textit{firehose}. El acceso público es gratuito y permite el acceso a un 1\% de la información que se genera en tiempo real y para acceder a el basta con crear una aplicación dentro de \textit{Twitter}. En cambio para acceder a \textit{firehose}, el cual permite acceso total a la información, debe comprarse el acceso. Dadas estas condiciones se seleccionó, previo acuerdo con los clientes, el uso de la API pública.
 
-Para hacer uso de la API descrita con anterioridad es necesario obtener cuatro claves de acceso: \textit{Access Token}, \textit{Access Token Secret}, \textit{Consumer Key (API Key)} y \textit{Consumer Secret (API Secret)}. Para más información sobre cómo conseguir estas claves consulte el Apéndice \ref{apendice:TwitterKeys}.
+Para hacer uso de la API descrita con anterioridad es necesario obtener cuatro claves de acceso: \textit{Access Token}, \textit{Access Token Secret}, \textit{Consumer Key (API Key)} y \textit{Consumer Secret (API Secret)}. Para más información sobre cómo conseguir estas claves consulte el Apéndice \ref{apendice:clavesApi}.
 
 \subsection{Especificación de términos de búsqueda}
 \label{sec:diseno:termBusqueda}
@@ -231,7 +231,7 @@ Los datos son seleccionados por el usuario, estos datos se agruparan en un archi
 
 El preprocesamiento y transformación de los datos está dado por la definición de los operadores presentados en la sección \ref{subsec:detectorNecesidades}.
 
-Teniendo en consideración que se utilizan dos aplicaciones distintas, donde en una se construye el clasificador y en otra donde es utilizado. Surge el problema de cómo realizar la comunicación entre ellas. Para solucionar este inconveniente se utilizará una carpeta compartida por ambas aplicaciones. En el caso de sistemas Unix se utilizará el directorio $/opt/DeNe$, mientras que para Windows se utilizará $C:/DeNe/$. En estos directorios se almacena un fichero con el clasificador serializado.
+Teniendo en consideración que se utilizan dos aplicaciones distintas, donde en una se construye el clasificador y en otra donde es utilizado. Surge el problema de cómo realizar la comunicación entre ellas. Para solucionar este inconveniente se utiliza una carpeta compartida por ambas aplicaciones. En el caso de sistemas Unix se utiliza el directorio $/opt/DeNe$, mientras que para Windows se utiliza $C:/DeNe/$. En estos directorios se almacena un fichero con el clasificador serializado.
 
 \begin{figure}[H]
 	\centering
@@ -302,7 +302,7 @@ Lo anteriormente descrito es presentado a continuación en el Algoritmo \ref{alg
 	\label{alg:filtroMarcadores}
 \end{algorithm}\vphantom\\
 
-Para realizar la selección del intervalo mencionado en la HU-v04 se solicitó, por parte del equipo FONDEF IDeA, el uso de una línea de tiempo con intervalo deslizante que, además, mostrase la cantidad de eventos detectados por fecha por medio de un histograma. Para ello se utilizó, inicialmente, se utilizó \textit{JDateRangeSlider}, de la biblioteca Javascript JQRangeSlider, \cite{JQRangeSlider}. Ésta biblioteca era suficiente para seleccionar el intervalo de fechas y detectar cambios producidos en la línea de tiempo para actualizar los valores, mas no permitía la implementación de un histograma externo.
+Para realizar la selección del intervalo mencionado en la HU-v04 se solicitó, por parte del equipo FONDEF IDeA, el uso de una línea de tiempo con intervalo deslizante que, además, mostrase la cantidad de eventos detectados por fecha por medio de un histograma. Para ello se utilizó, inicialmente, se utilizó \textit{JDateRangeSlider}, de la biblioteca Javascript JQRangeSlider, \cite{JQRangeSlider}. Ésta biblioteca era suficiente para seleccionar el intervalo de fechas y detectar cambios producidos en la línea de tiempo para actualizar los valores, mas no permite la implementación de un histograma externo.
 
 \begin{figure}[H]
 	\centering
@@ -334,7 +334,7 @@ Inicialmente este histograma sólo está disponible en inglés, pero permite cam
 
 Tras la selección de intervalo dentro del cual se desea que el sistema muestre los estados recibidos, se implementó un servicio REST, donde mediante una consulta del tipo POST con parámetros fecha inicial y final, retornase una lista con todos los marcadores encontrados.
 
-Las categorías mencionadas a continuación son descritas en la sección \ref{sec:diseno:categorias}. Los iconos correspondientes a las categorías que soporta el programa se definieron mediante la combinación de dos imágenes para cada categoría: un marcador de mapa, similar a los definidos en la API de Google Maps y una que sugiriera al usuario el tipo al cual se refería. Los diseños finales son presentados en las Figuras de la \ref{fig:agua} a la \ref{fig:seguridad}.
+Las categorías mencionadas a continuación son descritas en la sección \ref{sec:diseno:categorias}. Los iconos correspondientes a las categorías que soporta el programa se definieron mediante la combinación de dos imágenes para cada categoría: un marcador de mapa, similar a los definidos en la API de Google Maps y una que sugiriera al usuario el tipo al cual se refiere. Los diseños finales son presentados en las Figuras de la \ref{fig:agua} a la \ref{fig:seguridad}.
 
 \begin{figure}[!htb]
 	\minipage{0.32\textwidth}
@@ -553,7 +553,7 @@ Específicamente se solicitaron tres tipos de estadísticas que han de ser mostr
 
 Para cumplir lo solicitado hacía falta añadir elementos no considerados en la base de datos; hace falta conocer al usuario y contar los \textit{tweets} ingresados desde \textit{Twitter4J}.
 
-Para completar esta historia se realizaron modificaciones al esquema previamente definido en la sección \ref{sec:diseno:persistencia}, este de por si era suficiente para cumplir con la estadística número uno, pero incapaz de realizar las otras dos. Para la segunda estadística se consideró que bastaba con guardar al usuario junto con la colección de marcadores. De acuerdo a \cite{TwitterAgreement} en su sección F. \textit{Be a Good Partner to Twitter}, se insta a los desarrolladores que almacenen contenido \textit{offline} de \textit{Twitter}, a almacenar sólo el ID del usuario o del \textit{tweet}, por ello y siguiendo estos lineamientos se agregará el campo "userID" al esquema marcadores, pasando a quedar como se aprecia en la Figura \ref{fig:esquemaMarker2}.
+Para completar esta historia se realizaron modificaciones al esquema previamente definido en la sección \ref{sec:diseno:persistencia}, este de por si era suficiente para cumplir con la estadística número uno, pero incapaz de realizar las otras dos. Para la segunda estadística se consideró que bastaba con guardar al usuario junto con la colección de marcadores. De acuerdo a \cite{TwitterAgreement} en su sección F. \textit{Be a Good Partner to Twitter}, se insta a los desarrolladores que almacenen contenido \textit{offline} de \textit{Twitter}, a almacenar sólo el ID del usuario o del \textit{tweet}, por ello y siguiendo estos lineamientos se agrega el campo "userID" al esquema marcadores, pasando a quedar como se aprecia en la Figura \ref{fig:esquemaMarker2}.
 
 \begin{figure}[H]
 	\centering
@@ -619,7 +619,7 @@ Adicionalmente a lo anteriormente descrito hace falta un medio para obtener los 
 \subsubsection*{Configuración}
 \label{subsubsec:config}
 
-Esta historia nace producto de la HU-v01. El visualizador de eventos tendrá dos maneras de comportarse:
+Esta historia nace producto de la HU-v01. El visualizador de eventos tiene dos maneras de comportarse:
 
 \begin{itemize}
 \item Modo tiempo real: Cuando el sistema esté en funcionamiento y cada cierto tiempo, $t_{1}$, se actualizan los marcadores de los nuevos eventos y éstos se muestran durante un tiempo, $t_{2}$.
@@ -638,7 +638,7 @@ El detector de necesidades, al estar construido sobre \textit{Apache Storm}, est
 
 Conociendo desde donde se obtiene la información y teniendo acceso a ella resta conocer cómo realizar la conexión. Para ello se selecciono utilizar \textit{Twitter4J}, una biblioteca no oficial de Java para las API de \textit{Twitter}. Para su funcionamiento sólo requiere del uso de Java en su version 5 o superior.
 
-La implementación de lo anteriormente descrito se realiza utilizando una instancia del objeto \textit{TwitterStream}, el cual captura el flujo público de \textit{Twitter}, almacenando cada estado recibido en una cola. Con esto en mente se construyó el primer operador del sistema correspondiente al \textit{Spout} que surtirá de datos al sistema.
+La implementación de lo anteriormente descrito se realiza utilizando una instancia del objeto \textit{TwitterStream}, el cual captura el flujo público de \textit{Twitter}, almacenando cada estado recibido en una cola. Con esto en mente se construyó el primer operador del sistema correspondiente al \textit{Spout} que surte de datos al sistema.
 
 \begin{figure}[H]
 	\centering
@@ -650,7 +650,7 @@ La implementación de lo anteriormente descrito se realiza utilizando una instan
 
 Considerando lo recién expuesto la Figura \ref{fig:TwitterSpout} muestra cómo los estados son emitidos por el \textit{spout} al sistema basándose en la cola (\textit{queue}) para manejar lo que llega desde el \textit{stream}
 
-Tal y como se mencionó en el capítulo \ref{cap:MarcTeorico} una topología \textit{storm} funciona estableciendo un grafo donde cada nodo corresponde a un operador o \textit{bolt}, la Figura \ref{fig:stormBeLike} muestra como los \textit{bolt} se unen con el propósito de procesar las entradas entregadas por los \textit{spout} que, en este caso y tal como se señaló en el sección \ref{subsubseC:EntradaDeDatos} corresponde a aquel que recibe la información desde el \textit{stream} de \textit{Twitter}, pero ¿cuál será la función de cada uno de los \textit{bolts}?
+Tal y como se mencionó en el capítulo \ref{cap:MarcTeorico} una topología \textit{storm} funciona estableciendo un grafo donde cada nodo corresponde a un operador o \textit{bolt}, la Figura \ref{fig:stormBeLike} muestra como los \textit{bolt} se unen con el propósito de procesar las entradas entregadas por los \textit{spout} que, en este caso y tal como se señaló en el sección \ref{subsubseC:EntradaDeDatos} corresponde a aquel que recibe la información desde el \textit{stream} de \textit{Twitter}, pero ¿cuál es la función de cada uno de los \textit{bolts}?
 
 La pregunta anteriormente planteada abre un nuevo abanico de problemas, para cada uno de los cuales se desarrolla un operador y éstos, trabajando en conjunto, producen la información necesaria para ser almacenada como un documento 'marcador' en la colección 'Markers' descrita en la Figura \ref{fig:esquemaMarker2}.
 
@@ -725,7 +725,7 @@ La Figura \ref{fig:operadorFiltro} muestra la implementación del filtro de cons
 \subsubsection*{Operador normalizador de texto}
 \label{subsubsec:3op}
 
-El tercer problema es inherente a \textit{Twitter}: En esta red social es común referenciar un estado a un determinado tema, he ahí el uso de los conocidos \textit{Hashtag} que, como se mencionó en la sección \ref{subsubsec:estadisticasdeproc} corresponden a palabras concatenadas antecedidas por el caracter \#. Otro problema común corresponde a la mención de usuarios, ésta corresponde a un llamado al nombre de usuario dentro de la aplicación, antecedida por el caracter "@", usualmente usada para el envío de mensajes entre pares. Diversos autores, entre ellos, \cite{NLPaccuracy}, \cite{NLPaccuracy1} y \cite{NLPaccuracy2}, han señalado que la existencia de estos elementos significan una disminución en la precisión de los elementos descritos en la sección \ref{sec:diseno:clasificador}. Por ello él tercer operador corresponderá a normalizador de texto, el cual reemplaza menciones a usuarios, \textit{hashtags} y URLs, todas ellas variables, por palabras constantes, el reemplazo a realizarse se muestra en la Tabla \ref{tab:reemplazosDeEntidades}. Ésto se fundamenta en los resultados descritos en el capítulo \ref{cap:experimentos}.
+El tercer problema es inherente a \textit{Twitter}: En esta red social es común referenciar un estado a un determinado tema, he ahí el uso de los conocidos \textit{Hashtag} que, como se mencionó en la sección \ref{subsubsec:estadisticasdeproc} corresponden a palabras concatenadas antecedidas por el caracter \#. Otro problema común corresponde a la mención de usuarios, ésta corresponde a un llamado al nombre de usuario dentro de la aplicación, antecedida por el caracter "@", usualmente usada para el envío de mensajes entre pares. Diversos autores, entre ellos, \cite{NLPaccuracy}, \cite{NLPaccuracy1} y \cite{NLPaccuracy2}, han señalado que la existencia de estos elementos significan una disminución en la precisión de los elementos descritos en la sección \ref{sec:diseno:clasificador}. Por ello él tercer operador corresponde a normalizador de texto, el cual reemplaza menciones a usuarios, \textit{hashtags} y URLs, todas ellas variables, por palabras constantes, el reemplazo a realizarse se muestra en la Tabla \ref{tab:reemplazosDeEntidades}.
 
 \begin{table}[H]
 \centering
@@ -747,7 +747,7 @@ La implementación de éste operador se realizo utilizando expresiones regulares
 
 El cuarto y mayor problema presentado tiene relación, principalmente, con la historia HU-v01. Si bien se mencionó cómo se realiza la visualización, no se señaló cómo es que se obtienen tanto la coordenadas geográficas, latitud y longitud, para ubicar geográficamente un evento.
 
-Ha sido señalado por \cite{ChatoSurvey} que menos del 1\% de los \textit{tweets} contienen datos en sus campos correspondientes a geolocalización. En un experimento (véase Apéndice \ref{apendice:xcentajeGeo}) realizado utilizando la herramienta \textit{RapidMiner} se obtuvo una muestra de 67.789 \textit{tweets} directamente desde el \textit{stream} sin utilizar filtros de búsqueda, de esos \textit{tweets} 67.475 no contaban con los datos correspondientes a la ubicación geográfica, es decir, el 0.46\% de los datos de aquella muestra cuentan con la información requerida, lo que hace creer que lo presentado por los autores, antes mencionados, está en lo correcto.
+Ha sido señalado por \cite{ChatoSurvey} que menos del 1\% de los \textit{tweets} contienen datos en sus campos correspondientes a geolocalización. En un experimento (véase Apéndice \ref{apendice:apendice1}) realizado utilizando la herramienta \textit{RapidMiner} se obtuvo una muestra de 67.789 \textit{tweets} directamente desde el \textit{stream} sin utilizar filtros de búsqueda, de esos \textit{tweets} 67.475 no contaban con los datos correspondientes a la ubicación geográfica, es decir, el 0.46\% de los datos de aquella muestra cuentan con la información requerida, lo que hace creer que lo presentado por los autores, antes mencionados, está en lo correcto.
 
 Siendo la geolocalización un elemento de suma importancia para el funcionamiento de la aplicación, se ha de intentar obtener este dato de alguna forma. Así es como surge la posibilidad de usar el contenido del \textit{tweet} para obtener la ubicación, para ello se preparó un diccionario con las comunas del país y sus coordenadas geográficas, \cite{ubicacionesChile} y se diseñó el Algoritmo \ref{alg:geolocalizacion}. De esta manera existe una aproximación para detectar la ubicación a la que un \textit{tweet} hace referencia.\\
 
@@ -783,7 +783,7 @@ Los operadores descritos en las secciones \ref{subsubsec:5op} y \ref{subsubsec:6
 \subsubsection*{Operador removedor de \textit{stopword}}
 \label{subsubsec:5op}
 
-Éste operador hará uso de una lista de palabras denominadas \textit{stopwords} o palabras vacías, éstas corresponden a palabras sin significado, como artículos, pronombres, preposiciones, etcétera. Éstas palabras son eliminadas del texto que se está procesando, para ello se utilizará el Algoritmo \ref{alg:stopwords}.\\
+Éste operador hace uso de una lista de palabras denominadas \textit{stopwords} o palabras vacías, éstas corresponden a palabras sin significado, como artículos, pronombres, preposiciones, etcétera. Éstas palabras son eliminadas del texto que se está procesando, para ello se utiliza el Algoritmo \ref{alg:stopwords}.\\
 
 \begin{algorithm}[H]\setstretch{1.5}
 	\begin{algorithmic}[numeracion_lineas]
