@@ -51,7 +51,7 @@ Dentro de las tareas que pueden realizarse utilizando \textit{data mining} puede
 \subsection{Aprendizaje supervisado}
 \label{subsec:aprendSuperv}
 
-Se caracteriza por ser un proceso de aprendizaje en el que éste se realiza mediante un entrenamiento controlado por un agente externo, el que determina qué respuesta debería generarse a partir de una entrada determinada. \cite{AprendizajeSupervisado}.
+Se caracteriza por ser un proceso de aprendizaje en el que éste se realiza mediante un entrenamiento controlado por un agente externo, el que determina qué respuesta debe generarse a partir de una entrada determinada. \cite{AprendizajeSupervisado}.
 
 Se asocia al concepto de \textit{machine learning} con la minería de datos; la primera busca patrones conocidos y predecir en base a ellos mientras que la segunda busca patrones con anterioridad desconocidos, es decir, la primera tiene una función focalizada en la predicción mientras que la segunda realiza una función exploratoria.
 
@@ -63,19 +63,51 @@ Teniendo en cuenta los elementos vistos con anterioridad, se define el objetivo 
 
 Se le llama conjunto de entrenamiento al conjunto de datos utilizado para el aprendizaje. Este conjunto es entregado como entrada al algoritmo de aprendizaje y construcción del modelo. Para realizar la evaluación de la calidad del modelo se utiliza un segundo conjunto de instancias llamado datos de validación. Se espera que estos datos no hayan sido vistos con anterioridad por máquina y así obtener la confianza, es decir, la probabilidad de acierto que calcula el sistema para cada predicción.
 
-Lo ventajoso de este método es que se podrá clasificar una instancia sin haberla visto nunca, pero la desventaja principal es la que han de utilizarse una gran cantidad de instancias para el proceso de entrenamiento. El proceso de entrenamiento y evaluación se ilustra en la Figura ~\ref{fig:entrenamientoEvaluacion}.
+Lo ventajoso de este método es que se puede clasificar una instancia sin haberla visto nunca, pero la desventaja principal es la que han de utilizarse una gran cantidad de instancias para el proceso de entrenamiento. El proceso de entrenamiento y evaluación se ilustra en la Figura ~\ref{fig:entrenamientoEvaluacion}.
 
 \begin{figure}[H]
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[scale=0.6]{images/trainTest.png}
-	\caption[Proceso de entrenamiento y prueba del modelo.]{Proceso de entrenamiento y prueba del modelo.}
+	\caption[Proceso de entrenamiento y prueba del modelo.]{Proceso de entrenamiento y prueba del modelo.\\Fuente: Elaboración Propia, (2016)}
 	\label{fig:entrenamientoEvaluacion}
 \end{figure}
 
+Habiendo realizado la construcción del clasificador resta realizar la evaluación, para ello han de usarse una serie de métricas, en particular para este trabajo se hará uso de tres de ellas, éstas son la precisión (\textit{accuracy}), el \textit{recall} y la medición \textit{F-1 Score}. La descripción de cada una de ellas se pasa a detallar a continuación.
+
+La precisión corresponde al ratio de valores correctamente clasificados, es decir, del conjunto de elementos seleccionados, aquellos que fueron clasificado correctamente sobre el conjunto en total. Matemáticamente cumple la siguiente expresión:
+
+\[
+	Accuracy = \frac{TP}{TP+FP}
+\]
+
+Donde TP corresponde a los \textit{True Positives}, es decir, elementos correctamente clasificados y FP corresponde a los \textit{False Positives}, es decir, elementos clasificados de forma positiva, pero que no corresponden a aquella clase.
+
+El \textit{Recall}, también conocido como sensibilidad, corresponde al ratio de valores positivos que fueron clasificados correctamente.
+
+\[
+	Recall = \frac{TP}{TP+FN}
+\]
+
+Donde FN corresponde a los \textit{False Negatives}, es decir, elementos positivos que fueron clasificados como negativos para una clase, \cite{AccuracyRecall}.
+
+El \textit{F-1 Score} viene dado de la ecuación:
+
+\[
+	F_{\beta} = (1+\beta^{2})\frac{Accuracy · Recall}{(\beta^{2} · Accuracy) + Recall}
+\]
+
+Cuando el valor de $\beta$ es igual a 1:
+
+\[
+	F1 = 2\frac{Accuracy · Recall}{ Accuracy + Recall}
+\]
+
+A esto se le denomina promedio harmónico, pues pesa de igual manera pa precisión y la sensibilidad. Es una medida para medir el desempeño de un clasificador, corresponde a un valor de intercambio para los valores de precisión y sensibilidad, es decir, al aumentar uno cuánto ha de disminuir el otro, \cite{FMeasureInterpret}.
+
 Dentro de los algoritmos utilizados para la construcción de clasificadores se encuentra \textit{Naïve Bayes} \cite{NaiveBayes2} a continuación se realiza una descripción de este. 
 
-	\subsubsection{Naïve Bayes}
+	\subsubsection*{Naïve Bayes}
 	\label{subsubsec:naiveBayes}
 	
 	La clasificación puede verse como una función \begin{math}\gamma\end{math} que asigna etiquetas a observaciones \cite{NaiveBayes1}, es decir:
@@ -127,7 +159,7 @@ Dentro de los algoritmos utilizados para la construcción de clasificadores se e
 		P(d_{j}|c_{i}) = ArgMax{\substack{k}^n P(c_{i})}\prod_{j=1}^n P(a_{j}|c_{i})
 	\]
 
-	En términos simples el crear un modelo de clasificación Naïve Bayes se puede resumir en el Algoritmo \ref{alg:NaiveB}.
+	En términos simples el crear un modelo de clasificación Naïve Bayes se puede resumir en el Algoritmo \ref{alg:NaiveB}.\\
 
 	\begin{algorithm}[H]\setstretch{1.5}
 	\begin{algorithmic}[numeracion_lineas]

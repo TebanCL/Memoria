@@ -49,7 +49,7 @@ Las necesidades que la aplicación detecta no son una lista exhaustiva de las po
 
 Se considera para la construcción del clasificador un subconjunto de un \textit{dataset} de cuatro millones setecientos mil \textit{tweets} recogidos desde \textit{Twitter} correspondientes al terremoto ocurrido el 2010 en Chile. Este conjunto de datos contiene mensajes en distintos idiomas y ha sido filtrada llegando a aproximadamente un millón y medio de tweets, utilizado por \cite{}, para la construcción de su aplicación sobre rumores en \textit{Twitter}. De aquel conjunto se obtendrá un subconjunto para realizar el etiquetado y ser usado como datos de entrenamiento. 
 
-\section{Metodología y herramientas utilizadas}
+\section{Metodologías y herramientas utilizadas}
 \label{intro:metodologia}
 
 \subsection{Metodología}
@@ -57,7 +57,7 @@ Se considera para la construcción del clasificador un subconjunto de un \textit
 
 Para la realización de este trabajo se utilizarán dos metodologías, en esta sección se ambas son definidas.
 
-\subsubsection{Programación Extrema}
+\subsubsection*{Programación Extrema}
 \label{subsubsec:XP}
 
 La Programación Extrema (\textit{Extreme Programming}, XP desde ahora en adelante), comenzó como un proyecto el 6 de Marzo de 1996. Es uno de los procesos ágiles más populares y ha sido provado exitosamente en compañias e industrias de todos los tamaños. \cite{xP}.
@@ -128,11 +128,11 @@ El proceso de XP puede puede ser aprecido en la Figura \ref{fig:procesoXP}.
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[scale=0.6]{images/flowChartXP.png}
-	\caption[Diagrama de flujo de Programación Extrema.]{Diagrama de flujo de Programación Extrema}
+	\caption[Diagrama de flujo de Programación Extrema.]{Diagrama de flujo de Programación Extrema.\\Fuente: \cite{XP}}
 	\label{fig:procesoXP}
 \end{figure}
 
-\subsubsection{\textit{Knowledge Discovery in Databases} (KDD)}
+\subsubsection*{\textit{Knowledge Discovery in Databases} (KDD)}
 \label{subsubsec:kdd}
 
 Es definido por \cite{KDDFayyad} como "El proceso no trivial de identificar patrones válidos, nuevos, potencialmente útiles y en ultima instancia comprensible en los datos", surge de la necesidad de manejar grandes cantidades de datos e involucra simultaneamente varias disciplinas de investigación tales como el aprendizaje automático, la estadística, inteligencia artificial, sistemas de gestión de bases de datos, sistemas de apoyo a la toma de decisiones, entre otras.
@@ -142,7 +142,7 @@ Si bien puede variar el usuario, quien es aquel que determina el domino de la ap
 \begin{enumerate}
 \item Selección de datos: Consiste en buscar el objetivo y las herramientas del proceso de minería, identificando los datos que han de ser extraídos, buscando atributos apropiados de entrada y la información de salida para representar la tarea. Esto quiere decir, primero se debe tener en cuenta lo que se sabe, lo que se quiere obtener y cuáles son los datos que nos facilitarán esa información para poder llegar a nuestra meta, antes de comenzar el proceso como tal.
 \item Limpieza de datos: En este paso se limpian los atributos sucios, incluyendo datos incompletos, el ruido y datos inconsistentes. Estos datos sucios, en algunos casos, deben ser eliminados, pues pueden contribuir a un análisis inexacto y resultados incorrectos.
-\item Integración de datos: Combina datos de múltiples procedencias incluyendo múltiples bases de datos, que podrían tener diferentes contenidos y formatos.
+\item Integración de datos: Combina datos de múltiples procedencias incluyendo múltiples bases de datos, que pueden tener diferentes contenidos y formatos.
 \item Transformación de datos: Consiste en modificaciones sintácticas llevadas a cabo sobre los datos sin que suponga un cambio en la técnica de minería aplicada. Tiene dos caras, por un lado existen ventajas en el sentido de mejorar la interpretación de las reglas descubiertas y reduce el tiempo de ejecución, por el otro puede llevar a la pérdida de información.
 \item Reducción de datos: Reducción del tamaño de los datos, encontrando características más significativas dependiendo del objetivo del proceso.
 \item Minería de datos: Consiste en la búsqueda de patrones de interés que puedan expresarse como un modelo o dependencia de los datos. Se ha de de especificar un criterio de preferencia para seleccionar un modelo de un conjunto de posibles modelos. Además se ha de especificar la estrategia de búsqueda (algoritmo), a utilizar.
@@ -156,7 +156,7 @@ La representacíón del proceso descrito por la metodología KDD puede verse esq
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[scale=1]{images/kdd.png}
-	\caption[Proceso KDD.]{Proceso KDD.}
+	\caption[Proceso KDD.]{Proceso KDD.\\Fuente: \cite{KDDFigure}}
 	\label{fig:procesoKDD}
 \end{figure}
 
@@ -167,7 +167,7 @@ A continuación se presentan las herramientas, tanto de \textit{software} como d
 
 Se ha se utilizado diversas herramientas de software para la construcción de la aplicación, éstas son descritas a continuación haciendo especial énfasis en aquellas de gran importancia dentr del desarrollo del proyecto
 
-\subsubsection{Apache Storm}
+\subsubsection*{Apache Storm}
 \label{subsubsec:ApacheStorm}
 
 Apache Storm es un sistema de computación en tiempo real de código abierto. Simplifica el problema de flujos (\textit{streams}), de datos sin que estos tengan fin.
@@ -182,7 +182,7 @@ Oficialmente es representado como puede verse en la Figura \ref{fig:stormBeLike}
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[scale=0.6]{images/stormBeLike.png}
-	\caption[Representación del funcionamiento de Apache Storm.]{Representación del funcionamiento de Apache Storm.}
+	\caption[Representación del funcionamiento de Apache Storm.]{Representación del funcionamiento de Apache Storm.\\Fuente: \cite{StormFigure}}
 	\label{fig:stormBeLike}
 \end{figure}
 
@@ -194,7 +194,7 @@ Al trabajar con \textit{Apache Storm}, como ya se ha descrito, se han de constru
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[scale=0.8]{images/SpoutBase.png}
-	\caption[Construcción de un Spout.]{Construcción de un Spout.}
+	\caption[Construcción de un Spout.]{Construcción de un Spout.\\Fuente: Elaboración Propia, (2016)}
 	\label{fig:spoutbase}
 \end{figure}
 
@@ -210,7 +210,7 @@ En la figura \ref{fig:spoutbase} muestra la base para la implementación de un \
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[scale=0.8]{images/BoltBase.png}
-	\caption[Construcción de un Bolt.]{Construcción de un Bolt.}
+	\caption[Construcción de un Bolt.]{Construcción de un Bolt.\\Fuente: Elaboración Propia, (2016)}
 	\label{fig:boltbase}
 \end{figure}
 
@@ -249,7 +249,7 @@ La arquitectura de Storm se divide en tres componentes:
 \item Zookeeper: Si bien no es un componente propio de Storm, es necesario para su funcionamiento, pues se encarga de coordinar Nimbus y Supervisor, además de mantener sus estados, pues ambos son \textit{stateless}.
 \end{itemize}
 
-\subsubsection{MongoDB}
+\subsubsection*{MongoDB}
 \label{subsubsec:mongoDB}
 
 Base de datos no relacional (NoSQL) de código abierto escrita en C++ y está orientada al trabajo en documentos. Lo anterior quiere decir que, en lugar de guardar los datos en registros, lo hace en documentos y éstos son almacenada en una representación binaria de JSON conocida como BSON.
@@ -258,29 +258,29 @@ Una de las diferencias fundamentales con respecto a las bases de datos relaciona
 
 MongoDB fue creado para brindar escalabilidad, rendimiento y disponibilidad. Puede ser utilizado en un servidor único como en múltiples. Esto se logra dado que MongoDB brinda un elevado rendimiento, tanto para lectura como para escritura, potenciando la computación en memoria.
 
-Las consultas en MongoDB se realizan como si se tratase de Javascript entregando como parámetro un objeto JSON. Por ejemplo, dado el documento presentado en la Figura ~\ref{fig:MongoJsonExample}, parte de una colección llamada 'Personas' en MongoDB:
+Las consultas en MongoDB se realizan como si se tratase de Javascript entregando como parámetro un objeto JSON. Por ejemplo, dado el documento presentado en la Figura \ref{fig:MongoJsonExample}, parte de una colección llamada 'Personas' en MongoDB:
 
 \begin{figure}[H]
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[scale=0.8]{images/MongoJsonExample.png}
-	\caption[Documento en MongoDB.]{Documento en MongoDB.}
+	\caption[Documento en MongoDB.]{Documento en MongoDB.\\Fuente: Elaboración Propia, (2016)}
 	\label{fig:MongoJsonExample}
 \end{figure}
 
-Una consulta para encontrar este elemento dentro de la colección se daría de la forma aprecida en la Figura ~\ref{fig:MongoJsonQueryExample}
+Una consulta para encontrar este elemento dentro de la colección se dará de la forma aprecida en la Figura \ref{fig:MongoJsonQueryExample}
 
 \begin{figure}[H]
 	\centering
 	\captionsetup{justification=centering}
 	\includegraphics[scale=0.8]{images/MongoJsonQueryExample.png}
-	\caption[Consulta en MongoDB.]{Consulta en MongoDB.}
+	\caption[Consulta en MongoDB.]{Consulta en MongoDB.\\Fuente: Elaboración Propia, (2016)}
 	\label{fig:MongoJsonQueryExample}
 \end{figure}
 
 En pruebas realizando operaciones habituales dentro de las bases de datos \cite{MongoPerformance} demostró que el tiempo de ejecución de MongoDB, como base de datos NoSQL, aventaja significativamente a las bases de datos relacionales más populares como lo son MySQL y PostgreSQL.
 
-\subsubsection{Play Framework}
+\subsubsection*{Play Framework}
 \label{subsubsec:playframework}
 
 Es un \textit{framework} de código abierto para aplicaciones \textit{web} escrito en \textit{Java} y \textit{Scala}, el cual sigue el patrón de arquitectura \textit{Modelo-Vista-Controlador} (MVC). Utiliza el paradigma de diseño "Convención sobre configuración", el cual apunta a reducir la toma de decisiones que debe tomar el desarrollador sin perder flexibilidad. 
@@ -291,14 +291,14 @@ Elimina la desventaja de desarrollo al utilizar \textit{Java} dada por el contin
 
 Play no utilizar sesiones en su funcionar, privilegiando el uso de almacenamiento \textit{offline} o el uso de peticiones \textit{Ajax} para resolver problemas del lado del cliente.
 
-\subsubsection{Mallet}
+\subsubsection*{Mallet}
 \label{subsubsec:mallet}
 
 Fué desarrollada por \cite{Mallet}, en la Universidad de Massachusetts Amherst, es una herramienta de Java para el procesamiento de lenguaje natural, clasificación de documentos, \textit{clustering}, extracción de información y otras aplicaciones de aprendizaje de máquina sobre texto.
 
 Cuenta con implementaciones de una variedad de algoritmos entre los cuales se encuentran: Naïve Bayes, Máxima entropía y árboles de decisión. Además incluye herramientas para evaluar el desempeño de clasificadores mediante el uso de métricas más utilizadas.
 
-\subsubsection{Otras herramientas de \textit{software}}
+\subsubsection*{Otras herramientas de \textit{software}}
 \label{subsubsec:herrSoft}
 
 Además de las herramientas descritas se hará uso de las una lista de herramientas comunes para el desarrollo de proyectos de \textit{software} presentada a continuación:
@@ -310,11 +310,12 @@ Además de las herramientas descritas se hará uso de las una lista de herramien
 \item PowerDesigner 16, para la elaboración de diagramas.
 \item Bitbucket (Git), como repositorio de todo lo referente al proyecto (Detector de necesidades, visualizador y documento de memoria).
 \item Windows 10 Home Edition (x64).
+\item YourKit 1.8.0\_92 64 bits, para evaluación de \textit{performance} de la aplicación.
 \item Linux Mint 17.3 (x86).
 \item Oracle VirtualBox (5.0.14).
 \end{itemize}
 
-\subsubsection{Herramientas de \textit{hardware}}
+\subsubsection*{Herramientas de \textit{hardware}}
 \label{subsubsec:HerrHardw}
 
 Se utilizará el equipo del autor de este trabajo cuyas características técnicas son descritas a contunuación:

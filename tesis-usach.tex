@@ -4,6 +4,8 @@
 \usepackage{nameref}
 \usepackage{booktabs}
 \usepackage{adjustbox}
+\usepackage{mathtools}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 
 \begin{document}
 \baselineskip 23pt
@@ -23,12 +25,12 @@
 {\setstretch{1.0}						% Interlineado en las páginas preliminares
 \makecopyright							% Si es propuesta no se mostrará
 
+\setcounter{page}{1} 
+\include{preliminares/abstract}
+
 % ### Dedicatoria y agredecimientos de la tesis ###
 \include{preliminares/dedicatoria}		% En caso de no querer agregarlos, comente esta línea
 \include{preliminares/agradecimiento}
-
-\setcounter{page}{1} 
-\include{preliminares/abstract}
 
 % ### Índices ###
 \tableofcontents							%% Tabla de contenido
@@ -50,11 +52,14 @@
 \include{chapters/5-Evaluacion}
 \include{chapters/6-Conclusiones}
 
+\include{anexos/Glosario}
+
 % ### Bibliografía de la tesis ###
 {\setstretch{1.0}						% Interlineado en las páginas finales
 \bibliographystyle{apa-good}
 \bibliography{bibliografia}
 \addcontentsline{toc}{chapter}{Referencias bibliográficas} % Comando para agregar el índice a la Tabla de Contenido
+\addcontentsline{toc}{chapter}{Glosario}
 
 % ### Optativo: Anexos de la tesis ###
 \appendix

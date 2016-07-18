@@ -482,15 +482,15 @@
 				\hspace{6.8cm}
 				{\normalsize
 				\begin{tabular}{p{5.5cm}}
-					Tesis de grado presentada en conformidad a los requisitos \mbox{para obtener el título de} \@grado
+					Trabajo de titulación presentad en conformidad a los requisitos \mbox{para obtener el título de} \@grado
 				\end{tabular}
 				}
 			\end{flushleft}
 			\vspace*{1cm}
 			\null
 			\vfill
-			{\normalsize \@ciudad\ -- \@pais\\
-			\@annoexamen}
+			%{\normalsize \@ciudad\ -- \@pais\\
+			{\@annoexamen}
         \end{center}\par    
 \fi
 \restoregeometry
@@ -509,29 +509,12 @@
 		\vfill\par
         \begin{flushleft}
 			\copyright\ 
-			\@autor \;, \@annoexamen \\ 
+			\@autor, \@annoexamen \\ 
 			\includegraphics[height=12pt]{images/licences/cc_by.png}
 				~$\bullet$~~ Algunos derechos reservados. Esta obra est\'a bajo una Licencia Creative Commons Atribuci\'on-Chile 3.0. Sus condiciones de uso pueden ser revisadas en: \url{http://creativecommons.org/licenses/by/3.0/cl/}.      
         \end{flushleft}
     \fi
 }
-
-% Dedicatoria
-\newenvironment{dedicatoria}[1]
-{
-	\thispagestyle{empty}
-    \vspace*{17cm}\par
-    \hspace*{5cm}
-    \begin{flushright}
-    \textit{#1}
-    \end{flushright}
-}{}
-
-% Agradecimientos
-\newenvironment{agradecimiento}
-{
-    \chapter*{\centerline{AGRADECIMIENTOS}}
-}{\thispagestyle{empty}}
 
 % Resumen
 \newcommand{\KeywordsES}[1]
@@ -556,6 +539,24 @@
     \chapter*{\centerline{Abstract}}
     #1
 }
+
+
+% Dedicatoria
+\newenvironment{dedicatoria}[1]
+{
+    \thispagestyle{plain}
+    \vspace*{17cm}\par
+    \hspace*{5cm}
+    \begin{flushright}
+    \textit{#1}
+    \end{flushright}
+}{}
+
+% Agradecimientos
+\newenvironment{agradecimiento}
+{
+    \chapter*{\centerline{AGRADECIMIENTOS}}
+}{\thispagestyle{plain}}
 
 % Glosario
 \newenvironment{glosario}

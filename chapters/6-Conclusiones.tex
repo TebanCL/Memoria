@@ -1,3 +1,32 @@
 \chapter{Conclusiones}
 \label{cap:conclusiones}
-\textbf{placeholder}
+
+\textit{Twitter} al entregar a los desarrolladores un punto de acceso a la información que está fluyendo por la aplicación en tiempo real entrega una potente herramienta para la búsqueda de información, pues sus datos pueden ser objeto de análisis en diferentes áreas, por ejemplo, búsqueda de tendencias, política, eventos, etcétera. Lo que hace esta red social tan especial es que cualquiera puede acceder a ella, no en vano cuenta con millones de usuarios en todo el mundo y mediante su API posibilita obtener información. de primera fuente. En las pruebas realizadas no se vio influencia negativa dada la cuota máxima de accesos impuesta por \textit{Twitter}, pero es un ítem que se ha de tener en cuenta al desplegar la aplicación para funcionar en modo producción, pues las esperas pueden significar datos perdidos.
+
+El objetivo de este trabajo fue, en todo momento, lograr la detección de necesidades en los estados publicados en esta red social; los \textit{tweets}. Para ello se utilizó técnicas de aprendizaje de máquina, en este caso, minería \textit{web}. Ésta se diferencia de la minería tradicional dado que su fuente de información está en línea y no en bases de datos almacenadas para ser analizadas. Para el caso de \textit{Twitter}, presenta un desafío pues su información, el texto del \textit{tweet} en sí, no está estructurada, éste texto puede tener cualquier formato dentro de sus 140 carácteres. 
+
+Para solucionar éste inconveniente antes planteado y se utilizó la metodología KDD, que mediante sus cinco etapas permitió la construcción de un clasificador de texto utilizando el algoritmo de \textit{Naïve Bayes}, con el cual es posible etiquetar nuevos datos para la detección de necesidades. Si bien, como se mencionó en la sección \ref{sec:EvalClassificador}, el clasificador puede no ser el mejor, de hecho, presenta gran precisión, pero no es exhaustivo al momento de clasificar (bajo \textit{recall}). La necesidad de tener un cuerpo de entrenamiento con gran cantidad de instancias fue un problema, pues el tiempo utilizado para etiquetar datos fue muy grande, para el caso del cuerpo utilizado de aproximadamente 2000 instancias se tardó dos horas continuas, para no retrasar el desarrollo se optó por no etiquetar nuevos datos para incrementar el tamaño del conjunto de entrenamiento y en su lugar, para solventar esta debilidad del sistema, se construyó un módulo que permitiese la actualización del clasificador.
+
+El sistema de detección de necesidades consistió en dos aplicaciones, comunicadas por medio de la base de datos, así es posible manejar grandes cantidades de datos sin que el sistema colapse la memoria del equipo.
+
+Sobre los objetivos específicos podemos señalar, respectivamente, lo siguiente con respecto a su completitud:
+
+\begin{itemize}
+\item Se implementó un \textit{spout} capaz de obtener el \textit{stream} de \textit{Twitter}, para seleccionar aquellas que hicieran referencia al territorio nacional se utilizó un segundo operador, el detector de ubicación.
+\item Se inició con el trabajo realizado por \cite{TaxonomiaChato}, pero finalmente y avalado por el equipo de trabajo del proyecto FONDEF IDeA, se decidió utilizar una modificación de la categorización realizada por \cite{Alvarado}.
+\item Se construyó un cuerpo de entrenamiento, con el cual se diseñó un clasificador bayesiano haciendo uso de la herramienta Mallet.
+\item Mediante \textit{Apache Storm} se definieron 8 elementos, además del \textit{spout} para obtener los datos, con los cuales se dió soporte al sistema de detección de necesidades con capacidad de procesar grandes cantidades de datos.
+\item La escalabilidad está dada en primer lugar, y principalmente, por el uso de \textit{Apache Storm}, pues la aplicación de detección es aquella que realiza todo el procesamiento del sistema, en tanto la aplicación visualizadora se vale de los tiempos de respuesta de la base de datos y, precisamente, en segundo lugar la rapidez en las respuestas a las consultas realizadas a la base de datos de MongoDB permiten que no se produzcan respuestas lentas al manejar un gran volúmen de datos.
+\item Se simuló una condición en tiempo real de la aplicación haciendo uso de los datos recopilados en el terremoto de Concepción del año 2010 presentando en la sección \ref{sec:AltoTrafico} los resultado de ésta simulación.
+\end{itemize}
+
+Finalmente podemos señalar que, por medio de la concreción de los objetivos específicos señalados el sistema de detección de necesidades está completo y el objetivo general: "Construir un sistema escalable para la detección de necesidades de la población en tiempo real para escenarios de desastre natural haciendo uso de Twitter." se completó, presentando este sistema listo recolectar los datos desde \textit{Twitter} y detectar los eventos categorizados como necesidades que allí aparezcan.
+
+Habiendo concluido el desarrollo de la aplicación queda como trabajo futuro fundamentalmente dos puntos: Por un lado, la construcción de un conjunto de datos de entrenamiento más grande y cuyos elementos por clases estén balanceados como señala la teoría para permitir generar un mejor modelo de clasificación. Por otro la implementación de una API que dinámicamente encuentre los sinónimos de los términos de búsqueda para expandir de mejor manera las consultas, en lugar de hacer uso de un diccionario de sinónimos estáticos con sólo ciertos términos.
+
+	
+
+
+
+
+
