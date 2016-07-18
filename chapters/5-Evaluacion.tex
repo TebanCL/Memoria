@@ -60,7 +60,7 @@ En la sección \ref{subsubsec:topologiaSistema} se explicitó cómo están dispu
 	\label{fig:Implementacion1}
 \end{figure}
 
-Cada elemento de procesamiento, \textit{bolt}, es instanciado, el valor que acompaña a cada uno de ellos es el numero máximo de nodos que tendrá el sistema y seguido del modo de agrupamiento, en este caso, \textit{shuffle grouping} para balancear la carga en cada nodo.
+Cada elemento de procesamiento, \textit{bolt}, es instanciado, el valor que acompaña a cada uno de ellos es el numero máximo de nodos que tiene el sistema y seguido del modo de agrupamiento, en este caso, \textit{shuffle grouping} para balancear la carga en cada nodo.
 
 \begin{figure}[H]
 	\centering
@@ -80,7 +80,7 @@ Se utilizó el tiempo de ejecución para 1000, 2000, 4000 y 8000 estados, perten
 
 \begin{table}[H]
 \centering
-\caption[Estadísticas de los operadores para 1000, 2000, 4000 y 8000 estados.]{Estadísticas de los operadores para 1000, 2000, 4000 y 8000 estados.\\Fuente :Elaboración Propia, (2016)}
+\caption[Estadísticas de los operadores para 1000, 2000, 4000 y 8000 estados.]{Estadísticas de los operadores para 1000, 2000, 4000 y 8000 estados.\\Fuente: Elaboración Propia, (2016)}
 \label{tab:estadisticas}
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
@@ -113,11 +113,11 @@ En operadores normalizadores de texto y eliminación de \textit{stopwords} todo 
 
 El operador de ubicación admite, aproximadamente, un 54.06\% y presenta un elevado tiempo de ejecución.
 
-Estos resultados muestran el comportamiento individual de cada uno de éstos bolts, pero su operación no es de esta forma, por ello se preparó el mismo set de pruebas de 1000, 2000, 4000 y 8000 datos aleatoreos del conjunto de datos del terremoto de Concepción el año 2010 y se pasó al sistema para ver la cantidad de estados emitidos en cada caso. Para el caso del operador de consulta se utilizaron los términos "terremoto", "concepción" y "Chile". Se restringió el paralelismo de la topología completa para realizar estas pruebas, es decir, cada operador tuvo, como máximo, una instancia trabajando durante todo el proceso.
+Estos resultados muestran el comportamiento individual de cada uno de éstos bolts, pero su operación no es de esta forma, por ello se preparó el mismo conjunto de pruebas de 1000, 2000, 4000 y 8000 datos aleatoreos del conjunto de datos del terremoto de Concepción el año 2010 y se pasó al sistema para ver la cantidad de estados emitidos en cada caso. Para el caso del operador de consulta se utilizaron los términos "terremoto", "concepción" y "Chile". Se restringió el paralelismo de la topología completa para realizar estas pruebas, es decir, cada operador tuvo, como máximo, una instancia trabajando durante todo el proceso.
 
 \begin{table}[H]
 \centering
-\caption[Prueba sistema completo utilizando 1000 estados.]{Prueba sistema completo utilizando 1000 estados.\\Fuente :Elaboración Propia, (2016)}
+\caption[Prueba sistema completo utilizando 1000 estados.]{Prueba sistema completo utilizando 1000 estados.\\Fuente: Elaboración Propia, (2016)}
 \label{PruebaSistFull1000}
 \begin{tabular}{|c|l|l|}
 \hline
@@ -137,7 +137,7 @@ Persistencia & 0 & 0 \\ \hline
 
 \begin{table}[H]
 \centering
-\caption[Prueba sistema completo utilizando 2000 estados.]{Prueba sistema completo utilizando 2000 estados.\\Fuente :Elaboración Propia, (2016)}
+\caption[Prueba sistema completo utilizando 2000 estados.]{Prueba sistema completo utilizando 2000 estados.\\Fuente: Elaboración Propia, (2016)}
 \label{PruebaSistFull2000}
 \begin{tabular}{|c|l|l|}
 \hline
@@ -157,7 +157,7 @@ Persistencia & 0 & 0 \\ \hline
 
 \begin{table}[H]
 \centering
-\caption[Prueba sistema completo utilizando 4000 estados.]{Prueba sistema completo utilizando 4000 estados.\\Fuente :Elaboración Propia, (2016)}
+\caption[Prueba sistema completo utilizando 4000 estados.]{Prueba sistema completo utilizando 4000 estados.\\Fuente: Elaboración Propia, (2016)}
 \label{PruebaSistFull4000}
 \begin{tabular}{|c|l|l|}
 \hline
@@ -177,7 +177,7 @@ Persistencia & 0 & 0 \\ \hline
 
 \begin{table}[H]
 \centering
-\caption[Prueba sistema completo utilizando 8000 estados.]{Prueba sistema completo utilizando 8000 estados.\\Fuente :Elaboración Propia, (2016)}
+\caption[Prueba sistema completo utilizando 8000 estados.]{Prueba sistema completo utilizando 8000 estados.\\Fuente: Elaboración Propia, (2016)}
 \label{PruebaSistFull8000}
 \begin{tabular}{|c|l|l|}
 \hline
@@ -199,7 +199,7 @@ Las Tablas \ref{PruebaSistFull1000}, \ref{PruebaSistFull2000}, \ref{PruebaSistFu
 
 \begin{table}[H]
 \centering
-\caption[Prueba sistema completo utilizando 30000 estados.]{Prueba sistema completo utilizando 30000 estados.\\Fuente :Elaboración Propia, (2016)}
+\caption[Prueba sistema completo utilizando 30000 estados.]{Prueba sistema completo utilizando 30000 estados.\\Fuente: Elaboración Propia, (2016)}
 \label{tab:PruebaSistFull30000}
 \begin{tabular}{|c|l|l|}
 \hline
@@ -221,7 +221,7 @@ Persistencia & 0 & 0 \\ \hline
 
  \begin{table}[H]
 \centering
-\caption[Resultado esperado de un estado válido para el operador ubicación.]{Resultado esperado de un estado válido para el operador ubicación.\\Fuente :Elaboración Propia, (2016)}
+\caption[Resultado esperado de un estado válido para el operador ubicación.]{Resultado esperado de un estado válido para el operador ubicación.\\Fuente: Elaboración Propia, (2016)}
 \label{tab:resultadoEsperadoUbicacio}
 \begin{tabular}{lllll}
 \cline{1-3}
@@ -236,7 +236,7 @@ La solución a ésto fue reescribir el código del \textit{bolt} de ubicación, 
 
 \begin{table}[H]
 \centering
-\caption[Prueba al sistema completo y corregido utilizando 30000 estados.]{Prueba al sistema completo y corregido utilizando 30000 estados.\\Fuente :Elaboración Propia, (2016)}
+\caption[Prueba al sistema completo y corregido utilizando 30000 estados.]{Prueba al sistema completo y corregido utilizando 30000 estados.\\Fuente: Elaboración Propia, (2016)}
 \label{tab:sistemaCompletoEstadosCorregidos}
 \begin{tabular}{|c|l|l|}
 \hline
@@ -258,7 +258,7 @@ Estos resultados distan de los realizados para los operadores individuales y mue
 
 \begin{table}[H]
 \centering
-\caption[Generalización del nivel máximo de replicación de la topología.]{Generalización del nivel máximo de replicación de la topología.\\Fuente :Elaboración Propia, (2016)}
+\caption[Generalización del nivel máximo de replicación de la topología.]{Generalización del nivel máximo de replicación de la topología.\\Fuente: Elaboración Propia, (2016)}
 \label{tab:topologiaFinal2}
 \begin{tabular}{|l|c|}
 \hline
@@ -279,7 +279,7 @@ Donde $N$ es un valor arbitrario determinado por el desarrollador. Para determin
 
 \begin{table}[]
 \centering
-\caption[Nivel máximo de replicación de la topología.]{Nivel máximo de replicación de la topología.\\Fuente :Elaboración Propia, (2016)}
+\caption[Nivel máximo de replicación de la topología.]{Nivel máximo de replicación de la topología.\\Fuente: Elaboración Propia, (2016)}
 \label{tab:topologiaFinal}
 \begin{tabular}{|l|c|}
 \hline
@@ -321,6 +321,6 @@ Teniendo en consideración lo anterior en cuanto a la cantidad de mensajes, se r
         \label{fig:graficoAcumulado}
 \end{figure}
 
-Haciendo uso de éstos resultados se simuló la llegada de los estados contenidos dentro de los datos de prueba durante una hora sobre el sistema. Los resultados de esta simulación del comportamiento de la aplicación al operar como si fuese un evento real se muestran en las Figuras \ref{}. La máquina para realizar estas pruebas fue la descrita en la sección \ref{} y se utilizó la herramienta YourKit.
+Haciendo uso de éstos resultados se simuló la llegada de los estados contenidos dentro de los datos de prueba durante una hora sobre el sistema. Los resultados de esta simulación del comportamiento de la aplicación al operar como si fuese un evento real se muestran en las Figuras \ref{}. La máquina para realizar estas pruebas fue la descrita en la sección \ref{subsec:HerrDesarrollo} y se utilizó la herramienta YourKit.
 
 

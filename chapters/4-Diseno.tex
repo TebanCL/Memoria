@@ -28,7 +28,7 @@ Los datos almacenados en la base de datos son leídos por la visualizadora la qu
 
 Para realizar el etiquetado de los datos, es decir, la categorización del texto, se utiliza un clasificador \textit{Naïve Bayes}, el cual está almacenado en un fichero que permite ser modificado, siempre y cuando, se haga entrega de un archivo de entrada con un formáto específico para realizar un entrenamiento del clasificador. La elaboración de éste clasificador se detalla en la sección \ref{sec:diseno:clasificador}.
 
-La base de datos presta una función escencial al funcionamiento del sistema. Es aquí donde se almacenan las consultas realizadas, con las cuales filtran, según las necesidades del usuario, el \textit{stream}, además almacena los elementos que son mostrados por el visualizador en el mapa. Resumiendo lo anterior, la base de datos presta servicios de comunicación al sistema. Las aplicaciónes y justificación del uso de esta base de datos se presenta en la sección \ref{sec:diseno:comunicacion}.
+La base de datos presta una función escencial al funcionamiento del sistema. Es allí donde se almacenan las consultas realizadas, con las cuales filtran, según las necesidades del usuario, el \textit{stream}, además almacena los elementos que son mostrados por el visualizador en el mapa. Resumiendo lo anterior, la base de datos presta servicios de comunicación al sistema. Las aplicaciónes y justificación del uso de esta base de datos se presenta en la sección \ref{sec:diseno:comunicacion}.
 
 El sistema descrito está diseñado para operar de forma continua en condiciones de alto tráfico como lo es al ocurrir una emergencia del tipo catastrófica en el país. A pesar de lo anterior, se asume la existencia un sistema externo encargado de detectar cuándo se produce una situacion de las características antes mencionadas e inicie el sistema de detección, pues no está dentro de los alcances de este trabajo el que se detecte cuándo es que se ha producido un evento y la población comience a producir nuevos estados en las redes sociales.
 
@@ -41,7 +41,7 @@ A continuación se realiza mencionan las características que ha de tener el sis
 
 En primer lugar, es necesario hacer hincapié en el contexto en que el sistema opera. \textit{Twitter} es un servicio que cuenta con millones de usuarios activos, los que generan constantemente nuevo contenido que es emitido por la API de \textit{streaming}, lo que significa que la aplicación está sometida a un gran estrés cuando se encuentra en funcionamiento. Dado el contexto descrito la aplicación ha de ser capaz de soportar ese flujo de información.
 
-En segundo, y como se explicó en la sección \ref{subsec:apacheStorm}, el funcionamiento interno de las aplicaciones construidas con \textit{storm} se puede esquematizar por medio de un grafo dirigido donde los nodos se corresponden con los operadores definidos en la topología y que pueden tener diferente cantidad de elementos por procesar y tardar tiempos distintos en realizar su labor. Lo anterior sugiere que pueden existir niveles en los que se producen cuellos de botella en el \textit{pipeline} de procesamiento. Considerando lo anteriormente expuesto el sistema ha de estar preparado para responder de la mejor forma posible cuando se produzcan estas obstrucciones en el proceso.
+En segundo, y como se explicó en la sección \ref{subsec:HerrDesarrollo}, el funcionamiento interno de las aplicaciones construidas con \textit{storm} se puede esquematizar por medio de un grafo dirigido donde los nodos se corresponden con los operadores definidos en la topología y que pueden tener diferente cantidad de elementos por procesar y tardar tiempos distintos en realizar su labor. Lo anterior sugiere que pueden existir niveles en los que se producen cuellos de botella en el \textit{pipeline} de procesamiento. Considerando lo anteriormente expuesto el sistema ha de estar preparado para responder de la mejor forma posible cuando se produzcan estas obstrucciones en el proceso.
 
 En tercer lugar, el uso de un clasificador de texto involucra que la calidad del etiquetado está dada por el cómo éste se construyó. La construcción está dada por los datos de entrenamiento; mientras más datos se entreguen, probablemente, la calidad del clasificador sea mayor. Esto quiere decir que el clasificador puede ser mejorado y que constituirá una limitante el mantener éste estático.
 
@@ -63,7 +63,7 @@ Se ha de justificar lo expuesto hasta ahora al hacer mención de la existencia d
 	\label{fig:primeraComunicacion}
 \end{figure}
 
-Esta aproximación no consideraba la existencia de un sistema de persistencia de información; al considerar la persistencia la comunicación ya no se realizará por medio de peticiones REST, sino que se utilizará la base de datos como intermediario, así al momento de realizar una consulta, ésta es almacenada en la base de datos y recodiga por el sistema de clasificación; cuando el sistema clasifica correctamente un evento, éste también es almacenado en la base de datos y recogido por la aplicación visualizadora. De esta forma la comunicación del sistema pasa a realizarse de forma que se esquematiza en la Figura \ref{fig:comunFinal}.
+Esta aproximación no consideraba la existencia de un sistema de persistencia de información; al considerar la persistencia la comunicación ya no se realiza por medio de peticiones REST, sino que se utiliza la base de datos como intermediario, así al momento de realizar una consulta, ésta es almacenada en la base de datos y recodiga por el sistema de clasificación; cuando el sistema clasifica correctamente un evento, éste también es almacenado en la base de datos y recogido por la aplicación visualizadora. De esta forma la comunicación del sistema pasa a realizarse de forma que se esquematiza en la Figura \ref{fig:comunFinal}.
 
 \begin{figure}[H]
 	\centering
@@ -78,9 +78,9 @@ En la historia de usuario HU-v04, al hacer referencia a información pasada, se 
 \subsection{Persistencia}
 \label{sec:diseno:persistencia}
 
-Si bien está decidida la implementación de un sistema de persistencia en la aplicación, no se ha definido cuál ha de ser el sistema de gestión de base de datos que se utilizará, es por ello que en ésta sección se presenta la decisión tomada con respecto a este tema.
+Si bien está decidida la implementación de un sistema de persistencia en la aplicación, no se ha definido cuál ha de ser el sistema de gestión de base de datos que se ha de utilizar, es por ello que en ésta sección se presenta la decisión tomada con respecto a este tema.
 
-Se consideraron los principales sistemas de bases de datos utilizados y conocidos por el autor, dentro de los cuales se encontraban herramientas como: MySQL, PostgreSQL, SQL Server, MongoDB, entre otras. Dadas las características y las condiciones con las cuales operará el sistema de detección se requiere de un DBMS con rápido tiempo de respuesta en operaciones lectura/escritura; la decisión se tomó en base a los datos que se manejaran, pues no se apreció necesidad de implementar una base de datos relacional, de esta forma y teniendo en cuenta los resultados presentados en pruebas empíricas realizadas por \cite{MongoPerformance} en las cuales mostró que el tiempo de respuesta (en operaciones de lectura) es significativamente menor en MongoDB que en dos de los DBMS más conocidos como MySQL y PostgreSQL. Lo anterior, sumado al hecho de la capacidad de escalar de MongoDB reportada en fuentes oficiales o por diversos desarrolladores como \cite{MongoDBScalability} que han compartido sus experiencias en la \textit{web}, llevaron a decidir que MongoDB debiera ser el sistema de gestión de base de datos que se utilizase en el sistema.
+Se consideraron los principales sistemas de bases de datos utilizados y conocidos por el autor, dentro de los cuales se encontraban herramientas como: MySQL, PostgreSQL, SQL Server, MongoDB, entre otras. Dadas las características y las condiciones con las cuales opera el sistema de detección se requiere de un DBMS con rápido tiempo de respuesta en operaciones lectura/escritura; la decisión se tomó en base a los datos que se manejaran, pues no se apreció necesidad de implementar una base de datos relacional, de esta forma y teniendo en cuenta los resultados presentados en pruebas empíricas realizadas por \cite{MongoPerformance} en las cuales mostró que el tiempo de respuesta (en operaciones de lectura) es significativamente menor en MongoDB que en dos de los DBMS más conocidos como MySQL y PostgreSQL. Lo anterior, sumado al hecho de la capacidad de escalar de MongoDB reportada en fuentes oficiales o por diversos desarrolladores como \cite{MongoDBScalability} que han compartido sus experiencias en la \textit{web}, llevaron a decidir que MongoDB debiera ser el sistema de gestión de base de datos que se utilizase en el sistema.
 
 Para realizar la conexión de MongoDB y el \textit{framework} se utiliza, específicamente, dos bibliotecas: La primera corresponde a un ORM (Mapeo Objeto-Relacional), denominado Jongo, la cual hace uso de la segunda llamada Jackson, para realizar la conversion de JSON a objeto.
 
@@ -99,18 +99,18 @@ Volviendo a la historia de usuario que originó la necesidad de contar con un si
 
 Ya se mencionó que se seleccionó storm para construir el detector de necesidades, pero no se ha especificado el porqué de ello. Por este motivo en los siguientes párrafos se exponen las razones por las cuales se tomó esta decisión.
 
-Dado el contexto del funcionamiento del sistema, éste ha de entregar respuestas rápidas ante una emergencia; para ello, y como es descrito en la historia de usuario HU-c00, se requiere de un sistema capaz de procesar eventos en tiempo real que, dado el \textit{peak} de información que recibirá el sistema deberá ser escalable. El problema en este punto es el cómo construir un sistema que cumpla capáz de identificar necesidades y que posea esta, no menor, característica.
+Dado el contexto del funcionamiento del sistema, éste ha de entregar respuestas rápidas ante una emergencia; para ello, y como es descrito en la historia de usuario HU-c00, se requiere de un sistema capaz de procesar eventos en tiempo real que, dado el \textit{peak} de información que recibe el sistema éste debe ser escalable. El problema en este punto es el cómo construir un sistema que cumpla capaz de identificar necesidades y que posea esta, no menor, característica.
 
-Se consideraron sistemas de procesamiento distribuido; estos sistemas tienen la particularidad de ser una red de computadores (nodos, en general), que el usuario percibe como un solo gran sistema. Estos sistemas pueden ser de diversos tamaños, y suelen ser confiables, pues si un componente (nodo) falla, otro será capaz de reemplazarlo. \cite{DefSPD}. En un inicio se consideraron tres plataformas sobre las cuales podría construirse un sistema que pudiese cumplir con lo solicitado; dichas plataformas fueron Apache S4, Apache Storm y Apache Spark.
+Se consideraron sistemas de procesamiento distribuido; estos sistemas tienen la particularidad de ser una red de computadores (nodos, en general), que el usuario percibe como un solo gran sistema. Estos sistemas pueden ser de diversos tamaños, y suelen ser confiables, pues en caso de que un componente (nodo) falle, otro es capaz de reemplazarlo. \cite{DefSPD}. En un inicio se consideraron tres plataformas sobre las cuales puede construirse un sistema que pudiese cumplir con lo solicitado; dichas plataformas fueron Apache S4, Apache Storm y Apache Spark.
 
-Apache S4, pese a su simplicidad, no continuó con su desarrollo luego del año 2013 y nunca tuvo una versión estable 1.0, razones por las cuales se dejó como segunda opción. Apache Spark, pese a contar con continuos \textit{releases}, una comunidad de desarrolladores no menor y permitir la elaboración de sistemas escalables no era lo que se buscaba en aquel momento como herramienta de desarrollo, al momento de consultar con los, en este caso, clientes, éstos esperaban que el sistema, internamente, se comportara según el paradigma de procesamiento de \textit{streams}, por medio de operadores dispuestos en un grafo. Por ello finalmente se optó por \textit{Apache Storm}.
+Apache S4, pese a su simplicidad, no continuó con su desarrollo luego del año 2013 y nunca tuvo una versión estable 1.0, razones por las cuales se dejó como segunda opción. Apache Spark, pese a contar con continuos \textit{releases}, una comunidad de desarrolladores no menor y permitir la elaboración de sistemas escalables no era lo que se buscaba en aquel momento como herramienta de desarrollo, pues está orientado al procesamiento por lotes y no en tiempo real. Al momento de consultar con los, en este caso, clientes, éstos esperaban que el sistema, internamente, se comportara según el paradigma de procesamiento de \textit{streams}, por medio de operadores dispuestos en un grafo. Por ello finalmente se optó por \textit{Apache Storm}.
 
-\textit{Storm} permite construir sistemas que cumplan con las características de un sistema distribuido, como lo son: Escalabilidad (Tanto horizontal como vertical) y tolerancia a fallos (como la capacidad de un sistema para realizar correctamente y en todo momento aquello para lo que fue diseñado). Estos sistemas estan compuestos por dos tipos de elementos: \textit{Spout} y \textit{Bolt}, que fueron descritos en el capítulo \ref{cap:MarcTeorico}. Al combinar esos elementos se da origen a un grafo dirigido, como el presentado en la Figura \ref{fig:stormBeLike} en la página ~\pageref{fig:stormBeLike}, donde cada elemento de procesamiento (\textit{bolt}), cumple con una determinada tarea utilizando como entrada la salida del elemento anterior.
+\textit{Storm} permite construir sistemas que cumplan con las características de un sistema distribuido, como lo son: Escalabilidad (Tanto horizontal como vertical) y tolerancia a fallos (como la capacidad de un sistema para realizar correctamente y en todo momento aquello para lo que fue diseñado). Estos sistemas están compuestos por dos tipos de elementos: \textit{Spout} y \textit{Bolt}, que fueron descritos en el capítulo \ref{cap:MarcTeorico}. Al combinar esos elementos se da origen a un grafo dirigido, como el presentado en la Figura \ref{fig:stormBeLike} en la página ~\pageref{fig:stormBeLike}, donde cada elemento de procesamiento (\textit{bolt}), cumple con una determinada tarea utilizando como entrada la salida del elemento anterior.
 
 \subsection{Obtención de datos para el funcionamiento del sistema}
 \label{sec:diseno:obtenerDatos}
 
-La historia de usuaio HU-c01 refleja desde dondé se han de obtener los datos, pero es necesario especificar más aún. Como se señaló al momento de definir los alcances de este trabajo, sólo se utilizará \textit{Twitter} como fuente de información, así la unidad de información pasará, desde ahora, a llamarse como se habitúa en aquella red social: el \textit{Tweet}.
+La historia de usuaio HU-c01 refleja desde dondé se han de obtener los datos, pero es necesario especificar más aún. Como se señaló al momento de definir los alcances de este trabajo, sólo se utiliza \textit{Twitter} como fuente de información, así la unidad de información pasa, desde ahora, a llamarse como se habitúa en aquella red social: el \textit{Tweet}.
 
 El asunto es, entonces, cómo obtener la información que está produciéndose en \textit{Twitter} en tiempo real. Esta red social ha implementado una serie de interfaces para permitir a los desarrolladores acceder a sus datos; en particular, la \textit{Streaming API}, es aquella que permite acceder a la información de \textit{Twitter} con baja latencia. \cite{TwitterStreamingAPI}.
 
@@ -118,7 +118,7 @@ Existen tres tipos de \textit{streaming endpoints} disponibles, cada uno para un
 
 \begin{table}[H]
 \centering
-\caption[\textit{Streaming endpoints} de \textit{Twitter}.]{\textit{Streaming endpoints} de \textit{Twitter}.\\Fuente :Elaboración Propia, (2016)}
+\caption[\textit{Streaming endpoints} de \textit{Twitter}.]{\textit{Streaming endpoints} de \textit{Twitter}.\\Fuente: Elaboración Propia, (2016)}
 \label{tab:StreamingEndpoints}
 \begin{tabular}{|l|l|}
 \hline
@@ -130,12 +130,12 @@ Sitio   & Versión multi-usuario de la anterior.                                
 
 Para esta aplicación la adecuada corresponde a la API pública. En ésta, a la vez, existen dos puntos de acceso; el público y \textit{firehose}. El acceso público es gratuito y permite el acceso a un 1\% de la información que se genera en tiempo real y para acceder a el basta con crear una aplicación dentro de \textit{Twitter}. En cambio para acceder a \textit{firehose}, el cual permite acceso total a la información, debe comprarse el acceso. Dadas estas condiciones se seleccionó, previo acuerdo con los clientes, el uso de la API pública.
 
-Para hacer uso de la API descrita con anterioridad es necesario obtener cuatro claves de acceso: \textit{Access Token}, \textit{Access Token Secret}, \textit{Consumer Key (API Key)} y \textit{Consumer Secret (API Secret)}. Para más información sobre cómo conseguir estas claves consulte el Anexo \ref{anexo:TwitterKeys}.
+Para hacer uso de la API descrita con anterioridad es necesario obtener cuatro claves de acceso: \textit{Access Token}, \textit{Access Token Secret}, \textit{Consumer Key (API Key)} y \textit{Consumer Secret (API Secret)}. Para más información sobre cómo conseguir estas claves consulte el Apéndice \ref{apendice:TwitterKeys}.
 
 \subsection{Especificación de términos de búsqueda}
 \label{sec:diseno:termBusqueda}
 
-\textit{Twitter4J}, la herremienta que se menciona en la sección \ref{subsubseC:EntradaDeDatos} como aquella que permite obtener el flujo de información desde \textit{Twitter} implementa una forma de filtrado mediante el uso de palabras clave, pero posee una limitante al momento de modificar la búsqueda, deben instanciarse nuevamente los objetos con los cuales se realiza la conexión a la API de \textit{Twitter}, eso se traduce en tiempo de procesamiento perdido, para solucionar este inconveniente se decidió implementar un operador, descrito en la sección \ref{subsec:detectorNecesidades}, el cual estará encargado de realizar el filtrado de acuerdo a términos y llevar a cabo la operaciones descritas en la sección \ref{subsubsec:2op} referente a la expansión de la consulta, pero al ser un operador significa que opera con un nivel de replicación determinado, es decir, existen multiples instancias de operador al mismo tiempo ¿Cómo comunicar el estado de una consulta y que todos los operadores utilicen el mismo filtro?.
+\textit{Twitter4J}, la herremienta que se menciona en la sección \ref{subsubseC:EntradaDeDatos} como aquella que permite obtener el flujo de información desde \textit{Twitter} implementa una forma de filtrado mediante el uso de palabras clave, pero posee una limitante al momento de modificar la búsqueda, deben instanciarse nuevamente los objetos con los cuales se realiza la conexión a la API de \textit{Twitter}, eso se traduce en tiempo de procesamiento perdido, para solucionar este inconveniente se decidió implementar un operador, descrito en la sección \ref{subsec:detectorNecesidades}, el cual está encargado de realizar el filtrado de acuerdo a términos y llevar a cabo la operaciones descritas en la sección \ref{subsubsec:2op} referente a la expansión de la consulta, pero al ser un operador significa que opera con un nivel de replicación determinado, es decir, existen multiples instancias de operador al mismo tiempo ¿Cómo comunicar el estado de una consulta y que todos los operadores utilicen el mismo filtro?.
 
 Nuevamente la respuesta consistió en recurrir a la base de datos; almacenar la consulta y asignar un estado para controlar el comportamiento del operador. Así el esquema en la base de datos queda tal y como se presenta en la Figura \ref{fig:esquemaQuery}, documento de la colección "Queries".
 
@@ -154,9 +154,9 @@ Para implementar este operador se utilizaron dos clases llamadas \textit{Current
 \subsection{Interfáz del sistema}
 \label{sec:diseno:interfaz}
 
-Teniendo en consideración la característica del desarrollo de esta aplicación como un proyecto ágil con un mínimo de personal para desarrollar se requería de un \textit{framework} que contribuyera a acelerar la construcción de la aplicación. Tras considerar las alternativas más conocidas como \textit{Spring}, \textit{Hibernate} o \textit{JSF} que tienen una curva de aprendizaje elevada, se optó por utilizar un cuarto \textit{framework} que aunque desconocido, prometía una simplicidad en su uso. \textit{Play Framework}, construido haciendo uso de Scala y Java permite construir aplicaciones ligeras (tamaño en disco), sin estado (no guarda configuraciones de una sesión para ser utilizadas luego) y por defecto RESTful, ideal para la comunicación entre aplicaciones. Éste \textit{framework} sigue el patrón de arquitectura Modelo-vista-controlador (MVC). Cuenta con un compilador en tiempo real (compila y realiza el despliegue de la aplicación cuando detecta un cambio en el código), lo que agiliza en gran medida el desarrollo, pues al automatizar este proceso mantiene la atención en lo que se está desarrollando.
+Teniendo en consideración la característica del desarrollo de esta aplicación como un proyecto ágil con un mínimo de personal para desarrollar se requería de un \textit{framework} que contribuyera a acelerar la construcción de la aplicación. Tras considerar las alternativas más conocidas como \textit{Spring}, \textit{Hibernate} o \textit{JSF} que tienen una curva de aprendizaje elevada, se optó por utilizar un cuarto \textit{framework} que aunque desconocido, promete una simplicidad en su uso. \textit{Play Framework}, construido haciendo uso de Scala y Java permite construir aplicaciones ligeras (tamaño en disco), sin estado (no guarda configuraciones de una sesión para ser utilizadas luego) y por defecto RESTful, ideal para la comunicación entre aplicaciones. Éste \textit{framework} sigue el patrón de arquitectura Modelo-vista-controlador (MVC). Cuenta con un compilador en tiempo real (compila y realiza el despliegue de la aplicación cuando detecta un cambio en el código), lo que agiliza en gran medida el desarrollo, pues al automatizar este proceso mantiene la atención en lo que se está desarrollando.
 
-Para visualizar los puntos encontrados por el detector de necesidades se decidió utilizar la API de \textit{Google Maps} la que permite la colocación de los denominados 'marcadores' en un punto específico del mapa y asociar a ellos algún tipo de información. Así, aunque el funcionamiento interno esté dirigido por \textit{Play}, la principal funcionalidad del sistema, mostrar el mapa con sus marcadores, será implementada utilizando Javascript.
+Para visualizar los puntos encontrados por el detector de necesidades se decidió utilizar la API de \textit{Google Maps} la que permite la colocación de los denominados 'marcadores' en un punto específico del mapa y asociar a ellos algún tipo de información. Así, aunque el funcionamiento interno esté dirigido por \textit{Play}, la principal funcionalidad del sistema, mostrar el mapa con sus marcadores, es implementada utilizando Javascript.
 
 Estos marcadores, ya ubicados en el mapa, tienen asociado un cuadro de texto dentro del cual refleja el la categoría a la que pertenece y el \textit{tweet} original, el texto, que lo generó. Esto tiene como objetivo permitir decidir, en última instancia, al usuario si ha sido correctamente clasificado.
 
@@ -203,9 +203,9 @@ Los elementos clasificados como "Irrelevantes" no se muestran en el mapa de even
 
 El proyecto PMI realizado por \cite{WladdimiroPMI}, abordó una solución inicial para el problema de la detección de necesidades. En aquella oportunidad se utilizó una bolsa de palabras con términos asociados a las categorías para etiquetar los estados de \textit{Twitter}. Este trabajo busca mejorar aquello realizando la clasificación mediante una técnica de clasificación más poderosa.
 
-En su libro, \textit{Introduction to Information Retrival}, \cite{IRQE}, proponen el uso de \textit{Naïve Bayes}, para realizar clasificación de texto. Esto se logra realizando una implementación del algoritmo descrito en la sección \ref{subsec:naiveBayes}. Este ya ha sido implementado en diversas herramientas como: RapidMiner, Weka (acrónimo de \textit{Waikato Envoirment for Knowledge Analysis}), Mallet (acrónimo de \textit{MAchine Learning for LanguagE Toolkit }).
+En su libro, \textit{Introduction to Information Retrival}, \cite{IRQE}, proponen el uso de \textit{Naïve Bayes}, para realizar clasificación de texto. Esto se logra realizando una implementación del algoritmo descrito en la sección \ref{subsec:aprendSuperv}. Este ya ha sido implementado en diversas herramientas como: RapidMiner, Weka (acrónimo de \textit{Waikato Envoirment for Knowledge Analysis}), Mallet (acrónimo de \textit{MAchine Learning for LanguagE Toolkit }).
 
-Tras haber realizado pruebas con ellas, enfocándo la atención en  se decidió utilizar Mallet por su simplicidad de implementación junto con la mayor precisión de sus resultados.
+Tras haber realizado pruebas con ellas, enfocándo la atención en se decidió utilizar Mallet por su simplicidad de implementación junto con la mayor precisión de sus resultados.
 
 La sección \ref{sec:caracteristicasSistema} ya hace referencia a la inconveniencia de utilizar un clasificador estático para el etiquetado de nuevos eventos, al tratarse de un aprendizaje supervisado, donde se requiere de una persona entregue la respuesta esperada para realizar el entrenamiento, no es posible realizar este proceso de manera automática.
 
@@ -224,14 +224,14 @@ Los datos son seleccionados por el usuario, estos datos se agruparan en un archi
 \end{figure}
 
 \begin{enumerate}
-\item Corresponderá a un identificador arbitrario, pero necesario para la herramienta de clasificación Mallet.
-\item Corresponderá a la etiqueta que categoriza al contenido.
+\item Corresponde a un identificador arbitrario, pero necesario para la herramienta de clasificación Mallet.
+\item Corresponde a la etiqueta que categoriza al contenido.
 \item Contenido del \textit{tweet} propiamente tal.
 \end{enumerate}
 
 El preprocesamiento y transformación de los datos está dado por la definición de los operadores presentados en la sección \ref{subsec:detectorNecesidades}.
 
-Teniendo en consideración que se utilizan dos aplicaciones distintas, donde en una se construirá el clasificador y en otra se utilizará surge el problema de cómo realizar la comunicación entre ellas. Para solucionar este inconveniente se utilizará una carpeta compartida por ambas aplicaciones. En el caso de sistemas Unix se utilizará el directorio $/opt/DeNe$, mientras que para Windows se utilizará $C:/DeNe/$. En estos directorios se almacenará un fichero con el clasificador serializado.
+Teniendo en consideración que se utilizan dos aplicaciones distintas, donde en una se construye el clasificador y en otra donde es utilizado. Surge el problema de cómo realizar la comunicación entre ellas. Para solucionar este inconveniente se utilizará una carpeta compartida por ambas aplicaciones. En el caso de sistemas Unix se utilizará el directorio $/opt/DeNe$, mientras que para Windows se utilizará $C:/DeNe/$. En estos directorios se almacena un fichero con el clasificador serializado.
 
 \begin{figure}[H]
 	\centering
@@ -241,7 +241,7 @@ Teniendo en consideración que se utilizan dos aplicaciones distintas, donde en 
 	\label{fig:TopologiaGeneral}
 \end{figure}
 
-Cada vez que se actualice el clasificador se contrastará el nuevo con el ya existente, de encontrar mayor precisión en el primero, se reemplazará en la carpeta antes mencionada, según el sistema operativo de la máquina que se esté utilizando. En caso contrario , se mantendrá al anterior. En ambos escenarios se le dará a conocer al usuario la precisión de ambos.
+Cada vez que se actualice el clasificador se contrasta el nuevo con el ya existente, de encontrar mayor precisión en el primero, se reemplaza en la carpeta antes mencionada, según el sistema operativo de la máquina que se esté utilizando. En caso contrario, se mantiene al anterior. En ambos escenarios se le da a conocer al usuario la precisión de ambos.
 
 \section{Implementación del sistema}
 \label{sec:implementacion}
@@ -312,7 +312,7 @@ Para realizar la selección del intervalo mencionado en la HU-v04 se solicitó, 
 	\label{fig:JQRangeSlider}
 \end{figure}
 
-Para lograr implementar ambas dos se utilizó una biblioteca Javascript distinta. La Figura \ref{fig:HistogramaFinal} presenta la implementación utilizando \textit{HighCharts}, \cite{Highcharts}. Ésta, al contrario de la anterior, no permitía capturar los cambios en el histograma, para solucionarlo se implementó una función javascript que recogiese los valores del intervalo y arrojara un evento cuando se produjece un cambio, este evento se asoció al eje x de la linea temporal, cambiando el valor de la variable \textit{valuesOfAxis} cada vez que se moviese el eje, éste evento es descrito en la Figura \ref{fig:implementacionCambiosEnEje}.
+Para lograr implementar ambas dos se utilizó una biblioteca Javascript distinta. La Figura \ref{fig:HistogramaFinal} presenta la implementación utilizando \textit{HighCharts}, \cite{Highcharts}. Ésta, al contrario de la anterior, no permitía capturar los cambios en el histograma, para solucionarlo se implementó una función javascript que recogiese los valores del intervalo y arroja un evento cuando se produjece un cambio, este evento se asoció al eje x de la linea temporal, cambiando el valor de la variable \textit{valuesOfAxis} cada vez que se moviese el eje, éste evento es descrito en la Figura \ref{fig:implementacionCambiosEnEje}.
 
 Inicialmente este histograma sólo está disponible en inglés, pero permite cambiar todas sus etiquetas manualmente, así, buscando la usabilidad de la aplicación, se modificaron todos los textos y el resultado está visible en la Figura \ref{fig:HistogramaFinal}.
 
@@ -384,7 +384,7 @@ Las categorías mencionadas a continuación son descritas en la sección \ref{se
 	\endminipage\hfill
 \end{figure}
 
-Se consideró apropiado, además, diseñar un icono que representara la densidad de marcadores al momento de realizar el agrupamiento por categorías descrito en ésta sección para ello y siguiendo la combinación de colores utilizada por la biblioteca \textit{MarkerClusterer}, \ref{MarkerClusterer}, donde se muestra un cluster azul cuando es un cluster pequeño; amarillo para uno medio y rojo para uno grande. El tamaño de cada uno de estos es especificado internamente por la biblioteca:
+Se consideró apropiado, además, diseñar un icono que representara la densidad de marcadores al momento de realizar el agrupamiento por categorías descrito en ésta sección para ello y siguiendo la combinación de colores utilizada por la biblioteca \textit{MarkerClusterer}, \cite{MarkerClusterer}, donde se muestra un cluster azul cuando es un cluster pequeño; amarillo para uno medio y rojo para uno grande. El tamaño de cada uno de estos es especificado internamente por la biblioteca:
 
 \begin{itemize}
 \item Azul: De dos a diez elementos.
@@ -538,7 +538,7 @@ Se prepararon, entonces, tres iconos adicionales a cada categoría para reemplaz
 	\endminipage\hfill
 \end{figure}
 
-Dado que se solicitó que la interfaz no se recargue cada vez que se produzca un cambio dado por un nuevo evento detectado o el modificación en el intervalo de visualización. Para ello se utilizaron las facultados de Javascript y AJAX capturando los cambios en la línea temporal, descrita en esta sección. Cada vez que se detecte un cambio, se eliminará todo marcador del mapa y se reubican en el todos los que cumplan con los parámetros de búsqueda.
+Dado que se solicitó que la interfaz no se recargue cada vez que se produzca un cambio dado por un nuevo evento detectado o el modificación en el intervalo de visualización. Para ello se utilizaron las facultados de Javascript y AJAX capturando los cambios en la línea temporal, descrita en esta sección. Cada vez que se detecte un cambio, se elimina todo marcador del mapa y se reubican en el todos los que cumplan con los parámetros de búsqueda.
 
 \subsubsection*{Estadísticas de procesamiento}
 \label{subsubsec:estadisticasdeproc}
@@ -553,7 +553,7 @@ Específicamente se solicitaron tres tipos de estadísticas que han de ser mostr
 
 Para cumplir lo solicitado hacía falta añadir elementos no considerados en la base de datos; hace falta conocer al usuario y contar los \textit{tweets} ingresados desde \textit{Twitter4J}.
 
-Para completar esta historia se realizaron modificaciones al esquema previamente definido en la sección \ref{sec:diseno:persistencia}, este de por si era suficiente para cumplir con la estadística número uno, pero incapáz de realizar las otras dos. Para la segunda estadística se consideró que bastaba con guardar al usuario junto con la colección de marcadores. De acuerdo a \cite{TwitterAgreement} en su sección F. \textit{Be a Good Partner to Twitter}, se insta a los desarrolladores que almacenen contenido \textit{offline} de \textit{Twitter}, a almacenar sólo el ID del usuario o del \textit{tweet}, por ello y siguiendo estos lineamientos se agregará el campo "userID" al esquema marcadores, pasando a quedar como se aprecia en la Figura \ref{fig:esquemaMarker2}.
+Para completar esta historia se realizaron modificaciones al esquema previamente definido en la sección \ref{sec:diseno:persistencia}, este de por si era suficiente para cumplir con la estadística número uno, pero incapaz de realizar las otras dos. Para la segunda estadística se consideró que bastaba con guardar al usuario junto con la colección de marcadores. De acuerdo a \cite{TwitterAgreement} en su sección F. \textit{Be a Good Partner to Twitter}, se insta a los desarrolladores que almacenen contenido \textit{offline} de \textit{Twitter}, a almacenar sólo el ID del usuario o del \textit{tweet}, por ello y siguiendo estos lineamientos se agregará el campo "userID" al esquema marcadores, pasando a quedar como se aprecia en la Figura \ref{fig:esquemaMarker2}.
 
 \begin{figure}[H]
 	\centering
@@ -563,7 +563,7 @@ Para completar esta historia se realizaron modificaciones al esquema previamente
 	\label{fig:esquemaMarker2}
 \end{figure}
 
-Para la tercera estadística la colección de marcadores no sería útil, pues no reflejaría la cantidad de tweets procesados, para ello sería necesario implementar una tercera colección de documentos en la base de datos y almacenarlos antes de la aplicación de cualquier tipo de filtro. Esta colección tendrá el esquema presente en la Figura \ref{fig:esquemaTweet}.
+Para la tercera estadística la colección de marcadores no sería útil, pues no refleja la cantidad de tweets procesados, para ello es necesario implementar una tercera colección de documentos en la base de datos y almacenarlos antes de la aplicación de cualquier tipo de filtro. Esta colección tiene el esquema presente en la Figura \ref{fig:esquemaTweet}.
 
 \begin{figure}[H]
 	\centering
@@ -575,7 +575,7 @@ Para la tercera estadística la colección de marcadores no sería útil, pues n
 
 Al almacenar sólo el contenido del texto no viola las políticas de uso descritas de \textit{Twitter}, sólo es necesario la fecha para la estadística realizar la estadística, pero resulta útil almacenar el contenido para realizar la expansión de la consulta descrita en la sección \ref{subsubsec:2op} y no aumentar la latencia almacenando el ID y realizando una nueva consulta a la API de \textit{Twitter}.
 
-En general la obtención de estas estadísticas se dará utilizando el Algoritmo \ref{alg:estadisticas} descrito a continuación.\\
+En general la obtención de estas estadísticas se da utilizando el Algoritmo \ref{alg:estadisticas} descrito a continuación.\\
 
 \begin{algorithm}[H]\setstretch{1.5}
 	\begin{algorithmic}[numeracion_lineas]
@@ -594,7 +594,7 @@ En general la obtención de estas estadísticas se dará utilizando el Algoritmo
 	\label{alg:estadisticas}
 \end{algorithm}\vphantom\\
 
-Este algoritmo, como se mencionó, es de uso general y permitirá cumplir tanto la primera como la tercera estadística, para el caso de la segunda se requiere una modificación, pues se solicitó conocer los usuarios diferentes, el algoritmo \ref{alg:estadisticas2} presenta el algoritmo modificado para la segunda estadística.\\
+Este algoritmo, como se mencionó, es de uso general y permite cumplir tanto la primera como la tercera estadística, para el caso de la segunda se requiere una modificación, pues se solicitó conocer los usuarios diferentes, el algoritmo \ref{alg:estadisticas2} presenta el algoritmo modificado para la segunda estadística.\\
 
 \begin{algorithm}[H]\setstretch{1.5}
 	\begin{algorithmic}[numeracion_lineas]
@@ -636,7 +636,7 @@ El detector de necesidades, al estar construido sobre \textit{Apache Storm}, est
 \subsubsection*{Entrada de datos al sistema}
 \label{subsubseC:EntradaDeDatos}
 
-Conociendo desde donde se obtendrá la información y teniendo acceso a ella resta conocer cómo realizar la conexión. Para ello se selecciono utilizar \textit{Twitter4J}, una biblioteca no oficial de Java para las API de \textit{Twitter}. Para su funcionamiento sólo requiere del uso de Java en su version 5 o superior.
+Conociendo desde donde se obtiene la información y teniendo acceso a ella resta conocer cómo realizar la conexión. Para ello se selecciono utilizar \textit{Twitter4J}, una biblioteca no oficial de Java para las API de \textit{Twitter}. Para su funcionamiento sólo requiere del uso de Java en su version 5 o superior.
 
 La implementación de lo anteriormente descrito se realiza utilizando una instancia del objeto \textit{TwitterStream}, el cual captura el flujo público de \textit{Twitter}, almacenando cada estado recibido en una cola. Con esto en mente se construyó el primer operador del sistema correspondiente al \textit{Spout} que surtirá de datos al sistema.
 
@@ -650,9 +650,9 @@ La implementación de lo anteriormente descrito se realiza utilizando una instan
 
 Considerando lo recién expuesto la Figura \ref{fig:TwitterSpout} muestra cómo los estados son emitidos por el \textit{spout} al sistema basándose en la cola (\textit{queue}) para manejar lo que llega desde el \textit{stream}
 
-Tal y como se mencionó en el capítulo \ref{cap:MarcTeorico} una topología \textit{storm} funciona estableciendo un grafo donde cada nodo corresponde a un operador o \textit{bolt}, la Figura \ref{fig:stormBeLike} muestra como los \textit{bolt} se unen con el propósito de procesar las entradas entregadas por los \textit{spout} que, en este caso y tal como se señaló en el sección \ref{subsubseC:EntradaDeDatos} corresponderá a aquel que recibe la información desde el \textit{stream} de \textit{Twitter}, pero ¿cuál será la función de cada uno de los \textit{bolts}?
+Tal y como se mencionó en el capítulo \ref{cap:MarcTeorico} una topología \textit{storm} funciona estableciendo un grafo donde cada nodo corresponde a un operador o \textit{bolt}, la Figura \ref{fig:stormBeLike} muestra como los \textit{bolt} se unen con el propósito de procesar las entradas entregadas por los \textit{spout} que, en este caso y tal como se señaló en el sección \ref{subsubseC:EntradaDeDatos} corresponde a aquel que recibe la información desde el \textit{stream} de \textit{Twitter}, pero ¿cuál será la función de cada uno de los \textit{bolts}?
 
-La pregunta anteriormente planteada abre un nuevo abanico de problemas, para cada uno de los cuales se desarrollará un operador y éstos, trabajando en conjunto, producen la información necesaria para ser almacenada como un documento 'marcador' en la colección 'Markers' descrita en la Figura \ref{fig:esquemaMarker2}.
+La pregunta anteriormente planteada abre un nuevo abanico de problemas, para cada uno de los cuales se desarrolla un operador y éstos, trabajando en conjunto, producen la información necesaria para ser almacenada como un documento 'marcador' en la colección 'Markers' descrita en la Figura \ref{fig:esquemaMarker2}.
 
 \subsubsection*{Operador idioma}
 \label{subsubsec:1op}
@@ -661,7 +661,7 @@ La primera de las problemáticas a tratar es el idioma. De acuerdo a \cite{Twitt
 
 \cite{languageDetector} desarrolló, haciendo uso de un clasificador \textit{Naïve Bayes}, un módulo escrito en Java el cual es capaz de detectar con éxito 49 idiomas dentro del texto con un 99.8\% de precisión y fue la primera opción para resolver el problema del idioma, pero al analizar el cuerpo de un estado de \textit{Twitter} se encontró que uno de sus campos, precisamente, correspondía al idioma en el que estaba escrito el \textit{tweet}, por ello, y con objeto de no realizar cálculos innecesarios, se optó por utilizar este campo.
 
-La Figura \ref{fig:operadorIdioma} presenta el código de la implementación de este \textit{bolt}, correspondiente a su método \textit{execute}, descrito en la sección \ref{subsubsec:Bolt}.
+La Figura \ref{fig:operadorIdioma} presenta el código de la implementación de este \textit{bolt}, correspondiente a su método \textit{execute}, descrito en la sección \ref{subsec:HerrDesarrollo}.
 
 \begin{figure}[H]
 	\centering
@@ -676,13 +676,13 @@ Aunque simple, éste operador filtra un gran número de estados, dado que según
 \subsubsection*{Operador filtro de consultas}
 \label{subsubsec:2op}
 
-El segundo problema corresponde a que aunque se tengan los mensajes en el idioma correcto existen mensajes que el usuario desea que sean priorizados, para ello, y como se definió en la sección \ref{sec:diseno:termBusqueda}, son entregados términos de búsqueda. Es así como el segundo nivel de operadores corresponderá a aplicar los filtros de búsqueda ingresados por el usuario, si existiesen, aplicando el algoritmo descrito anteriormente y discriminando aquellos estados que contengan las palabras buscadas.
+El segundo problema corresponde a que aunque se tengan los mensajes en el idioma correcto existen mensajes que el usuario desea que sean priorizados, para ello, y como se definió en la sección \ref{sec:diseno:termBusqueda}, son entregados términos de búsqueda. Es así como el segundo nivel de operadores corresponda a aplicar los filtros de búsqueda ingresados por el usuario, si existiesen, aplicando el algoritmo descrito anteriormente y discriminando aquellos estados que contengan las palabras buscadas.
 
 Adicionalmente, la historia HU-c02 que guarda relación con la HU-v05, menciona la necesidad de incrementar los términos de búsqueda para enriquecerla y abarcar la mayor información posible dado una consulta. Para realizar esto se consideró una práctica del procesamiento de lenguaje natural como es la denominada \textit{Query Expansion} (QE). Según lo descrito por \cite{IRQE} son técnicas comunes al utilizar QE la búsqueda de sinónimos (uso de diccionarios priviamente establecidos), diccionarios basados en la minería de los elementos previamente hayados, creación de diccionadios basados en la co-ocurrencia de términos, es decir, términos que suelen venir juntos o un vocabulario mantenido por editores humanos. Para este trabajo sólo se consideran las dos primeras: Búsqueda por diccionario de sinónimos y una implementación que encuentra los términos más frecuentes dentro de los resultados de la búsqueda.
 
 El diccionario de sinónimos es básicamente una bolsa de palabras asociadas a una semilla, es decir, dado un término de búsqueda agregar todos los términos asociados a el en el diccionario.
 
-En el caso de la búsqueda de términos frecuentes se sugirió integrar un proyecto \textit{storm} ya desarrollado el cuál tiene por finalidad la búsqueda de los denominados \textit{thrending topics}, es decir, aquellos términos de los que se realizan más menciones en un determinado instante, pero aquella implementación sólo consideraba los denominados \textit{hashtag}, un marcador de palabras concatenadas que inician por el caracter "\#". Siendo ese el caso el uso de esta topología storm no sería del todo util. En su lugar se desarrolló un contador de frecuencias para palabras con un funcionamiento similar, dicha implementación se aprecia en el Algoritmo \ref{alg:TT}.\\
+En el caso de la búsqueda de términos frecuentes se sugirió integrar un proyecto \textit{storm} ya desarrollado el cuál tiene por finalidad la búsqueda de los denominados \textit{thrending topics}, es decir, aquellos términos de los que se realizan más menciones en un determinado instante, pero aquella implementación sólo consideraba los denominados \textit{hashtag}, un marcador de palabras concatenadas que inician por el caracter "\#". Siendo ese el caso el uso de esta topología storm no es del todo util. En su lugar se desarrolla un contador de frecuencias para palabras con un funcionamiento similar, dicha implementación se aprecia en el Algoritmo \ref{alg:TT}.\\
 
 \begin{algorithm}[H]\setstretch{1.5}
 	\begin{algorithmic}[numeracion_lineas]
@@ -725,11 +725,11 @@ La Figura \ref{fig:operadorFiltro} muestra la implementación del filtro de cons
 \subsubsection*{Operador normalizador de texto}
 \label{subsubsec:3op}
 
-El tercer problema es inherente a \textit{Twitter}: En esta red social es común referenciar un estado a un determinado tema, he ahí el uso de los conocidos \textit{Hashtag} que, como se mencionó en la sección \ref{subsubsec:estadisticasdeproc} corresponden a palabras concatenadas antecedidas por el caracter \#. Otro problema común corresponde a la mención de usuarios, ésta corresponde a un llamado al nombre de usuario dentro de la aplicación, antecedida por el caracter "@", usualmente usada para el envío de mensajes entre pares. Diversos autores, entre ellos, \cite{NLPaccuracy}, \cite{NLPaccuracy1} y \cite{NLPaccuracy2}, han señalado que la existencia de estos elementos significan una disminución en la precisión de los elementos descritos en la sección \ref{sec:diseno:clasificador}. Por ello él tercer operador corresponderá a normalizador de texto, el cual reemplaza menciones a usuarios, \textit{hashtags} y URLs, todas ellas variables, por palabras constantes, el reemplazo a realizarse se muestra en la Tabla \ref{tab:reemplazosDeEntidades}. Esto se fundamenta en los resultados descritos en el capítulo \ref{cap:experimentos}.
+El tercer problema es inherente a \textit{Twitter}: En esta red social es común referenciar un estado a un determinado tema, he ahí el uso de los conocidos \textit{Hashtag} que, como se mencionó en la sección \ref{subsubsec:estadisticasdeproc} corresponden a palabras concatenadas antecedidas por el caracter \#. Otro problema común corresponde a la mención de usuarios, ésta corresponde a un llamado al nombre de usuario dentro de la aplicación, antecedida por el caracter "@", usualmente usada para el envío de mensajes entre pares. Diversos autores, entre ellos, \cite{NLPaccuracy}, \cite{NLPaccuracy1} y \cite{NLPaccuracy2}, han señalado que la existencia de estos elementos significan una disminución en la precisión de los elementos descritos en la sección \ref{sec:diseno:clasificador}. Por ello él tercer operador corresponderá a normalizador de texto, el cual reemplaza menciones a usuarios, \textit{hashtags} y URLs, todas ellas variables, por palabras constantes, el reemplazo a realizarse se muestra en la Tabla \ref{tab:reemplazosDeEntidades}. Ésto se fundamenta en los resultados descritos en el capítulo \ref{cap:experimentos}.
 
 \begin{table}[H]
 \centering
-\caption[Reemplazo de entidades en texto.]{Reemplazo de entidades en texto.\\Fuente :Elaboración Propia, (2016)}
+\caption[Reemplazo de entidades en texto.]{Reemplazo de entidades en texto.\\Fuente: Elaboración Propia, (2016)}
 \label{tab:reemplazosDeEntidades}
 \begin{tabular}{|c|c|}
 \hline
@@ -745,9 +745,9 @@ La implementación de éste operador se realizo utilizando expresiones regulares
 \subsubsection*{Operador geolocalizador}
 \label{subsubsec:4op}
 
-El cuarto y mayor problema presentado tiene relación, principalmente, con la historia HU-v01. Si bien se mencionó cómo se realizaría la visualización, no se señaló cómo es que se obtienen tanto la coordenadas geográficas, latitud y longitud, para ubicar geográficamente un evento.
+El cuarto y mayor problema presentado tiene relación, principalmente, con la historia HU-v01. Si bien se mencionó cómo se realiza la visualización, no se señaló cómo es que se obtienen tanto la coordenadas geográficas, latitud y longitud, para ubicar geográficamente un evento.
 
-Ha sido señalado por \cite{ChatoSurvey} que menos del 1\% de los \textit{tweets} contienen datos en sus campos correspondientes a geolocalización. En un experimento (véase anexo \ref{anexo:xcentajeGeo}) realizado utilizando la herramienta \textit{RapidMiner} se obtuvo una muestra de 67.789 \textit{tweets} directamente desde el \textit{stream} sin utilizar filtros de búsqueda, de esos \textit{tweets} 67.475 no contaban con los datos correspondientes a la ubicación geográfica, es decir, el 0.46\% de los datos de aquella muestra cuentan con la información requerida, lo que hace creer que lo presentado por los autores, antes mencionados, está en lo correcto.
+Ha sido señalado por \cite{ChatoSurvey} que menos del 1\% de los \textit{tweets} contienen datos en sus campos correspondientes a geolocalización. En un experimento (véase Apéndice \ref{apendice:xcentajeGeo}) realizado utilizando la herramienta \textit{RapidMiner} se obtuvo una muestra de 67.789 \textit{tweets} directamente desde el \textit{stream} sin utilizar filtros de búsqueda, de esos \textit{tweets} 67.475 no contaban con los datos correspondientes a la ubicación geográfica, es decir, el 0.46\% de los datos de aquella muestra cuentan con la información requerida, lo que hace creer que lo presentado por los autores, antes mencionados, está en lo correcto.
 
 Siendo la geolocalización un elemento de suma importancia para el funcionamiento de la aplicación, se ha de intentar obtener este dato de alguna forma. Así es como surge la posibilidad de usar el contenido del \textit{tweet} para obtener la ubicación, para ello se preparó un diccionario con las comunas del país y sus coordenadas geográficas, \cite{ubicacionesChile} y se diseñó el Algoritmo \ref{alg:geolocalizacion}. De esta manera existe una aproximación para detectar la ubicación a la que un \textit{tweet} hace referencia.\\
 
@@ -776,9 +776,9 @@ Siendo la geolocalización un elemento de suma importancia para el funcionamient
 
 Para detectar cuándo una ubicación está en Chile, se generó un cuadro en el mapa donde se delimita todo el territorio Chileno, incluyendo Isla de Pascua.
 
-Haciendo uso del algoritmo desarrollado es posible aumentar la cantidad de elementos que continuarán en la línea de procesamiento. En el capítulo \ref{cap:experimentos} realiza una evaluación sobre la efectividad del operador.
+Haciendo uso del algoritmo desarrollado es posible aumentar la cantidad de elementos que continúan en la línea de procesamiento. En el capítulo \ref{cap:experimentos} realiza una evaluación sobre la efectividad del operador.
 
-Los operadores descritos en las secciones \ref{subsubsec:5op} y \ref{subsubsec:6op} tienen relación con la labor del señalado en \ref{subsubsec:7op}, las razones que llevan a la construcción de estos tres son expuestan en la sección \ref{subsec:clasificador}, mientras tanto, al igual que los operadores anteriores se detallará el cómo fueron diseñados.
+Los operadores descritos en las secciones \ref{subsubsec:5op} y \ref{subsubsec:6op} tienen relación con la labor del señalado en \ref{subsubsec:7op}, las razones que llevan a la construcción de estos tres son expuestan en la sección \ref{subsubsec:clasificacion}, mientras tanto, al igual que los operadores anteriores se detalla el cómo fueron diseñados.
 
 \subsubsection*{Operador removedor de \textit{stopword}}
 \label{subsubsec:5op}
@@ -809,7 +809,7 @@ Este operador hace uso del algoritmo de \cite{Porter}, para extraer prefijos y s
 
 \begin{table}[H]
 \centering
-\caption[Ejemplo de \textit{stemming} para la palabra 'presentar'.]{Ejemplo de \textit{stemming} para la palabra 'presentar'.\\Fuente :Elaboración Propia, (2016)}
+\caption[Ejemplo de \textit{stemming} para la palabra 'presentar'.]{Ejemplo de \textit{stemming} para la palabra 'presentar'.\\Fuente: Elaboración Propia, (2016)}
 \label{tab:ejstemming}
 \begin{tabular}{|c|c|}
 \hline
@@ -836,16 +836,16 @@ Este operador hace uso del clasificador generado mediante las técnicas descrita
 \subsubsection*{Operador persistencia}
 \label{subsubsec:8op}
 
-Este operador se encarga de conectarse a la base de datos y almacenar el nuevo marcador. Los datos recibidos desde la cadena de procesamiento se llevarán a una instancia de objeto Java, llamado "Marker", el cual contiene los mismos elementos descritos para un documento de la colección "Markers", a un objeto JSON utilizando \textit{Jackson} y finalmente, utilizando \textit{Jongo}, lo transformará en BSON para almacenarlo en la base de datos en MongoDB.
+Este operador se encarga de conectarse a la base de datos y almacenar el nuevo marcador. Los datos recibidos desde la cadena de procesamiento se lleva a una instancia de objeto Java, llamado "Marker", el cual contiene los mismos elementos descritos para un documento de la colección "Markers", a un objeto JSON utilizando \textit{Jackson} y finalmente, utilizando \textit{Jongo}, lo transforma en BSON para almacenarlo en la base de datos en MongoDB.
 
 \subsubsection*{Construcción del clasificador}
 \label{subsubsec:clasificacion}
 
 Hasta ahora se han tocado, prácticamente, todos los temas que se relacionan con el funcionamiento del sistema de detección, desde donde se obtienen los datos, cómo se procesan e incluso cómo se almacenan, pero no se ha especificado cómo se realiza la clasificación, es decir, cómo dado un texto de entrada se consigue discriminar en qué categoría encaja. Ésta sección especifica lo que se contextualizó en la sección \ref{subsubsec:7op}.
 
-El concepto que involucra la construcción de un clasificador es el de "aprendizaje supervizado", que fue mencionado en la sección \ref{sec:aprendSuperv}, en este tipo de aprendizaje se requiere de un conjunto de datos de entrada, denominados conjunto de entrenamiento, que ha de pasar por el algoritmo, en este caso \textit{Naïve Bayes}, que ha de conocer previamente, la salida esperada para cada elemento del conjunto. El resultado esperado es un clasificador capáz de predecir, en este caso, a qué categoría pertenece un texto sometido a su evaluación.
+El concepto que involucra la construcción de un clasificador es el de "aprendizaje supervizado", que fue mencionado en la sección \ref{subsec:aprendSuperv}, en este tipo de aprendizaje se requiere de un conjunto de datos de entrada, denominados conjunto de entrenamiento, que ha de pasar por el algoritmo, en este caso \textit{Naïve Bayes}, que ha de conocer previamente, la salida esperada para cada elemento del conjunto. El resultado esperado es un clasificador capaz de predecir, en este caso, a qué categoría pertenece un texto sometido a su evaluación.
 
-Según la metodología KDD existen subprocesos en la búsqueda de conocimiento en bases de datos, estos fueron descritos en la sección \ref{subsec:kdd}, para este caso particular se describe cómo fue realizado cada uno de estos subprocesos para la construcción del clasificador con el que cuenta el sistema.
+Según la metodología KDD existen subprocesos en la búsqueda de conocimiento en bases de datos, estos fueron descritos en la sección \ref{subsec:MetodologiaDetalle}, para este caso particular se describe cómo fue realizado cada uno de estos subprocesos para la construcción del clasificador con el que cuenta el sistema.
 
 El subproceso de selección de datos se llevó a cabo extrayendo un subconjunto del \textit{dataset} mencionado en la sección \ref{subsec:alcances}. Éste conjunto, de exactamente 2234 \textit{tweets} correspondientes al del terremoto de Concepción el año 2010, todos ellos en español, pero no todos hacen referencia al evento, pues éste coincidió con la realización de la LI versión del Festival Internacional de la Canción de Viña del Mar y muchos de estos \textit{tweets} hacen referencia a este último. Los datos en este punto de proceso cuentan con los campos correspondientes a un \textit{tweet} de la época, es decir: "ID\_unit", "day", "date", "time\_zone", "time", "tweet\_it", "user\_id", "name", "screen\_name", "friends\_count", "follower\_count", "text" y "value". Todos ellos separados por coma (,).
 
@@ -855,7 +855,7 @@ El siguiente paso, correspondiente al suproceso de transformación de datos, del
 
 El cuarto subproceso es automatizado por Mallet y corresponde al minado de datos en sí, para entregarle los datos a Mallet primero han de construirse como un objeto "\textit{Instance}", lo cual se realiza entregándole cada uno de los elementos preparados en la sección anterior: el identificador, etiqueta y contenido que ya ha pasado por las operaciones que componene el subproceso de transformación. Como resultado de este proceso se obtiene un objeto \textit{Classifier}, el cual puede ser serializado y almacenado como un archivo denominado, en este caso, "classifier.dene". 
 
-Finalmente el subproceso de evaluación también es llevado a cabo por la herramienta Mallet, que implementa un objeto denominado "\textit{Trial}" el cual, utilizando un clasificador y un conjunto de datos de prueba. Como resultado de este subproceso se obtienen las métricas comunes de evaluación: \textit{accuracy}, \textit{recall} y \textit{F-1 score}. La evaluación del clasificador construido se presenta en la sección \ref{} del Capítulo \ref{sec:EvalClassificador}. 
+Finalmente el subproceso de evaluación también es llevado a cabo por la herramienta Mallet, que implementa un objeto denominado "\textit{Trial}" el cual, utilizando un clasificador y un conjunto de datos de prueba. Como resultado de este subproceso se obtienen las métricas comunes de evaluación: \textit{accuracy}, \textit{recall} y \textit{F-1 score}. La evaluación del clasificador construido se presenta en la sección \ref{sec:EvalClassificador} del Capítulo \ref{sec:EvalClassificador}. 
 
 \subsubsection*{Topología del sistema}
 \label{subsubsec:topologiaSistema}
@@ -867,7 +867,7 @@ La razón de este orden en la topología se debe a varias razones y se justifica
 \begin{itemize}
 \item \textit{Spout Twitter}: Es el eslabón principal de la cadena. Desde aquí se emiten los nuevos estados al sistema y todo el sistema depende de el. 
 \item \textit{Bolt} Filtro de idioma: Ocupa la primera posición de los operadores del sistema, dado que se espera que el \textit{stream} reciba estados de todo el mundo y no sólo en español. Al estar este operador en primer lugar se asegura de reducir el flujo en gran medida, lo cual puede comprobarse por los resultados obtenidos en el Capítulo \ref{cap:experimentos}.
-\item \textit{Bolt} Filtro de consulta: Habiendo filtrado sólo aquellos estados cuyo lenguage sea el español es necesario filtrar aun más el \textit{stream} valiéndose de las restricciones especificadas por el usuario. Así sólo los estados que contengan términos especificados por el usuario, o el sistema de expansión, continuan en el sistema.
+\item \textit{Bolt} Filtro de consulta: Habiendo filtrado sólo aquellos estados cuyo lenguage sea el español es necesario filtrar aun más el \textit{stream} valiéndose de las restricciones especificadas por el usuario. Así sólo los estados que contengan términos especificados por el usuario, o el sistema de expansión, continúan en el sistema.
 \item\textit{Bolt} Normalizador de texto: Previo al detector de ubicación para evitar posibles confusiones que pueda acarrear la existencia de nombres de lugares en elementos como nombres de usuario, \textit{hashtags} o enlaces.
 \item\textit{Bolt} Detección de ubicación: Ocupa ésta posición, pues debe ir previo a la eliminación de \textit{stopwords}, de lo contrario ubicaciones, como por ejemplo "los vilos", válida dentro de chile, es ignorada por el sistema.
 \item\textit{Bolt} Eliminador de \textit{stopword}: Se realiza previo al \textit{Stemming} para reducir la carga computacional, pues el operador de \textit{stemming} lleva a palabras raíz estos términos que no son necesarios.

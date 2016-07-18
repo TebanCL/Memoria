@@ -1,26 +1,60 @@
 \chapter{Requerimientos}
 \label{cap:Requerimientos}
 
-Éste capítulo detallará los requisitos de las aplicaciones, descritos como historias de usuario. Éstos señalan las necesidades de los clientes.
+Éste capítulo detalla los requisitos de las aplicaciones, descritos como historias de usuario. Éstos señalan las necesidades de los clientes.
 
 El cliente es uno de los clientes del proyecto FONDEF IDeA, código ID15I10560, proyecto orientado a generar herramientas para la gestión de desastres naturales. Los requerimientos se levantan en reuniones con los investigadores y responsables de aplicaciones del proyecto donde se estipulan las funcionalidades deseables, dichas reuniones tuvieron lugar en el Departamente de Ingeniería informática de la Universidad de Santiago e Chile.
 
 \section{Proceso de toma de requerimientos}
 \label{sec:tomaDeRequerimientos}
 
+Las primeras reuniones tuvieron un caracter exploratorio, en ellas se discutieron aspectos referentes al estado del arte y se acotaron los alcances del proyecto. En reuniones subsecuentes y mediante conversaciones con el equipo del proyecto FONDEF IDeA se encontraron los requisitos descritos en la tabla \ref{tab:requerimientos} mediante los cuales fue posible construir las historias de usuarios necesarias para la metodología que se está empleando. Los requisitos mostrados a continuación se corresponden con el identificador RFXX para los requerimientos funcionales, donde XX corresponde al número del requisitos y RNFYY, para el caso de los requerimientos no funcionales donde YY corresponde al número del requisito.
 
-
+\begin{table}[]
+\centering
+\caption[Requisitos encontrados]{Requisitos encontrados\\Fuente: Elaboración Propia, (2016)}
+\label{tab:requerimientos}
+\begin{tabular}{|c|l|c|}
+\hline
+\textbf{Identificador} & \multicolumn{1}{c|}{\textbf{Requisito}} & \textbf{Dependencia} \\ \hline
+RNF00 & \begin{tabular}[c]{@{}l@{}}Se ha de implementar un sistema de procesamiento\\ de \textit\{streams\}.\end{tabular} & - \\ \hline
+RNF01 & La fuente de datos debe ser \textit\{Twitter\}. & - \\ \hline
+RNF02 & \begin{tabular}[c]{@{}l@{}}Debe obtenerse la información de \textit\{Twitter\}\\ en tiempo real.\end{tabular} & RNF01 \\ \hline
+RNF03 & El sistema debe ser escalable & RNF00 \\ \hline
+RNF04 & \begin{tabular}[c]{@{}l@{}}El sistema debe presentar una interfaz donde el\\ usuario pueda opearar.\end{tabular} & - \\ \hline
+RNF05 & \begin{tabular}[c]{@{}l@{}}La interfaz debe poder recargar su información \\ sin actualizar la misma\end{tabular} & RNF04 \\ \hline
+RNF06 & \begin{tabular}[c]{@{}l@{}}Los parámetros utilizados para operar el sistema \\ deben ser modificables.\end{tabular} & - \\ \hline
+RNF07 & \begin{tabular}[c]{@{}l@{}}Se debe presentar un mapa para el despliegue de\\ la información.\end{tabular} & RNF04 \\ \hline
+RNF08 & Cada categoría debe tener un icono particular. & RF05 \\ \hline
+RNF09 & \begin{tabular}[c]{@{}l@{}}La información en el mapa debe agruparse según\\ nivel de acercamiento de éste.\end{tabular} & RNF08, RNF04 \\ \hline
+RNF10 & \begin{tabular}[c]{@{}l@{}}Se debe poder elegir qué eventos se muestran por\\ categoría\end{tabular} & RNF08, RNF04 \\ \hline
+RNF11 & \begin{tabular}[c]{@{}l@{}}Se deben mostrar estadísticas de procesamiento \\ para la consulta actual.\end{tabular} & RF02, RNF04 \\ \hline
+RNF12 & \begin{tabular}[c]{@{}l@{}}Se debe mostrar desde donde viene un evento, es \\ decir, qué estado lo generó al visualizarlo en el\\ mapa.\end{tabular} & \begin{tabular}[c]{@{}c@{}}RNF10, RNF09,\\ RNF04\end{tabular} \\ \hline
+RNF13 & \begin{tabular}[c]{@{}l@{}}Debe mostrarse una línea temporal para seleccionar\\ el intervalo.\end{tabular} & RF08 \\ \hline
+RNF14 & \begin{tabular}[c]{@{}l@{}}Debe mostrarse un histograma con la cantidad de\\ eventos pasado por fecha.\end{tabular} & RF08 \\ \hline
+RF00 & \begin{tabular}[c]{@{}l@{}}Se deben detectar las necesidades expresadas\\ en los \textit\{tweets\}\end{tabular} & \begin{tabular}[c]{@{}c@{}}RNF00, RNF01,\\ RNF02\end{tabular} \\ \hline
+RF01 & \begin{tabular}[c]{@{}l@{}}Los operadores del sistema deben especificarse\\ como \textit\{bolts\}\end{tabular} & RNF00 \\ \hline
+RF02 & Se debe poder especificar términos de búsqueda, & RNF00, RNF04, \\ \hline
+RF03 & \begin{tabular}[c]{@{}l@{}}Los términos ingresados deben expandirse,\\ automáticamente, para abarcar nuesvos términos\\ útiles.\end{tabular} & RF03 \\ \hline
+RF04 & Sólo se trabajaran \textit\{tweets\} en español. & RF01, RNF00 \\ \hline
+RF05 & \begin{tabular}[c]{@{}l@{}}La detección de necesidades debe realizarse de \\ forma dinámica, no utilizando bolsas de palabras.\end{tabular} & - \\ \hline
+RF06 & Se debe poder acceder a eventos pasados. & - \\ \hline
+RF07 & Debe existir un sistema de persistencia de datos. & RF06 \\ \hline
+RF08 & \begin{tabular}[c]{@{}l@{}}Se debe poder especificar un intervalo dentro del \\ cual mostrar datos.\end{tabular} & RF06 \\ \hline
+RF09 & El sistema debe funcionar de forma continua & - \\ \hline
+\end{tabular}
+\end{table}
 
 \section{Historias de usuario y criterios de aceptación}
 \label{sec:historias}
 
-Los requerimientos antes mencionados se agruparon para, según lo descrito por la metodología \textit{extreme programing}, como historias de usuario. Estas historias de usuario tienen la siguiente nomenclatura para su identificación: Aquellos que guarden relación con la aplicación de detección se identifican como 'HU-cXX' donde XX corresponde al número del requisito; 'HU-vYY' para aquellas que correspondan a la aplicación interfáz donde, al igual que en el caso anterior, YY corresponden al número del requisito.
+Los requerimientos antes mencionados se agruparon para, según lo descrito por la metodología \textit{extreme programming}, como historias de usuario. Estas historias de usuario tienen la siguiente nomenclatura para su identificación: Aquellos que guarden relación con la aplicación de detección se identifican como 'HU-cXX', donde XX corresponde al número del requisito; 'HU-vYY' para aquellas que correspondan a la aplicación interfáz, donde, al igual que en el caso anterior, YY corresponden al número del requisito.
 
 La Tabla \ref{tab:ReqTotales} presenta las historias de usuario correspondientes a los requerimientos de todo el sistema en general, sin hacer referencia al cómo está dividido éste.
 
 \begin{table}[H]
 \centering
-\caption[Historias de usuario.]{Historias de usuario.\\Fuente :Elaboración Propia, (2016)}
+\caption[Historias de usuario.]{Historias de usuario.\\Fuente: Elaboración Propia, (2016)}
 \label{tab:ReqTotales}
 \begin{tabular}{cl}
 \hline
@@ -42,5 +76,24 @@ La Tabla \ref{tab:ReqTotales} presenta las historias de usuario correspondientes
 
 Estas historias de usuario se corresponden con los criterios de aceptación descritos en la Tabla \ref{tab:criteriosAceptacion} que se presenta a continuación.
 
-\textbf{Faltan criterios, conversarlo con profes}
-
+\begin{table}[]
+\centering
+\caption[Criterios de aceptación para las historias de usuario.]{Criterios de aceptación para las historias de usuario.\\Fuente: Elaboración Propia, (2016)}
+\label{tab:criteriosAceptacion}
+\begin{tabular}{|c|l|}
+\hline
+\textbf{Identificador} & \multicolumn{1}{c|}{\textbf{Criterio de aceptación}} \\ \hline
+HU-c00 & \begin{tabular}[c]{@{}l@{}}· Debe contruirse el sistema de procesamiento de stream.\\ · Debe capturarse la información desde Twitter.\\ · Debe usarse la información que llega al sistema y no almacenarla para\\ trabajarla por lotes.\\ · El sistema debe concluir con un dato etiquetado en la base de datos.\end{tabular} \\ \hline
+HU-c01 & · Twitter debe ser desde donde se obtienen los datos de entrada del sistema. \\ \hline
+HU-c02 & · Deben implementarse técnicas para realizar expansión de la consulta. \\ \hline
+HU-v00 & \begin{tabular}[c]{@{}l@{}}· Debe contarse con una interfaz que muestre los eventos detectados por \\ el sistema.\end{tabular} \\ \hline
+HU-v01 & \begin{tabular}[c]{@{}l@{}}· El mapa de eventos debe mostrar los eventos, asociados a un punto \\ geográfico.\end{tabular} \\ \hline
+HU-v02 & \begin{tabular}[c]{@{}l@{}}· Debe poder filtrarse por modos de agrupamiento.\\ · Debe poder filtrarse por categorías.\\ · El mapa debe permitir modificar su nivel de acercamiento.\end{tabular} \\ \hline
+HU-v03 & · El mapa debe actualizarse automáticamente. \\ \hline
+HU-v04 & \begin{tabular}[c]{@{}l@{}}· Debe poder seleccionarse el intervalo.\\ · Los eventos en el mapa deben modificarse según el intervalo que se \\ seleccione.\\ · Debe seleccionarse el intervalo mediante una línea de tiempo.\\ · Debe mostrarse un histograma con los eventos pasados presentes en el\\ sistema.\end{tabular} \\ \hline
+HU-v05 & \begin{tabular}[c]{@{}l@{}}· Debe existir un lugar donde especificar éstos términos.\\ · El sistema debe mostrar qué términos se están utilizando para la \\ búsqueda actual.\end{tabular} \\ \hline
+HU-v06 & · Cada evento de categorización diferente debe tener un icono particular. \\ \hline
+HU-v07 & \begin{tabular}[c]{@{}l@{}}· Deben mostrarse la cantidad de usuarios diferentes que han emitido\\ estados detectados.\\ · Deben mostrarse la cantidad de necesidades detectadas.\\ · Deben mostrarse la cantidad de eventos procesados.\end{tabular} \\ \hline
+HU-v08 & \begin{tabular}[c]{@{}l@{}}· Debe existir un lugar donde realizar el cambio de parámetros.\\ · Debe ser explícito el cambio de los parámetros de funcionamiento en\\ la interfaz.\end{tabular} \\ \hline
+\end{tabular}
+\end{table}

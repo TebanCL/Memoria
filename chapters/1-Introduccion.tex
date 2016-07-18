@@ -8,7 +8,7 @@ Los desastres naturales en Chile han sido frecuentes en los últimos años. Sól
 
 Los académicos del FONDEF IDeA de la Universidad de Santiago de Chile, se han adjudicado fondos para el desarrollo de un proyecto de dos años de duración; el cual consiste en el desarrollo de una plataforma de \textit{streaming} a escala nacional, enfocada en el procesamiento de datos en caso de crisis. Esta plataforma hará uso de la información generada por los usuarios en redes sociales como fuente de datos. Se espera que esta plataforma proporcione herramientas para que cualquier persona pueda desarrollar nuevas aplicaciones permitiendo atender las diversas problemáticas que puedan existir cuando el país se enfrente a catástrofes. Para ayudar a difundir la plataforma se requiere construir tres aplicaciones: una que apoye la coordinación de voluntarios, la segunda que difunda noticias y mensajes y, finalmente, una que permita detectar necesidades de la población; todas ellas al presentarse escenarios de catástrofes naturales.
 
-En particular, para este trabajo, se espera atacar el problema de la detección de necesidades de la población y servir de apoyo para la construcción de la plataforma de \textit{streaming}, en relación a qué operadores se han de construir y cómo ha de estructurarse el sistema para operar sobre datos nacionales.
+En particular, para este trabajo, se ataca el problema de la detección de necesidades de la población y servir de apoyo para la construcción de la plataforma de \textit{streaming}, en relación a qué operadores se han de construir y cómo ha de estructurarse el sistema para operar sobre datos nacionales.
 
 \section{Descripción del problema}
 \label{intro:problema}
@@ -20,7 +20,7 @@ El problema que aboda esta memoria es el hacer uso de la información generada p
 
 Se propone una aplicación, que al ocurrir un escenario de desastre recogerá constantemente, en tiempo real, publicaciones desde \textit{Twitter} y analice si corresponde o no a una necesidad existente en el conjunto de necesidades detectables y, en casos afirmativos, mostrarlas durante un intervalo de tiempo sobre un mapa geográfico del país haciendo uso de los metadatos asociados al tweet, en el caso en que se encuentren disponibles o hacer uso del contenido para inferir sus ubicaciones si es posible.
 
-Como se mencionó, se espera que la aplicación esté expuesta a grandes cantidades de información, pues estará recibiendo directamente desde el \textit{stream} de \textit{Twitter}, por ello se aprovechan las capacidades de \textit{Apache Storm}, para ser capáz de procesar esta información en tiempo real para llevar a cabo la clasificación de cada entrada. A medida que los datos se clasifiquen, éstos se posicionan en el mapa, haciendo uso de Google Maps, para ser visualizados´con un icono correspondiente a su categoría particular por el usuario final del sistema.
+Como se mencionó, se espera que la aplicación esté expuesta a grandes cantidades de información, pues recibe directamente desde el \textit{stream} de \textit{Twitter}, por ello se aprovechan las capacidades de \textit{Apache Storm}, para ser capáz de procesar esta información en tiempo real para llevar a cabo la clasificación de cada entrada. A medida que los datos se clasifiquen, éstos se posicionan en el mapa, haciendo uso de Google Maps, para ser visualizados´con un icono correspondiente a su categoría particular por el usuario final del sistema.
 
 La clasificación de los datos de entrada se está dada por la evaluación realizada por un modelo de clasificador bayesiano, éste categoriza estos datos según su contenido en siete posibles categorías.
 
@@ -45,7 +45,7 @@ La clasificación de los datos de entrada se está dada por la evaluación reali
 
 Se utilizan las publicaciones de \textit{Twitter} para llevar a cabo el procesamiento de la información y no se considera, en el marco de este trabajo, el uso de una red social alternativa, no porque no sea posible, sino que con el motivo de acotar el problema.
 
-Las necesidades que la aplicación detecta no son una lista exhaustiva de las posibles existentes, sino de un subconjunto que se ha considerado más importante en el equipo de trabajo del proyecto FONDEF IDeA. De esta forma se logra acotar el problema reduciendo la cantidad de categorías y permitir una mayor precisión en la clasificación (trabajos similares han bordeado una precisión entre el sesenta y ochenta por ciento, pero estos resultados van de la mano con la cantidad de datos utilizados para entrenar), entendiendo la precisión como la relación de elementos clasificados correcta o incorrectamente.
+Las necesidades que la aplicación detecta no son una lista exhaustiva de las posibles existentes, sino de un subconjunto que se ha considerado más importante en el equipo de trabajo del proyecto FONDEF IDeA. De esta forma se logra acotar el problema reduciendo la cantidad de categorías y permitir una mayor precisión en la clasificación (trabajos similares han bordeado una precisión entre el sesenta y ochenta por ciento, pero estos resultados van de la mano con la cantidad de datos utilizados para entrenar), entendiendo la precisión como la relación de elementos clasificados correctamente sobre el total.
 
 Se considera para la construcción del clasificador un subconjunto de un \textit{dataset} de cuatro millones setecientos mil \textit{tweets} recogidos desde \textit{Twitter} correspondientes al terremoto ocurrido el 2010 en Chile. Este conjunto de datos contiene mensajes en distintos idiomas y ha sido filtrada llegando a aproximadamente un millón y medio de tweets, utilizado por \cite{}, para la construcción de su aplicación sobre rumores en \textit{Twitter}. De aquel conjunto se obtendrá un subconjunto para realizar el etiquetado y ser usado como datos de entrenamiento. 
 
@@ -55,14 +55,14 @@ Se considera para la construcción del clasificador un subconjunto de un \textit
 \subsection{Metodología}
 \label{subsec:MetodologiaDetalle}
 
-Para la realización de este trabajo se utilizarán dos metodologías, en esta sección se ambas son definidas.
+Para la realización de este trabajo se utilizan dos metodologías, en esta sección se ambas son definidas.
 
 \subsubsection*{Programación Extrema}
 \label{subsubsec:XP}
 
 La Programación Extrema (\textit{Extreme Programming}, XP desde ahora en adelante), comenzó como un proyecto el 6 de Marzo de 1996. Es uno de los procesos ágiles más populares y ha sido provado exitosamente en compañias e industrias de todos los tamaños. \cite{xP}.
 
-Su éxito se debe a que hace especial incapié en la satisfacción del cliente por sobre la entrega de todo lo el software posible.
+Su éxito se debe a que hace especial hincapié en la satisfacción del cliente por sobre la entrega de todo lo el software posible.
 
 Aporta cinco formas escenciales para mejorar el proceso de desarrollo de software: Comunicación, simplicidad, retroalimentación, respeto y coraje: Constantemente se comunica al equipo de desarrollo con el cliente. Se intenta mantener el diseño lo más simple y sencillo posible. Se obtiene retroalimentación desde las pruebas desde el día uno. Se les entrega el software al cliente lo más pronto posible con los cambios solicitados. El éxito depende, en gran medida, del respeto y comunicación de los miembros del equipo y los clientes. Implementando XP el equipo puede responder a los cambios sin temor.
 
@@ -115,11 +115,11 @@ La metodología implementa unas simples reglas de trabajo, las que se dividen en
 Éstas reglas por si solas pueden carecer de sentido, pero se apoyan en los \textbf{valores} que la metodología quiere entregar y que fueron mencionadas anteriormente, pero ahora son detalladas:
 
 \begin{itemize}
-\item Simplicidad: Se hará lo que se solicitó, pero no más. Ésto maximiza el valor entregado dado una fecha límite. Nuestras metas se alcanzarán por medio de pequeños pasos para mitigar errores tan pronto ocurran. Crearemos algo de lo que estemos orgullosos y lo mantendremos en el tiempo a costos razonables.
-\item Comunicación: Todos somos partes de un equipo y nos comunicamos cara a cara a diario. Trabajaremos juntos en todo: desde la toma de requerimientos hasta la implementación. Crearemos la mejor solución posible al problema.
-\item Retroalimentación: Cada iteración será completada seriamente entregando \textit{software} funcional. Mostraremos nuestro \textit{software} a menudo y prontamente para luego escuchar y aplicar los cambios solicitados. Hablaremos de nuestro proyecto y adaptaremos nuestro proceso a el, no al revéz.
+\item Simplicidad: Se hace lo que se solicitó, pero no más. Ésto maximiza el valor entregado dado una fecha límite. Nuestras metas se alcanzan por medio de pequeños pasos para mitigar errores tan pronto ocurran. Se crea algo de lo que se esté orgullosos y lo se mantiene en el tiempo a costos razonables.
+\item Comunicación: Todos somos partes de un equipo y nos comunicamos cara a cara a diario. Se trabaja juntos en todo: desde la toma de requerimientos hasta la implementación. Se crea la mejor solución posible al problema.
+\item Retroalimentación: Cada iteración es completada seriamente entregando \textit{software} funcional. Mostraremos nuestro \textit{software} a menudo y prontamente para luego escuchar y aplicar los cambios solicitados. Se habla de nuestro proyecto y se adapta nuestro proceso a el, no al revéz.
 \item Respeto: Todos dan y reciben el respeto que merecen como miembros del equipo. Todos contribuyen con valor así sea simple entusiasmo. Los desarrolladores respetan la experiencia del cliente y viceversa. 
-\item Coraje: Diremos la verdad sobre el progreso y nuestras estimaciones. No se documentan excusas por si se falla porque se planea tener éxito. No tenemos porque no trabajamos solos. Nos adaptaremos a los cambio cuando ocurran.
+\item Coraje: Se dice la verdad sobre el progreso y nuestras estimaciones. No se documentan excusas por si se falla, pues se planea tener éxito. No tenemos porque no trabajamos solos. Nos adaptaremos a los cambio cuando ocurran.
 \end{itemize}
 
 El proceso de XP puede puede ser aprecido en la Figura \ref{fig:procesoXP}.
@@ -137,7 +137,7 @@ El proceso de XP puede puede ser aprecido en la Figura \ref{fig:procesoXP}.
 
 Es definido por \cite{KDDFayyad} como "El proceso no trivial de identificar patrones válidos, nuevos, potencialmente útiles y en ultima instancia comprensible en los datos", surge de la necesidad de manejar grandes cantidades de datos e involucra simultaneamente varias disciplinas de investigación tales como el aprendizaje automático, la estadística, inteligencia artificial, sistemas de gestión de bases de datos, sistemas de apoyo a la toma de decisiones, entre otras.
 
-Si bien puede variar el usuario, quien es aquel que determina el domino de la aplicación, es decir, cómo se utilizarán los datos, el proceso generalmente considera las siguientes etapas:
+Si bien puede variar el usuario, quien es aquel que determina el domino de la aplicación, es decir, cómo se utilizan los datos, el proceso generalmente considera las siguientes etapas:
 
 \begin{enumerate}
 \item Selección de datos: Consiste en buscar el objetivo y las herramientas del proceso de minería, identificando los datos que han de ser extraídos, buscando atributos apropiados de entrada y la información de salida para representar la tarea. Esto quiere decir, primero se debe tener en cuenta lo que se sabe, lo que se quiere obtener y cuáles son los datos que nos facilitarán esa información para poder llegar a nuestra meta, antes de comenzar el proceso como tal.
@@ -230,7 +230,7 @@ Se refiere a la forma en la que se van a compartir los datos entre los component
 
 \begin{itemize}
 \item Shuffle grouping: Storm decide de forma \textit{round robin} la tarea a la que se va a enviar la tupla, de manera que la distribución sea equivalente entre todos los nodos.
-\item Fields gruoping: Se agrupan los \textit{streams} por un determinado campo de manera que se distribuyen los valores que cumplen una determinada condición a la misma tarea.
+\item Fields grouping: Se agrupan los \textit{streams} por un determinado campo de manera que se distribuyen los valores que cumplen una determinada condición a la misma tarea.
 \item All grouping: El \textit{stream} pasa por todas las tareas haciendo multicast.
 \item Grobal grouping: El \textit{stream} se envía al \textit{bolt} con ID más bajo.
 \item None grouping: Es un \textit{Shuffle grouping} donde el orden no es importante.
@@ -268,7 +268,7 @@ Las consultas en MongoDB se realizan como si se tratase de Javascript entregando
 	\label{fig:MongoJsonExample}
 \end{figure}
 
-Una consulta para encontrar este elemento dentro de la colección se dará de la forma aprecida en la Figura \ref{fig:MongoJsonQueryExample}
+Una consulta para encontrar este elemento dentro de la colección se da de la forma aprecida en la Figura \ref{fig:MongoJsonQueryExample}
 
 \begin{figure}[H]
 	\centering
@@ -289,7 +289,7 @@ Se enfoca en la productividad a aplicaciones \textit{RESTful}.
 
 Elimina la desventaja de desarrollo al utilizar \textit{Java} dada por el continuo ciclo de compilar-empaquetamiento-despliegue. Al detectar cambios en el código realiza inmediatamente la compilación y actualiza en la JVM sin necesidad de reiniciar el servidor.
 
-Play no utilizar sesiones en su funcionar, privilegiando el uso de almacenamiento \textit{offline} o el uso de peticiones \textit{Ajax} para resolver problemas del lado del cliente.
+\textit{Play} no utilizar sesiones en su funcionar, privilegiando el uso de almacenamiento \textit{offline} o el uso de peticiones \textit{Ajax} para resolver problemas del lado del cliente.
 
 \subsubsection*{Mallet}
 \label{subsubsec:mallet}
@@ -336,6 +336,6 @@ El Capítulo \ref{cap:Requerimientos}. \nameref{cap:Requerimientos}, describe el
 
 El Capítulo \ref{cap:Diseno}. \nameref{cap:Diseno}, se presenta la arquitectura del sistema y las decisiones que llevaron a que se se optara por ésta además de describir la implementación de las aplicaciones visualizador y detector de necesidades, incluyendo los elementos que las componen y, en el caso de esta última aplicación, el porqué del uso de una topología en particular.
 
-El Capítulo \ref{cap:experimentos}. \nameref{cap:experimentos}, evalúa el nivel de replicación de los operadores del sistema y su rendimiento en una simulación de una situación real como fue el terremoto de Concepción en febrero del año 2010.
+El Capítulo \ref{cap:experimentos}. \nameref{cap:experimentos}, describe la completitud de las historias de usuario, evalúa el nivel de replicación de los operadores del sistema y su rendimiento en una simulación de una situación real como fue el terremoto de Concepción en febrero del año 2010.
 
-Finalmente en el Capítulo \ref{cap:conclusiones}. \nameref{cap:conclusiones}, presenta las conclusiones del trabajo realizado, el cumplimiento de objetivos tanto general como específicos, la completitud de las historias de usuario, los resultados de los experimentos y trabajo futuro.
+Finalmente en el Capítulo \ref{cap:conclusiones}. \nameref{cap:conclusiones}, presenta las conclusiones del trabajo realizado, el cumplimiento de objetivos tanto general como específicos, los resultados de los experimentos y trabajo futuro.
