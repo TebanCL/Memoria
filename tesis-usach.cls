@@ -483,7 +483,7 @@
 				\hspace{6.8cm}
 				{\normalsize
 				\begin{tabular}{p{5.5cm}}
-					Trabajo de titulación presentad en conformidad a los requisitos \mbox{para obtener el título de} \@grado
+					Trabajo de titulación presentado en conformidad a los requisitos \mbox{para obtener el título de} \@grado
 				\end{tabular}
 				}
 			\end{flushleft}

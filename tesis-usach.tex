@@ -63,7 +63,9 @@
 
 % ### Optativo: Anexos de la tesis ###
 \appendix
-\renewcommand{\thechapter}{A}
+%\renewcommand{\thechapter}{A}
+\renewcommand{\thesection}{\alph{section}.}
+\renewcommand\thefigure{\thesection.\arabic{figure}} 
 \addcontentsline{toc}{chapter}{Apéndices}							% Agregar Apéndice al índice. En caso de no poseer anexos, comentar
 % ### Anexos ###
 \include{anexos/Anexo-1}
