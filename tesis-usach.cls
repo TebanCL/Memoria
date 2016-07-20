@@ -77,7 +77,9 @@
 \RequirePackage{lscape}
 
 % Anexos
-\RequirePackage{appendix}
+%\RequirePackage{appendix}
+\usepackage[titletoc]{appendix}
+%\usepackage[toc,page]{appendix}
 
 % Tabla de contenidos
 \RequirePackage[nottoc,notlot,notlof,notbib]{tocbibind}

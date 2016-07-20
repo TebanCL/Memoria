@@ -52,24 +52,29 @@
 \include{chapters/5-Evaluacion}
 \include{chapters/6-Conclusiones}
 
+\addcontentsline{toc}{chapter}{Glosario}
 \include{anexos/Glosario}
+
 
 % ### Bibliografía de la tesis ###
 {\setstretch{1.0}						% Interlineado en las páginas finales
 \bibliographystyle{apa-good}
 \bibliography{bibliografia}
 \addcontentsline{toc}{chapter}{Referencias bibliográficas} % Comando para agregar el índice a la Tabla de Contenido
-\addcontentsline{toc}{chapter}{Glosario}
 
-% ### Optativo: Anexos de la tesis ###
+%% ### Optativo: Anexos de la tesis ###
 \appendix
-%\renewcommand{\thechapter}{A}
-\renewcommand{\thesection}{\alph{section}.}
-\renewcommand\thefigure{\thesection.\arabic{figure}} 
-\addcontentsline{toc}{chapter}{Apéndices}							% Agregar Apéndice al índice. En caso de no poseer anexos, comentar
+\begin{appendices}
+%\renewcommand{\thesection}{\alph{section}.}
+%\renewcommand\thefigure{\thesection.\arabic{figure}} 
+%\addcontentsline{toc}{chapter}{Apéndices}							% Agregar Apéndice al índice. En caso de no poseer anexos, comentar
 % ### Anexos ###
 \include{anexos/Anexo-1}
-} % end \setstretch{1.0}
+%} % end \setstretch{1.0}
+\end{appendices}
+
+
+}
 
 \end{document}
 % end
