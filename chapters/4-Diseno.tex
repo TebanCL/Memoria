@@ -235,21 +235,13 @@ Para el caso del agrupamiento se definieron tres modos de funcionamiento las cua
 
 Las Figuras \ref{fig:clusterdistancia} y \ref{fig:clustercategoria} presentan un ejemplo de ambos tipos de agrupamiento especial, respectivamente por distancia y categoría.
 
-\begin{figure}[!htb]
-	\minipage{0.48\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/EjemploCluster.png}
-	\caption[Ejemplo de agrupamiento basado en la distancia de los marcadores.]{Ejemplo de agrupamiento basado en la distancia de los marcadores.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:clusterdistancia}
-	\endminipage\hfill
-	\minipage{0.48\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/ClusterCategoria.png}
-	\caption[Ejemplo de agrupamiento basado en la categorías de los marcadores.]{Ejemplo de agrupamiento basado en la categorías de los marcadores.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:clustercategoria}
-	\endminipage\hfill
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\subfloat[Cluster distancias.]{\centering\label{fig:mdleft}{\includegraphics[width=0.45\textwidth]{images/EjemploCluster.png}}}\hfill
+\subfloat[Cluster categoría.]{\centering\label{fig:mdleft}{\includegraphics[width=0.45\textwidth]{images/ClusterCategoria.png}}}
+\caption[Ejemplos de agrupamiento basados en distancia y categorías.]{Ejemplos de agrupamiento basados en distancia y categorías.\\Fuente: Elaboración Propia, (2016)}
+\label{fig:subfigures}
 \end{figure}
 
 Para el segundo caso sólo se definieron dos reglas de funcionamiento las cuales se describen a continuación:
@@ -352,54 +344,56 @@ Inicialmente este histograma sólo está disponible en inglés, pero permite cam
 
 Tras la selección de intervalo dentro del cual se desea que el sistema muestre los estados recibidos, se implementó un servicio REST, donde mediante una consulta del tipo POST con parámetros fecha inicial y final, retornase una lista con todos los marcadores encontrados.
 
-Las categorías mencionadas a continuación son descritas en la sección \ref{sec:diseno:categorias}. Los iconos correspondientes a las categorías que soporta el programa se definieron mediante la combinación de dos imágenes para cada categoría: un marcador de mapa, similar a los definidos en la API de Google Maps y una que sugiriera al usuario el tipo al cual se refiere. Los diseños finales son presentados en las Figuras de la \ref{fig:agua} a la \ref{fig:seguridad}.
+Las categorías mencionadas a continuación son descritas en la sección \ref{sec:diseno:categorias}. Los iconos correspondientes a las categorías que soporta el programa se definieron mediante la combinación de dos imágenes para cada categoría: un marcador de mapa, similar a los definidos en la API de Google Maps y una que sugiriera al usuario el tipo al cual se refiere. Los diseños finales son presentados en la Figura \ref{fig:categoriasFig}
 
-\begin{figure}[!htb]
-	\minipage{0.32\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/categorias/agua.png}
-	\caption[Icono categoría agua.]{Icono categoría agua.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:agua}
-	\endminipage\hfill
-	\minipage{0.32\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/categorias/alimento.png}
-	\caption[Icono categoría alimento.]{Icono categoría alimento.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:alimento}
-	\endminipage\hfill
-	\minipage{0.32\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/categorias/electricidad.png}
-	\caption[Icono categoría electricidad.]{Icono electricidad agua.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:electricidad}
-	\endminipage\hfill
-\end{figure}
 
-\begin{figure}[!htb]
-	\minipage{0.32\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/categorias/comunicacion.png}
-	\caption[Icono categoría comunicacion.]{Icono categoría comunicacion.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:comunicacion}	
-	\endminipage\hfill
-	\minipage{0.32\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/categorias/personas.png}
-	\caption[Icono categoría personas.]{Icono categoría personas.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:personas}
-	\endminipage\hfill
-	\minipage{0.32\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/categorias/seguridad.png}
-	\caption[Icono categoría seguridad.]{Icono categoría seguridad.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:seguridad}
-	\endminipage\hfill
+\begin{figure}[H]
+\centering
+\subfloat[Categoría agua.]{
+	\makebox[4cm][c]{
+		\label{fig:mdleft}{
+			\includegraphics[width=1.5cm]{images/categorias/agua.png}
+		}
+	}
+}\hfill
+\subfloat[Categoría alimento.]{
+	\makebox[4cm][c]{
+		\label{fig:mdleft}{
+			\includegraphics[width=1.5cm]{images/categorias/alimento.png}
+		}
+	}
+}\hfill
+\subfloat[Categoría electricidad.]{
+	\makebox[4cm][c]{
+		\label{fig:mdright}{
+			\includegraphics[width=1.5cm]{images/categorias/electricidad.png}
+		}
+	}
+}\hfill
+\vfill
+\subfloat[Categoría comunicación]{
+	\makebox[4cm][c]{
+		\label{fig:mdleft}{
+			\includegraphics[width=1.5cm]{images/categorias/comunicacion.png}
+		}
+	}
+}\hfill
+\subfloat[Categoría personas.]{
+	\makebox[4cm][c]{
+		\label{fig:mdleft}{
+			\includegraphics[width=1.5cm]{images/categorias/personas.png}
+		}
+	}
+}\hfill
+\subfloat[Categoría seguridad.]{
+	\makebox[4cm][c]{
+		\label{fig:mdright}{
+			\includegraphics[width=1.5cm]{images/categorias/seguridad.png}
+		}
+	}
+}\hfill
+\caption[Categorías para marcadores.]{Iconos de categorías para marcadores.\\Fuente: Elaboración Propia, (2016)}
+\label{fig:categoriasFig}
 \end{figure}
 
 Se consideró apropiado, además, diseñar un icono que representara la densidad de marcadores al momento de realizar el agrupamiento por categorías descrito en ésta sección para ello y siguiendo la combinación de colores utilizada por la biblioteca \textit{MarkerClusterer}, \cite{MarkerClusterer}, donde se muestra un cluster azul cuando es un cluster pequeño; amarillo para uno medio y rojo para uno grande. El tamaño de cada uno de estos es especificado internamente por la biblioteca:
@@ -410,150 +404,168 @@ Se consideró apropiado, además, diseñar un icono que representara la densidad
 \item Rojo: Desde cien elementos.
 \end{itemize}
 
-Se prepararon, entonces, tres iconos adicionales a cada categoría para reemplazar los íconos por defecto de la biblioteca, las que pueden verse en las Figuras \ref{fig:aguaS}. a la \ref{fig:seguridadL}.
+Se prepararon, entonces, tres iconos adicionales a cada categoría para reemplazar los íconos por defecto de la biblioteca, las que pueden verse en las Figuras \ref{fig:clusterAgua}. a la \ref{fig:clusterseguridad}.
 
 \begin{figure}[H]
-	\minipage{0.32\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/categorias/aguaS.png}
-	\caption[Icono categoría agua para cluster pequeño.]{Icono categoría agua para cluster pequeño.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:aguaS}
-	\endminipage\hfill
-	\minipage{0.32\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/categorias/aguaM.png}
-	\caption[Icono categoría agua para cluster medio.]{Icono categoría agua para cluster medio.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:aguaM}
-	\endminipage\hfill
-	\minipage{0.32\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/categorias/aguaL.png}
-	\caption[Icono categoría agua para cluster grande.]{Icono categoría agua para cluster grande.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:aguaL}
-	\endminipage\hfill
+\centering
+\subfloat[Cluster pequeño.]{
+	\makebox[4cm][c]{
+		\label{fig:mdleft}{
+			\includegraphics[width=1.5cm]{images/categorias/aguaS.png}
+		}
+	}
+}\hfill
+\subfloat[Cluster medio.]{
+	\makebox[4cm][c]{
+		\label{fig:mdleft}{
+			\includegraphics[width=1.5cm]{images/categorias/aguaM.png}
+		}
+	}
+}\hfill
+\subfloat[Cluster grande.]{
+	\makebox[4cm][c]{
+		\label{fig:mdright}{
+			\includegraphics[width=1.5cm]{images/categorias/aguaL.png}
+		}
+	}
+}
+\caption[Iconos de cluster para categoría agua.]{Iconos de cluster para categoría agua.\\Fuente: Elaboración Propia, (2016)}
+\label{fig:clusterAgua}
 \end{figure}
 
 \begin{figure}[H]
-	\minipage{0.32\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/categorias/alimentoS.png}
-	\caption[Icono categoría alimento para cluster pequeño.]{Icono categoría alimento para cluster pequeño.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:alimentoS}
-	\endminipage\hfill
-	\minipage{0.32\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/categorias/alimentoM.png}
-	\caption[Icono categoría alimento para cluster medio.]{Icono categoría alimento para cluster medio.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:alimentoM}
-	\endminipage\hfill
-	\minipage{0.32\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/categorias/alimentoL.png}
-	\caption[Icono categoría alimento para cluster grande.]{Icono categoría alimento para cluster grande.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:alimentoL}
-	\endminipage\hfill
+\centering
+\subfloat[Cluster pequeño.]{
+	\makebox[4cm][c]{
+		\label{fig:mdleft}{
+			\includegraphics[width=1.5cm]{images/categorias/alimentoS.png}
+		}
+	}
+}\hfill
+\subfloat[Cluster medio.]{
+	\makebox[4cm][c]{
+		\label{fig:mdleft}{
+			\includegraphics[width=1.5cm]{images/categorias/alimentoM.png}
+		}
+	}
+}\hfill
+\subfloat[Cluster grande.]{
+	\makebox[4cm][c]{
+		\label{fig:mdright}{
+			\includegraphics[width=1.5cm]{images/categorias/alimentoL.png}
+		}
+	}
+}
+\caption[Iconos de cluster para categoría alimento.]{Iconos de cluster para categoría alimento.\\Fuente: Elaboración Propia, (2016)}
+\label{fig:clusteralimento}
 \end{figure}
 
 \begin{figure}[H]
-	\minipage{0.32\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/categorias/electricidadS.png}
-	\caption[Icono categoría electricidad para cluster pequeño.]{Icono categoría electricidad para cluster pequeño.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:electricidadS}
-	\endminipage\hfill
-	\minipage{0.32\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/categorias/electricidadM.png}
-	\caption[Icono categoría electricidad para cluster medio.]{Icono categoría electricidad para cluster medio.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:electricidadM}
-	\endminipage\hfill
-	\minipage{0.32\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/categorias/electricidadL.png}
-	\caption[Icono categoría electricidad para cluster grande.]{Icono categoría electricidad para cluster grande.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:electricidadÑ}
-	\endminipage\hfill
+\centering
+\subfloat[Cluster pequeño.]{
+	\makebox[4cm][c]{
+		\label{fig:mdleft}{
+			\includegraphics[width=1.5cm]{images/categorias/electricidadS.png}
+		}
+	}
+}\hfill
+\subfloat[Cluster medio.]{
+	\makebox[4cm][c]{
+		\label{fig:mdleft}{
+			\includegraphics[width=1.5cm]{images/categorias/electricidadM.png}
+		}
+	}
+}\hfill
+\subfloat[Cluster grande.]{
+	\makebox[4cm][c]{
+		\label{fig:mdright}{
+			\includegraphics[width=1.5cm]{images/categorias/electricidadL.png}
+		}
+	}
+}
+\caption[Iconos de cluster para categoría electricidad.]{Iconos de cluster para categoría electricidad.\\Fuente: Elaboración Propia, (2016)}
+\label{fig:clusterelectricidad}
 \end{figure}
 
 \begin{figure}[H]
-	\minipage{0.32\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/categorias/comunicacionS.png}
-	\caption[Icono categoría comunicación para cluster pequeño.]{Icono categoría comunicación para cluster pequeño.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:comunicacionS}
-	\endminipage\hfill
-	\minipage{0.32\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/categorias/comunicacionM.png}
-	\caption[Icono categoría comunicación para cluster medio.]{Icono categoría comunicación para cluster medio.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:comunicacionM}
-	\endminipage\hfill
-	\minipage{0.32\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/categorias/comunicacionL.png}
-	\caption[Icono categoría comunicación para cluster grande.]{Icono categoría comunicación para cluster grande.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:comunicacionL}
-	\endminipage\hfill
+\centering
+\subfloat[Cluster pequeño.]{
+	\makebox[4cm][c]{
+		\label{fig:mdleft}{
+			\includegraphics[width=1.5cm]{images/categorias/comunicacionS.png}
+		}
+	}
+}\hfill
+\subfloat[Cluster medio.]{
+	\makebox[4cm][c]{
+		\label{fig:mdleft}{
+			\includegraphics[width=1.5cm]{images/categorias/comunicacionL.png}
+		}
+	}
+}\hfill
+\subfloat[Cluster grande.]{
+	\makebox[4cm][c]{
+		\label{fig:mdright}{
+			\includegraphics[width=1.5cm]{images/categorias/comunicacionL.png}
+		}
+	}
+}
+\caption[Iconos de cluster para categoría comunicación.]{Iconos de cluster para categoría comunicación.\\Fuente: Elaboración Propia, (2016)}
+\label{fig:clustercomunicacion}
 \end{figure}
 
 \begin{figure}[H]
-	\minipage{0.32\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/categorias/personasS.png}
-	\caption[Icono categoría personas para cluster pequeño.]{Icono categoría personas para cluster pequeño.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:personasS}
-	\endminipage\hfill
-	\minipage{0.32\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/categorias/personasM.png}
-	\caption[Icono categoría personas para cluster medio.]{Icono categoría personas para cluster medio.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:personasM}
-	\endminipage\hfill
-	\minipage{0.32\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/categorias/personasL.png}
-	\caption[Icono categoría personas para cluster grande.]{Icono categoría personas para cluster grande.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:personasL}
-	\endminipage\hfill
+\centering
+\subfloat[Cluster pequeño.]{
+	\makebox[4cm][c]{
+		\label{fig:cluster}{
+			\includegraphics[width=1.5cm]{images/categorias/personasS.png}
+		}
+	}
+}\hfill
+\subfloat[Cluster medio.]{
+	\makebox[4cm][c]{
+		\label{fig:mdleft}{
+			\includegraphics[width=1.5cm]{images/categorias/personasM.png}
+		}
+	}
+}\hfill
+\subfloat[Cluster grande.]{
+	\makebox[4cm][c]{
+		\label{fig:mdright}{
+			\includegraphics[width=1.5cm]{images/categorias/personasL.png}
+		}
+	}
+}
+\caption[Iconos de cluster para categoría personas.]{Iconos de cluster para categoría personas.\\Fuente: Elaboración Propia, (2016)}
+\label{fig:clusterpersonas}
 \end{figure}
 
 \begin{figure}[H]
-	\minipage{0.32\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/categorias/seguridadS.png}
-	\caption[Icono categoría seguridad para cluster pequeño.]{Icono categoría seguridad para cluster pequeño.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:seguridadS}
-	\endminipage\hfill
-	\minipage{0.32\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/categorias/seguridadM.png}
-	\caption[Icono categoría seguridad para cluster medio.]{Icono categoría seguridad para cluster medio.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:seguridadM}
-	\endminipage\hfill
-	\minipage{0.32\textwidth}
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=1]{images/categorias/seguridadL.png}
-	\caption[Icono categoría seguridad para cluster grande.]{Icono categoría seguridad para cluster grande.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:seguridadL}
-	\endminipage\hfill
+\centering
+\subfloat[Cluster pequeño.]{
+	\makebox[4cm][c]{
+		\label{fig:mdleft}{
+			\includegraphics[width=1.5cm]{images/categorias/seguridadS.png}
+		}
+	}
+}\hfill
+\subfloat[Cluster medio.]{
+	\makebox[4cm][c]{
+		\label{fig:mdleft}{
+			\includegraphics[width=1.5cm]{images/categorias/seguridadM.png}
+		}
+	}
+}\hfill
+\subfloat[Cluster grande.]{
+	\makebox[4cm][c]{
+		\label{fig:mdright}{
+			\includegraphics[width=1.5cm]{images/categorias/seguridadL.png}
+		}
+	}
+}
+\caption[Iconos de cluster para categoría seguridad.]{Iconos de cluster para categoría seguridad.\\Fuente: Elaboración Propia, (2016)}
+\label{fig:clusterseguridad}
 \end{figure}
 
 Dado que se solicitó que la interfaz no se recargue cada vez que se produzca un cambio dado por un nuevo evento detectado o el modificación en el intervalo de visualización. Para ello se utilizaron las facultados de Javascript y AJAX capturando los cambios en la línea temporal, descrita en esta sección. Cada vez que se detecte un cambio, se elimina todo marcador del mapa y se reubican en el todos los que cumplan con los parámetros de búsqueda.
