@@ -1,14 +1,16 @@
 \chapter{Diseño e implementación}
 \label{cap:Diseno}
 
-Este capítulo detalla la fase de construcción de la aplicación se señalan las decisiones tomadas a lo largo del desarrollo para cumplir con lo solicitado, descrito en el capítulo anterior.
+El presente capítulo detalla la fase de diseño construcción de la aplicación se señalan las decisiones tomadas a lo largo del desarrollo para cumplir con lo solicitado, descrito en el capítulo anterior.
 
-Yendo desde lo general a lo particular se presenta la arquitectura del sistema para continuar con las decisiones que llevaron al sistema a ser lo que es.
+Yendo desde lo general a lo particular se comienza presentando la arquitectura del sistema, construida a partir de los requerimientos establecidos en el capítulo anterior, posteriormente se continúa con las decisiones que llevaron al sistema a ser lo que es.
 
 \section{Arquitectura del sistema}
 \label{sec:Arquitectura}
 
-El sistema de detección de necesidades, en su conjunto, conta de dos aplicaciones independientes que trabajan unidas para realizar el proceso de detección de eventos. 
+El sistema de detección de necesidades, en su conjunto, consta de dos módulos independientes: el \textit{front-end}, dedicado a la interacción con el usuario, presentación de la información, etcétera; y el \textit{back-end}, orientado a las tareas de procesamiento \textit{online} de los datos para su posterior despliegue.
+
+La comunicación entre los módulos se realiza por medio del almacenamiento de documentos en la base de datos. Esta arquitectura se presenta en la Figura \ref{fig:arquitecturaSistema}. A continuación se detalla cada uno de los elementos que la componen.
 
 \begin{figure}[H]
 	\centering
@@ -18,28 +20,28 @@ El sistema de detección de necesidades, en su conjunto, conta de dos aplicacion
 	\label{fig:arquitecturaSistema}
 \end{figure}
 
-La figura \ref{fig:arquitecturaSistema} presenta la arquitectura del sistema. Éste está compuesto de dos aplicaciones. La arquitectura del sistema pasa a describirse a continuación.
+\subsection{\textit{Back-end}}
+\label{subsec:backend}
 
-Todo el sistema es alimentado por el \textit{stream} provisto por el servicio de \textit{streaming} de \textit{Twitter}, pues ésta red social genera más de 140 millones de \textit{tweets} diariamente, \cite{StormIBM}, y su uso se dispara en períodos de crisis, \cite{TaxonomiaChato}, por ello es una buena fuente de información primaria, es decir, que la información viene desde la misma población afectada.
+El módulo de \textit{back-end} corresponde al sistema de detección en sí, todo el sistema está alimentado por el \textit{stream} entregado por la API de \textit{Twitter}, pues en esta red social se generan más de 140 millones de \textit{tweets} diariamente, \cite{StormIBM}, y se dispara en periodos de crisis, \cite{TaxonomiaChato}, por ello es una buena fuente de información primaria, es decir, que viene desde la misma población afectada. Haciendo uso de esta fuente de información da soporte a la historia de usuario HU-c02, que explicita el uso de ésta.
 
-Para ser capaz de procesar el flujo de información que llega de manera continua se hace uso \textit{Apache Storm}, el sistema de procesamiento de \textit{streams} que fue presentado en la sección \ref{arte:PPDesastres}, el cual divide el procesamiento en pequeñas tareas, en el caso del flujo desde \textit{Twitter}, éste ingresa, por medio de un \textit{spout}, a la aplicación detectora de necesidades la que procesa y clasifica cada \textit{tweet} del \textit{stream}, ésto se hace por medio de una serie de operadores denominados \textit{bolts} y lo transforma, de ser posible, en un marcador almacenado en la base de datos. La serie de pasos o \textit{bolts} por los que pasa un un \textit{tweet} son descritos en la sección \ref{subsec:detectorNecesidades}.
+Para el procesamiento de de los datos, que llegan de forma continua se hace uso de \textit{Apache Storm} para construir un grado de procesamiento \textit{ad-hoc} a la aplicación, capaz de filtrar todos los eventos que respondan a los requerimientos de la aplicación. Para ello se utilizan los elementos de \textit{Storm} presentados en la sección \ref{arte:SPS}, \textit{spout} y \textit{bolt} para la construcción de operadores que realicen las tareas necesarias para la transformación de datos. Uno de estos operadores tiene que ver con cómo son compartidos los datos, en este caso, se hace uso de una base de datos no relacional, MongoDB, para compartir datos entre módulos para permitir una comunicación bidireccional, tanto de consultas como de elementos a ser desplegados en la visualización. Otro de los operadores tiene que ver con el etiquetado de datos, para ello se hace uso de un clasificador, almacenado como un archivo, generado haciendo uso de Mallet, \cite{Mallet}, para etiquetar las nuevas entradas como elementos de una categoría en particular. El cómo funcionan éstos operadores se detalla a lo largo de éste capítulo.
 
-Los datos almacenados en la base de datos son leídos por la visualizadora la que se encarga de mostrar al usuario, mediante su navegador \textit{web}, la ubicación y cantidad de eventos tanto en tiempo real, como históricos. La visualización de éstos últimos se realiza por medio de las API proporcionadas por \textit{Google Maps} y \textit{Highcharts}. El primero se utiliza para obtener un mapa geográfico con la capacidad de ubicar geográficamente puntos por medio de marcadores y modificarlos a voluntad, mientras que el segundo para transformar los datos a una línea temporal que muestre al usuario la cantidad de eventos por cada período.
+Los elementos cuya comunicación se señala con una flecha roja son elementos que están considerados en la arquitectura final, pero que están fuera de los alcances de éste proyecto, ellos son: el sistema detector de eventos que, al detectar que se produce un evento catastrófico en el país, comienza a ejecutar el detector de necesidades; y el módulo etiquetador que recibe un archivo con entradas y las etiqueta para, posteriormente, realizar el entrenamiento de un nuevo clasificador.
 
-Para realizar el etiquetado de los datos, es decir, la categorización del texto, se utiliza un clasificador \textit{Naïve Bayes}, el cual está almacenado en un fichero que permite ser modificado, siempre y cuando, se haga entrega de un archivo de entrada con un formáto específico para realizar un entrenamiento del clasificador. La elaboración de éste clasificador se detalla en la sección \ref{sec:diseno:clasificador}.
+\subsection{\textit{Front-end}}
+\label{subsec:front}
 
-La base de datos presta una función escencial al funcionamiento del sistema. Es allí donde se almacenan las consultas realizadas, con las cuales filtran, según las necesidades del usuario, el \textit{stream}, además almacena los elementos que son mostrados por el visualizador en el mapa. Resumiendo lo anterior, la base de datos presta servicios de comunicación al sistema. Las aplicaciónes y justificación del uso de esta base de datos se presenta en la sección \ref{sec:diseno:comunicacion}.
+El módulo correspondiente a la visualización está encargado de desplegar la interfaz de usuario al sistema por medio de su navegador \textit{web}. Hace uso de la información registrada por el módulo de detección de necesidades, la cual es almacenado en la base de datos, para mostrarla al usuario. Para realizar ésto se utilizan las API de Google Maps y Highcharts para, respectivamente, desplegar el mapa geográfico, donde la información es mostrada como marcadores adaptados para cada categoría presente en la aplicación y permita manipular la información de tal forma que se cumpla con lo solicitado por la historia de usuario HU-v02, HU-v03, HU-v06 y HU-v07, y el uso de la línea temporal e histograma de frecuencias utilizados para cumplir con la historia de usuario HU-v04.
 
-El sistema descrito está diseñado para operar de forma continua en condiciones de alto tráfico como lo es al ocurrir una emergencia del tipo catastrófica en el país. A pesar de lo anterior, se asume la existencia un sistema externo encargado de detectar cuándo se produce una situacion de las características antes mencionadas e inicie el sistema de detección, pues no está dentro de los alcances de este trabajo el que se detecte cuándo es que se ha producido un evento y la población comience a producir nuevos estados en las redes sociales.
-
-El desarrollo de la aplicación se guia por el cumplimiento de las historias de usuario descritas en la Tabla \ref{tab:ReqTotales}. Para ello se trata cada historia como un problema individual que luego han de ser constituidas en la aplicación final.
+Además ésta aplicación proporciona el medio para que el usuario realice consultas al sistema para realizar un filtrado de datos que cumpla con sus necesidades, cumpliendo así con la historia de usuario HU-v05. De igual manera permite el establecimiento de parámetros para el funcionamiento de la aplicación como se especificó en la historia HU-v08.
 
 \section{Características del sistema}
 \label{sec:caracteristicasSistema}
 
 A continuación se realiza mencionan las características que ha de tener el sistema, se hace esto para tener en cuenta en las decisiones tomadas en las siguientes secciones.
 
-En primer lugar, es necesario hacer hincapié en el contexto en que el sistema opera. \textit{Twitter} es un servicio que cuenta con millones de usuarios activos, los que generan constantemente nuevo contenido que es emitido por la API de \textit{streaming}, lo que significa que la aplicación está sometida a un gran estrés cuando se encuentra en funcionamiento. Dado el contexto descrito la aplicación ha de ser capaz de soportar ese flujo de información.
+En primer lugar, es necesario hacer hincapié en el contexto en que el sistema opera. \textit{Twitter} es un servicio que cuenta con millones de usuarios activos, los que generan constantemente nuevo contenido que recuperado por la API de \textit{streaming}. Dado la masividad de los datos generados, se requiere de una plataforma de procesamiento capaz de lidiar con dicha carga y mantener tiempos de procesamiento razonables.
 
 En segundo, y como se explicó en la sección \ref{subsec:HerrDesarrollo}, el funcionamiento interno de las aplicaciones construidas con \textit{storm} se puede esquematizar por medio de un grafo dirigido donde los nodos se corresponden con los operadores definidos en la topología y que pueden tener diferente cantidad de elementos por procesar y tardar tiempos distintos en realizar su labor. Lo anterior sugiere que pueden existir niveles en los que se producen cuellos de botella en el \textit{pipeline} de procesamiento. Considerando lo anteriormente expuesto el sistema ha de estar preparado para responder de la mejor forma posible cuando se produzcan estas obstrucciones en el proceso.
 
@@ -53,17 +55,7 @@ Esta sección presenta las decisiones tomadas por el autor al momento de diseña
 \subsection{Comunicación}
 \label{sec:diseno:comunicacion}
 
-Se ha de justificar lo expuesto hasta ahora al hacer mención de la existencia de dos aplicaciones que componen el sistema de detección de necesidades. El uso del sistema de procesamiento distribuido, \textit{storm}, dificultaba en su momento la integración con un \textit{framework} para aplicaciones Java y, dado que el sistema ha de poseer una interfáz donde el usuario pueda visualizar los eventos detectados, por ello se decidió construir ambos módulos; detección y visualización en aplicaciones separadas. En un primer momento se pensó comunicar ambas aplicaciones por medio de peticiones REST cuyo contenido fuesen tanto las consultas ingresadas por el usuario para realizar una búsqueda más exhaustiva, como los datos correspondientes a marcadores ubicados en el mapa del visualizador. Esta aproximación de solución se esquematiza en la Figura \ref{fig:primeraComunicacion}, presentada a continuación.
-
-\begin{figure}[H]
-	\centering
-	\captionsetup{justification=centering}
-	\includegraphics[scale=0.8]{images/PrimeraComunicacion.png}
-	\caption[Esquema que representa la comunicación entre aplicaciones en primeras etapas del desarrollo.]{Esquema que representa la comunicación entre aplicaciones en primeras etapas del desarrollo.\\Fuente: Elaboración Propia, (2016)}
-	\label{fig:primeraComunicacion}
-\end{figure}
-
-Esta aproximación no consideraba la existencia de un sistema de persistencia de información; al considerar la persistencia la comunicación ya no se realiza por medio de peticiones REST, sino que se utiliza la base de datos como intermediario, así al momento de realizar una consulta, ésta es almacenada en la base de datos y recodiga por el sistema de clasificación; cuando el sistema clasifica correctamente un evento, éste también es almacenado en la base de datos y recogido por la aplicación visualizadora. De esta forma la comunicación del sistema pasa a realizarse de forma que se esquematiza en la Figura \ref{fig:comunFinal}.
+Se ha de justificar lo expuesto hasta ahora al hacer mención de la existencia de dos módulos que componen el sistema de detección de necesidades. El uso del sistema de procesamiento distribuido, \textit{storm}, dificultaba en su momento la integración con un \textit{framework} para aplicaciones Java y, dado que el sistema ha de poseer una interfáz donde el usuario pueda visualizar los eventos detectados, por ello se decidió construir ambos módulos; detección y visualización de manera separada. En un primer momento se pensó comunicar ambas aplicaciones por medio de peticiones REST cuyo contenido fuesen tanto las consultas ingresadas por el usuario para realizar una búsqueda más exhaustiva, como los datos correspondientes a marcadores ubicados en el mapa del visualizador, pero ésta aproximación no consideraba la existencia de un sistema de persistencia de información; al considerarla, la comunicación ya no se realiza por medio de peticiones REST, sino que se utiliza la base de datos como intermediario. La Figura \ref{fig:comunFinal} presenta cómo se produce la comunicación en el sistema.
 
 \begin{figure}[H]
 	\centering
@@ -73,18 +65,21 @@ Esta aproximación no consideraba la existencia de un sistema de persistencia de
 	\label{fig:comunFinal}
 \end{figure}
 
-En la historia de usuario HU-v04, al hacer referencia a información pasada, se infiere la necesidad de la implementación de un sistema de persistencia de datos. Es, principalmente, por esta razón que llevó a que modificara la primera forma de comunicación.
+El módulo de detección comienza a alimentarse del \textit{stream} de \textit{Twitter}, a la vez consulta a la base de datos por si se han ingresado nuevas consultas por el usuario. Al obtener la respuesta la utiliza para generar nuevos marcadores los que pasan a ser almacenados en la base de datos, desde donde son obtenidos por la el módulo de visualización para desplegar la información por pantalla.
+
 
 \subsection{Persistencia}
 \label{sec:diseno:persistencia}
 
 Si bien está decidida la implementación de un sistema de persistencia en la aplicación, no se ha definido cuál ha de ser el sistema de gestión de base de datos que se ha de utilizar, es por ello que en ésta sección se presenta la decisión tomada con respecto a este tema.
 
-Se consideraron los principales sistemas de bases de datos utilizados y conocidos por el autor, dentro de los cuales se encontraban herramientas como: MySQL, PostgreSQL, SQL Server, MongoDB, entre otras. Dadas las características y las condiciones con las cuales opera el sistema de detección se requiere de un DBMS con rápido tiempo de respuesta en operaciones lectura/escritura; la decisión se tomó en base a los datos que se manejaran, pues no se apreció necesidad de implementar una base de datos relacional, de esta forma y teniendo en cuenta los resultados presentados en pruebas empíricas realizadas por \cite{MongoPerformance} en las cuales mostró que el tiempo de respuesta (en operaciones de lectura) es significativamente menor en MongoDB que en dos de los DBMS más conocidos como MySQL y PostgreSQL. Lo anterior, sumado al hecho de la capacidad de escalar de MongoDB reportada en fuentes oficiales o por diversos desarrolladores como \cite{MongoDBScalability} que han compartido sus experiencias en la \textit{web}, llevaron a decidir que MongoDB debiera ser el sistema de gestión de base de datos que se utilizase en el sistema.
+Debido a que se requiere mantener una ventana de datos históricos se requiere de un mecanismo de persistencia o base de dato. Los datos han de ser almacenados, al menos durante un tiempo, para que el sistema pueda realizar inferencias de información considerando los datos recibidos. 
+
+Se consideraron los principales sistemas de bases de datos utilizados y conocidos por el autor, dentro de los cuales se encontraban herramientas relacionales como: MySQL, PostgreSQL, SQL Server y MongoDB para el caso de sistemas de gestión de base de datos (DBMS) no relacionales. Dadas las características y las condiciones con las cuales opera el sistema de detección se requiere de un DBMS con rápido tiempo de respuesta en operaciones lectura/escritura; la decisión se tomó en base a los datos que se manejaran, pues no se apreció necesidad de implementar una modelo relacional, pues no habían datos que requirieran mantener la consistencia entre relaciones y, es más, se requiere, sobre todo, de rapidez. De esta forma y teniendo en cuenta los resultados presentados en pruebas empíricas realizadas por \cite{MongoPerformance} en las cuales mostró que el tiempo de respuesta (en operaciones de lectura) es significativamente menor en MongoDB que en dos de los DBMS más conocidos como MySQL y PostgreSQL. Lo anterior, sumado al hecho de la capacidad de escalar de MongoDB reportada en fuentes oficiales o por diversos desarrolladores como \cite{MongoDBScalability} que han compartido sus experiencias en la \textit{web}, llevaron a decidir que MongoDB debiera ser el sistema de gestión de base de datos que se utilizase en el sistema.
 
 Para realizar la conexión de MongoDB y el \textit{framework} se utiliza, específicamente, dos bibliotecas: La primera corresponde a un ORM (Mapeo Objeto-Relacional), denominado Jongo, la cual hace uso de la segunda llamada Jackson, para realizar la conversion de JSON a objeto.
 
-Volviendo a la historia de usuario que originó la necesidad de contar con un sistema de persistencia de datos, habiendo resuelto lo anterior la siguiente problemática se presenta como ¿qué datos han de guardarse? Según la definición de la historia en la que se señalan "eventos pasados dentro de un intervalo de tiempo", se infiera que ha de guardarse tanto el contenido visible del dato, la clasificación que se le asignó y la fecha en que se identificó, para ello y dado que se seleccionó MongoDB, y aunque no es necesario, se especificó un esquema para los documentos de la colección, dados los datos que se almacenan sólo resta tener la información correspondiente a la ubicación, por lo que el esquema se definió como se presenta en la Figura \ref{fig:esquemaMarker1} correspondiente a la colección "Markers".
+Volviendo a la historia de usuario que originó la necesidad de contar con un sistema de persistencia de datos, habiendo resuelto lo anterior la siguiente problemática se presenta como ¿qué datos han de guardarse? Según la definición de la historia en la que se señalan "eventos pasados dentro de un intervalo de tiempo", se infiere que ha de guardarse tanto el contenido visible del dato, la clasificación que se le asignó y la fecha en que se identificó, para ello y dado que se seleccionó MongoDB, se especificó un esquema para los documentos de la colección, dados los datos que se almacenan sólo resta tener la información correspondiente a la ubicación, por lo que el esquema se definió como se presenta en la Figura \ref{fig:esquemaMarker1} correspondiente a la colección "Markers".
 
 \begin{figure}[H]
 	\centering
@@ -94,12 +89,14 @@ Volviendo a la historia de usuario que originó la necesidad de contar con un si
 	\label{fig:esquemaMarker1}
 \end{figure}
 
+El primer campo corresponde al ID asignado por mongo para cumplir con la unicidad de los datos, el segundo campo corresponde al contenido textual del \textit{tweet} para ser mostrado junto con el marcador y que el usuario pueda ver desde dónde el sistema asignó aquel \textit{tweet} a una categoría en particular. El tercer campo corresponde al nombre de la etiqueta o categoría asignada al \textit{tweet}, esta asignación está dada por el resultado de la evaluación del clasificador. Los campos cuarto y quinto corresponden a la ubicación geográfica en la que se posiciona el marcador y, finalmente, el sexto campo corresponde al momento en que fue creado el marcador para ser utilizado en los diferentes criterios de visualización del sistema.
+
 \subsection{Sistema de procesamiento}
 \label{sec:diseno:sistDeProce}
 
 Ya se mencionó que se seleccionó storm para construir el detector de necesidades, pero no se ha especificado el porqué de ello. Por este motivo en los siguientes párrafos se exponen las razones por las cuales se tomó esta decisión.
 
-Dado el contexto del funcionamiento del sistema, éste ha de entregar respuestas rápidas ante una emergencia; para ello, y como es descrito en la historia de usuario HU-c00, se requiere de un sistema capaz de procesar eventos en tiempo real que, dado el \textit{peak} de información que recibe el sistema éste debe ser escalable. El problema en este punto es el cómo construir un sistema que cumpla capaz de identificar necesidades y que posea esta, no menor, característica.
+Dado el contexto del funcionamiento del sistema, éste ha de entregar respuestas rápidas ante una emergencia; para ello, y como es descrito en la historia de usuario HU-c00, se requiere de un sistema capaz de procesar eventos en tiempo real que, dado la masividad de datos con los que debe lidiar la aplicación, ésta ha de poder escalar. El problema en este punto es el cómo construir un sistema que cumpla capaz de identificar necesidades y que posea esta, no menor, característica.
 
 Se consideraron sistemas de procesamiento distribuido; estos sistemas tienen la particularidad de ser una red de computadores (nodos, en general), que el usuario percibe como un solo gran sistema. Estos sistemas pueden ser de diversos tamaños, y suelen ser confiables, pues en caso de que un componente (nodo) falle, otro es capaz de reemplazarlo. \cite{DefSPD}. En un inicio se consideraron tres plataformas sobre las cuales puede construirse un sistema que pudiese cumplir con lo solicitado; dichas plataformas fueron Apache S4, Apache Storm y Apache Spark.
 
@@ -107,12 +104,10 @@ Apache S4, pese a su simplicidad, no continuó con su desarrollo luego del año 
 
 \textit{Storm} permite construir sistemas que cumplan con las características de un sistema distribuido, como lo son: Escalabilidad (Tanto horizontal como vertical) y tolerancia a fallos (como la capacidad de un sistema para realizar correctamente y en todo momento aquello para lo que fue diseñado). Estos sistemas están compuestos por dos tipos de elementos: \textit{Spout} y \textit{Bolt}, que fueron descritos en el capítulo \ref{cap:MarcTeorico}. Al combinar esos elementos se da origen a un grafo dirigido, como el presentado en la Figura \ref{fig:stormBeLike} en la página ~\pageref{fig:stormBeLike}, donde cada elemento de procesamiento (\textit{bolt}), cumple con una determinada tarea utilizando como entrada la salida del elemento anterior.
 
-\subsection{Obtención de datos para el funcionamiento del sistema}
+\subsection{Fuente de datos}
 \label{sec:diseno:obtenerDatos}
 
 La historia de usuaio HU-c01 refleja desde dondé se han de obtener los datos, pero es necesario especificar más aún. Como se señaló al momento de definir los alcances de este trabajo, sólo se utiliza \textit{Twitter} como fuente de información, así la unidad de información pasa, desde ahora, a llamarse como se habitúa en aquella red social: el \textit{Tweet}.
-
-El asunto es, entonces, cómo obtener la información que está produciéndose en \textit{Twitter} en tiempo real. Esta red social ha implementado una serie de interfaces para permitir a los desarrolladores acceder a sus datos; en particular, la \textit{Streaming API}, es aquella que permite acceder a la información de \textit{Twitter} con baja latencia. \cite{TwitterStreamingAPI}.
 
 Existen tres tipos de \textit{streaming endpoints} disponibles, cada uno para un caso de uso particular y son descritos en la Tabla \ref{tab:StreamingEndpoints}.
 
@@ -132,12 +127,12 @@ Para esta aplicación la adecuada corresponde a la API pública. En ésta, a la 
 
 Para hacer uso de la API descrita con anterioridad es necesario obtener cuatro claves de acceso: \textit{Access Token}, \textit{Access Token Secret}, \textit{Consumer Key (API Key)} y \textit{Consumer Secret (API Secret)}. Para más información sobre cómo conseguir estas claves consulte el Apéndice \ref{apendice:clavesApi}.
 
-\subsection{Especificación de términos de búsqueda}
+\subsection{Términos de búsqueda}
 \label{sec:diseno:termBusqueda}
 
-\textit{Twitter4J}, la herremienta que se menciona en la sección \ref{subsubseC:EntradaDeDatos} como aquella que permite obtener el flujo de información desde \textit{Twitter} implementa una forma de filtrado mediante el uso de palabras clave, pero posee una limitante al momento de modificar la búsqueda, deben instanciarse nuevamente los objetos con los cuales se realiza la conexión a la API de \textit{Twitter}, eso se traduce en tiempo de procesamiento perdido, para solucionar este inconveniente se decidió implementar un operador, descrito en la sección \ref{subsec:detectorNecesidades}, el cual está encargado de realizar el filtrado de acuerdo a términos y llevar a cabo la operaciones descritas en la sección \ref{subsubsec:2op} referente a la expansión de la consulta, pero al ser un operador significa que opera con un nivel de replicación determinado, es decir, existen multiples instancias de operador al mismo tiempo ¿Cómo comunicar el estado de una consulta y que todos los operadores utilicen el mismo filtro?.
+\textit{Twitter4J}, es una herramienta que permite obtener el flujo de información desde \textit{Twitter} implementa una forma de filtrado mediante el uso de palabras clave, pero posee una limitante al momento de modificar la búsqueda, deben instanciarse nuevamente los objetos con los cuales se realiza la conexión a la API de \textit{Twitter}, eso se traduce en tiempo de procesamiento perdido. Para solucionar este inconveniente se decidió implementar un operador, descrito en la sección \ref{subsec:detectorNecesidades}, el cual está encargado de realizar el filtrado de acuerdo a términos y llevar a cabo la operaciones descritas en la sección \ref{subsubsec:2op} referente a la expansión de la consulta. Sin embargo, un operador como este puede poseer réplicas que operan al mismo tiempo, con esto surge el problema de ¿Cómo comunicar y aplicar los nuevos términos de búsqueda, desechando los antiguos?.
 
-Nuevamente la respuesta consistió en recurrir a la base de datos; almacenar la consulta y asignar un estado para controlar el comportamiento del operador. Así el esquema en la base de datos queda tal y como se presenta en la Figura \ref{fig:esquemaQuery}, documento de la colección "Queries".
+Para dar solución a esta problemática se decidió recurrir a la base de datos; almacenar la consulta y asignar un estado para controlar el comportamiento del operador. Así el esquema en la base de datos queda tal y como se presenta en la Figura \ref{fig:esquemaQuery}, documento de la colección "Queries".
 
 \begin{figure}[H]
 	\centering
@@ -151,43 +146,15 @@ Donde la propiedad "estado" puede tomar dos valores: "actual" o "antiguo", refle
 
 Para implementar este operador se utilizaron dos clases llamadas \textit{CurrentQueryChecker} y \textit{QueryExpander} desarrolladas, la primera, para detectar cuándo y si es que ha cambiado una consulta en la base de datos y la segunda para desarrollar la labor descrita por el algoritmo de expansión descrito en la sección \ref{subsubsec:2op}.
 
-\subsection{Interfáz del sistema}
-\label{sec:diseno:interfaz}
-
-Teniendo en consideración la característica del desarrollo de esta aplicación como un proyecto ágil con un mínimo de personal para desarrollar se requería de un \textit{framework} que contribuyera a acelerar la construcción de la aplicación. Tras considerar las alternativas más conocidas como \textit{Spring}, \textit{Hibernate} o \textit{JSF} que tienen una curva de aprendizaje elevada, se optó por utilizar un cuarto \textit{framework} que aunque desconocido, promete una simplicidad en su uso. \textit{Play Framework}, construido haciendo uso de Scala y Java permite construir aplicaciones ligeras (tamaño en disco), sin estado (no guarda configuraciones de una sesión para ser utilizadas luego) y por defecto RESTful, ideal para la comunicación entre aplicaciones. Éste \textit{framework} sigue el patrón de arquitectura Modelo-vista-controlador (MVC). Cuenta con un compilador en tiempo real (compila y realiza el despliegue de la aplicación cuando detecta un cambio en el código), lo que agiliza en gran medida el desarrollo, pues al automatizar este proceso mantiene la atención en lo que se está desarrollando.
-
-Para visualizar los puntos encontrados por el detector de necesidades se decidió utilizar la API de \textit{Google Maps} la que permite la colocación de los denominados 'marcadores' en un punto específico del mapa y asociar a ellos algún tipo de información. Así, aunque el funcionamiento interno esté dirigido por \textit{Play}, la principal funcionalidad del sistema, mostrar el mapa con sus marcadores, es implementada utilizando Javascript.
-
-Estos marcadores, ya ubicados en el mapa, tienen asociado un cuadro de texto dentro del cual refleja el la categoría a la que pertenece y el \textit{tweet} original, el texto, que lo generó. Esto tiene como objetivo permitir decidir, en última instancia, al usuario si ha sido correctamente clasificado.
-
-Según lo solicitado en la historia de usuario HU-v02 se prepararon dos tipos de filtros a la interfaz para la visualización de eventos en el mapa: El primero considera el agrupamiento o \textit{clustering} de marcadores, mientras que el segundo considera el tipo de marcador o marcadores que se desean visualizar.
-
-Para el caso del agrupamiento se definieron tres modos de funcionamiento las cuales se describen a continuación:
-
-\begin{enumerate}
-\item No agrupar: Mostrar todos los marcadores que correspondan en el mapa de acuerdo al punto geográfico que corresponda en su definición.
-\item Agrupar por distancia: Define una grilla invisible en el mapa donde los elementos que calcen en una cudrícula son agregados a un \textit{cluster} y visualizados como tal.
-\item Agrupar por categoría: De igual forma que el agrupamiento por distancia, pero sólo agrega elementos que comparan categoría.
-\end{enumerate}
-
-Para el segundo caso sólo se definieron dos reglas de funcionamiento las cuales se describen a continuación:
-
-\begin{enumerate}
-\item Mostrar todos: Muestra elementos de todas las categorias existentes.
-\item Mostrar categoría: Para cada categoría mostrar sólo los elementos de aquella categoría. 
-\end{enumerate}
-
-Al combinar ambos tipos de filtros se tienen potencialmente seis modos de funcionamiento, pero considerando las categorías descritas en al sección \ref{sec:diseno:categorias} ese número se expande a veintiún modos de funcionamiento del visualizador.
-
 \subsection{Categorización de necesidades}
 \label{sec:diseno:categorias}
 
 La definición de las categorías es un punto importante dentro de la construcción de la aplicación. Teóricamente en función a la cantidad de clases (categorías), el tamaño del conjunto de entrenamiento ha de ser mayor o menor.
 
-Inicialmente se consideró la taxonomía definida por \cite{TaxonomiaChato}, pero el equipo del proyecto FONDEF IDeA estableció que no era conveniente utilizar, pues presentaba gran cantidad de categorías y era demasiado específica, se sugirió en su lugar utilizar la clasificación realizada por \cite{PMIProfes} en la que se presentaba una categorización de cinco categorías, ellas eran:
+Inicialmente se consideró la taxonomía definida por \cite{TaxonomiaChato}, pero el equipo del proyecto FONDEF IDeA estableció que no era conveniente utilizar, pues presentaba gran cantidad de categorías y era demasiado específica. Como alternativa se sugirió en su lugar utilizar la clasificación realizada por \cite{PMIProfes}, en la que se presentaba una categorización de cinco categorías. Éstas fueron realizadas por parte de un equipo de psicólogos experos en el contexto del proyecto PMI-USA 1204, basándose en la información obtenida del terremoto de febrero de 2010 y los \textit{twees} recolectados en dicho evento, éstas eran:
 
 \begin{enumerate}
-\item Necesidades básicas: \textit{Tweet} que entregara o solicitara información sobre serviciós básicos: Agua potable, electricidad y abastecimiento de alimentos.
+\item Necesidades básicas: \textit{Tweet} que entrege o solicite información sobre serviciós básicos: Agua potable, electricidad y abastecimiento de alimentos.
 \item Comunicación: \textit{Tweet} que entregue o solicite información sobre alguna localidad.
 \item Seguridad: \textit{Tweet} que señale un riesgo para la población.
 \item Personas: \textit{Tweet} que haga referencia al hallazgo o búsquead de una persona desaparecida.
@@ -196,16 +163,12 @@ Inicialmente se consideró la taxonomía definida por \cite{TaxonomiaChato}, per
 
 Acordando con el equipo, se decidió separar el primer ítem en los tres elementos que lo componen: Agua, alimentos y electricidad. Así, finalmente, se obtienen siete categorías de clasificación.\\
 
-Los elementos clasificados como "Irrelevantes" no se muestran en el mapa de eventos, pues hacen referencia a eventos que, pese a haber pasado por todos los operadores anteriormente descritos, no guardan relación con el evento o sus consecuencias.
+Los elementos clasificados como "Irrelevantes" no se muestran en el mapa de eventos, pues hacen referencia a eventos que, pese a haber pasado por todos los operadores anteriormente descritos, no guardan relación con el evento o sus consecuencias. Éstos pueden ser \textit{tweets} a etiquetar por expertos \textit{a posteriori} con el objetivo de enriquecer la información del clasificador. Esta tarea, sin embargo, está fuera del alcance de este proyecto.
 
 \subsection{Clasificador}
 \label{sec:diseno:clasificador}
 
-El proyecto PMI realizado por \cite{WladdimiroPMI}, abordó una solución inicial para el problema de la detección de necesidades. En aquella oportunidad se utilizó una bolsa de palabras con términos asociados a las categorías para etiquetar los estados de \textit{Twitter}. Este trabajo busca mejorar aquello realizando la clasificación mediante una técnica de clasificación más poderosa.
-
-En su libro, \textit{Introduction to Information Retrival}, \cite{IRQE}, proponen el uso de \textit{Naïve Bayes}, para realizar clasificación de texto. Esto se logra realizando una implementación del algoritmo descrito en la sección \ref{subsec:MineriaTexto}. Este ya ha sido implementado en diversas herramientas como: RapidMiner, Weka (acrónimo de \textit{Waikato Envoirment for Knowledge Analysis}), Mallet (acrónimo de \textit{MAchine Learning for LanguagE Toolkit }).
-
-Tras haber realizado pruebas con ellas, enfocándo la atención en se decidió utilizar Mallet por su simplicidad de implementación junto con la mayor precisión de sus resultados.
+Se busca generar un clasificador automático capaz de detectar necesidades y lidiar con la jerga nacional. Para ello, según lo descrito por \cite{IRQE} en su libro \textit{Introduction to Information Retrival}, se entrenó un clasificador basado en \textit{Naïve Bayes}, haciendo uso de Mallet, pues en pruebas realizadas con las RapidMiner y Weka, mencionadas en la sección \ref{subsubsec:Classifiers}, alcanzó mejores resultados.
 
 La sección \ref{sec:caracteristicasSistema} ya hace referencia a la inconveniencia de utilizar un clasificador estático para el etiquetado de nuevos eventos, al tratarse de un aprendizaje supervisado, donde se requiere de una persona entregue la respuesta esperada para realizar el entrenamiento, no es posible realizar este proceso de manera automática.
 
@@ -242,6 +205,61 @@ Teniendo en consideración que se utilizan dos aplicaciones distintas, donde en 
 \end{figure}
 
 Cada vez que se actualice el clasificador se contrasta el nuevo con el ya existente, de encontrar mayor precisión en el primero, se reemplaza en la carpeta antes mencionada, según el sistema operativo de la máquina que se esté utilizando. En caso contrario, se mantiene al anterior. En ambos escenarios se le da a conocer al usuario la precisión de ambos.
+
+\subsection{Interfaz web}
+\label{sec:diseno:interfaz}
+
+Teniendo en consideración la característica del desarrollo de esta aplicación como un proyecto ágil con un mínimo de personal para desarrollar se requería de un \textit{framework} que contribuyera a acelerar la construcción de la aplicación. Tras considerar las alternativas más conocidas como \textit{Spring}, \textit{Hibernate} o \textit{JSF} que tienen una curva de aprendizaje elevada, se optó por utilizar un cuarto \textit{framework} que aunque desconocido, promete una simplicidad en su uso. \textit{Play Framework}, construido haciendo uso de Scala y Java permite construir aplicaciones ligeras (tamaño en disco), sin estado (no guarda configuraciones de una sesión para ser utilizadas luego) y por defecto RESTful, ideal para la comunicación entre aplicaciones. Éste \textit{framework} sigue el patrón de arquitectura Modelo-vista-controlador (MVC). Cuenta con un compilador en tiempo real (compila y realiza el despliegue de la aplicación cuando detecta un cambio en el código), lo que agiliza en gran medida el desarrollo, pues al automatizar este proceso mantiene la atención en lo que se está desarrollando.
+
+Para visualizar los puntos encontrados por el detector de necesidades se decidió utilizar la API de \textit{Google Maps} la que permite la colocación de los denominados 'marcadores' en un punto específico del mapa y asociar a ellos algún tipo de información. Así, aunque el funcionamiento interno esté dirigido por \textit{Play}, la principal funcionalidad del sistema, mostrar el mapa con sus marcadores, es implementada utilizando Javascript.
+
+Estos marcadores, ya ubicados en el mapa, tienen asociado un cuadro de texto dentro del cual refleja el la categoría a la que pertenece y el \textit{tweet} original, el texto, que lo generó, la Figura \ref{fig:EjemploMarker} presenta un ejemplo del funcionamiento de ésto en la interfaz \textit{web}. Esto tiene como objetivo permitir decidir, en última instancia, al usuario si ha sido correctamente clasificado.
+
+\begin{figure}[H]
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=0.8]{images/EjemploMarker.png}
+	\caption[Ejemplo de marcador en el mapa con su categorización y \textit{tweet} que lo generó.]{Ejemplo de marcador en el mapa con su categorización y \textit{tweet} que lo generó.\\Fuente: Elaboración Propia, (2016)}
+	\label{fig:EjemploMarker}
+\end{figure}
+
+Según lo solicitado en la historia de usuario HU-v02 se prepararon dos tipos de filtros a la interfaz para la visualización de eventos en el mapa: El primero considera el agrupamiento o \textit{clustering} de marcadores, mientras que el segundo considera el tipo de marcador o marcadores que se desean visualizar.
+
+Para el caso del agrupamiento se definieron tres modos de funcionamiento las cuales se describen a continuación:
+
+\begin{enumerate}
+\item No agrupar: Mostrar todos los marcadores que correspondan en el mapa de acuerdo al punto geográfico que corresponda en su definición.
+\item Agrupar por distancia: Define una grilla invisible en el mapa donde los elementos que calcen en una cudrícula son agregados a un \textit{cluster} y visualizados como tal.
+\item Agrupar por categoría: De igual forma que el agrupamiento por distancia, pero sólo agrega elementos que comparan categoría.
+\end{enumerate}
+
+Las Figuras \ref{fig:clusterdistancia} y \ref{fig:clustercategoria} presentan un ejemplo de ambos tipos de agrupamiento especial, respectivamente por distancia y categoría.
+
+\begin{figure}[!htb]
+	\minipage{0.48\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/EjemploCluster.png}
+	\caption[Ejemplo de agrupamiento basado en la distancia de los marcadores.]{Ejemplo de agrupamiento basado en la distancia de los marcadores.\\Fuente: Elaboración Propia, (2016)}
+	\label{fig:clusterdistancia}
+	\endminipage\hfill
+	\minipage{0.48\textwidth}
+	\centering
+	\captionsetup{justification=centering}
+	\includegraphics[scale=1]{images/ClusterCategoria.png}
+	\caption[Ejemplo de agrupamiento basado en la categorías de los marcadores.]{Ejemplo de agrupamiento basado en la categorías de los marcadores.\\Fuente: Elaboración Propia, (2016)}
+	\label{fig:clustercategoria}
+	\endminipage\hfill
+\end{figure}
+
+Para el segundo caso sólo se definieron dos reglas de funcionamiento las cuales se describen a continuación:
+
+\begin{enumerate}
+\item Mostrar todos: Muestra elementos de todas las categorias existentes.
+\item Mostrar categoría: Para cada categoría mostrar sólo los elementos de aquella categoría. 
+\end{enumerate}
+
+Al combinar ambos tipos de filtros se tienen potencialmente seis modos de funcionamiento, pero considerando las categorías descritas en al sección \ref{sec:diseno:categorias} ese número se expande a veintiún modos de funcionamiento del visualizador.
 
 \section{Implementación del sistema}
 \label{sec:implementacion}

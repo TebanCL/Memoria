@@ -19,7 +19,6 @@
 
 % Interlineado de 1.5:
 \renewcommand{\baselinestretch}{1.5}
-
 % #### Init file 'tesis-postgrado.cls' ####
 
 % Archivos suplementarios
