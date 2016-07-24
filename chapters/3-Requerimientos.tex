@@ -1,16 +1,15 @@
 \chapter{Requerimientos}
 \label{cap:Requerimientos}
 
-Éste capítulo detalla los requisitos de las aplicaciones, descritos como historias de usuario. Éstos señalan las necesidades de los clientes.
+Este capítulo detalla los requisitos de las aplicaciones, descritos como historias de usuario. Estos señalan las necesidades de los clientes.
 
-El cliente corresponde a miembros del equipo que lidera el proyecto FONDEF IDeA, código ID15I10560, proyecto orientado a generar herramientas para la gestión de desastres naturales. Los requerimientos se levantan en reuniones con los investigadores y responsables de aplicaciones del proyecto donde se estipulan las funcionalidades deseables, dichas reuniones tuvieron lugar en el Departamente de Ingeniería informática de la Universidad de Santiago e Chile.
+El cliente corresponde a miembros del equipo que lidera el proyecto FONDEF IDeA, código ID15I10560, proyecto orientado a generar herramientas para la gestión de desastres naturales. Los historias de usuario se levantan en reuniones con los investigadores y responsables de aplicaciones del proyecto donde se estipulan las funcionalidades deseables, dichas reuniones tuvieron lugar en el Departamente de Ingeniería informática de la Universidad de Santiago e Chile.
 
 \section{Proceso de toma de requerimientos}
 \label{sec:tomaDeRequerimientos}
 
-Dado que se seleccionó basarse, para el desarrollo de este proyecto, en la metodología \textit{Extreme Programming}, descrita en la sección \ref{subsec:MetodologiaDetalle} esta sección se detallará el proceso de toma de requerimientos basado en esta metodología, para ello se narra cómo se gestó el proyecto desde sus inicios y cómo se construyeron las Tabla \ref{tab:ReqTotalesC} y \ref{tab:ReqTotalesV}, presentadas en la sección \ref{sec:historias} correspondiente a las historias de usuario del sistema.
-
-Inicialmente por parte del cliente, miembros del equipo del proyecto FONDEF IDeA, se tenía clara la visión del sistema en general, es decir, un sistema que haciendo uso de \textit{Twitter} detectara por medio de un sistema de procesamiento de \textit{streams} en tiempo real necesidades expresadas por la población en escenarios de catástrofe, mas no se tenía claro cómo éste debiese ser construido. 
+La metodologia en la que se basó el trabajo de este proyecto es la metodología \textit{extreme programming} (XP), descrita anteriormente en la seccion \ref{subsec:MetodologiaDetalle}. En la presente sección se detalla el proceso de toma de requerimientos basados en esta metodologia. La toma de requerimientos se realiza por medio de las llamadas historias de usuarios descritas por el cliente en las sucesivas reuniones de trabajo realizadas.
+El cliente, miembros del equipo FONDEF, poseían ya una visión clara del sistema en general, sin embargo al avanzar en el proyecto surgieron nuevos requerimientos que debieron ser abordados.
 
 Dado el caracter iterativo de la metodología, se definió el siguiente ciclo de operación entre el equipo de desarrollo — el autor del presente trabajo — y los clientes:
 
@@ -29,13 +28,13 @@ El primer punto a ser construido la siguiente semana fue el apartado de comunica
 
 Con respecto al apartado visual, habiendo presentado las historias de usuario HU-v00, como un prototipo de la intergaz, HU-v01, como marcadores dentro del mapa y HU-v03, como un refresco de las marcadores almacenados cada sierto tiempo se solicitaron nuevos elementos para mejorar la experiencia del usuario, así se dio origen a la historia HU-v06, la cual trata sobre la aplicación de iconos descriptivos a los marcadores de cada categoría. Además se solicitó que la configuación con respecto a la HU-v03 fuese automática, para ello se escribió una nueva historia de usuario: HU-v08.
 
-La semana siguiente se solicitó que existieran diferentes formas de visualización de marcadores; se pidió que, segun el nivel de acercamiento del mapa, éstos se agruparan formando \textit{clusters} de marcadores que se agruparan según categoría dando origen a la historia HU-v02.
+La semana siguiente se solicitó que existieran diferentes formas de visualización de marcadores; se pidió que, segun el nivel de acercamiento del mapa, estos se agruparan formando \textit{clusters} de marcadores que se agruparan según categoría dando origen a la historia HU-v02.
 
-Producto de una charla realizada en la universidad donde se presentó una aplicación construida en la Universidad de Chile, referente a los efectos de desastres en redes sociales, se incorporó una nueva historia sobre una funcionalidad deseable para el sistema, la HU-v04, referente a la existencia de una línea de tiempo que mostrase la cantidad de eventos (necesidades), detectadas por fechas y que éstas pudiesen ser visualizadas en el mapa. Adicionalmente se señaló que era necesario un medio para que se incorporaran consultas al sistema, de manera de filtrar el flujo de datos de entrada según las necesidades de quien estuviese usando la aplicación, incorporando la HU-v05, además se señaló que se quería que el sistema mostrase estadísticas, sobre la actual consulta, referentes a la cantidad de eventos encontrados, procesados y usuarios, ésto se agregó en la HU-v07.
+Producto de una charla realizada en la universidad donde se presentó una aplicación construida en la Universidad de Chile, referente a los efectos de desastres en redes sociales, se incorporó una nueva historia sobre una funcionalidad deseable para el sistema, la HU-v04, referente a la existencia de una línea de tiempo que mostrase la cantidad de eventos (necesidades), detectadas por fechas y que pudiesen ser visualizadas en el mapa. Adicionalmente se señaló que era necesario un medio para que se incorporaran consultas al sistema, de manera de filtrar el flujo de datos de entrada según las necesidades de quien estuviese usando la aplicación, incorporando la HU-v05, además se señaló que se quería que el sistema mostrase estadísticas, sobre la actual consulta, referentes a la cantidad de eventos encontrados, procesados y usuarios, esto se agregó en la HU-v07.
 
 La siguiente iteración se solicitó la implementación de un método que extendiera la consulta realizada por el usuario (HU-v05), según los datos que se hubiesen obtenido hasta el momento, para ello se gestó la historia de usuario HU-c02.
 
-Finalmente el cliente solicitó un módulo para actualizar el modelo de clasificación utilizado, inicialmente se pidió que éste fuese automático, pero ante la dificultad técnica de ello, dado que la entrada para el modelo debe ser ingresada por un usuario experto, se sugirío a los clientes realizar un cambio e implementar un actualizador manual del modelo del clasificador, lo cual fue aceptado y se registró como HU-c03.
+Finalmente el cliente solicitó un módulo para actualizar el modelo de clasificación utilizado, inicialmente se pidió que fuese automático, pero ante la dificultad técnica de ello, dado que la entrada para el modelo debe ser ingresada por un usuario experto, se sugirío a los clientes realizar un cambio e implementar un actualizador manual del modelo del clasificador, lo cual fue aceptado y se registró como HU-c03.
 
 Es importante señalar que la historia de usuario HU-c00, correspondiente a la detección de necesidades en sí corresponde a la historia más compleja del sistema y está compuesta por la construcción de múltiples operadores que pueden desarrollándose a lo largo del proyecto, por lo que no era posible completarla en una iteración. Lo que se realizó fue presentar avances en la construcción de operadores semanalmente.
 
@@ -82,6 +81,7 @@ Estas historias de usuario se corresponden con los criterios de aceptación desc
 
 \begin{table}[H]
 \centering
+\captionsetup{justification=centering}
 \caption[Criterios de aceptación para HU de procesamiento]{Criterios de aceptación para HU de procesamiento.\\Fuente: Elaboración Propia, (2016)}
 \label{tab:criteriosAceptacionC}
 \begin{tabular}{|l|l|}
@@ -107,14 +107,14 @@ HU-v01 & \begin{tabular}[c]{@{}l@{}}· El mapa de eventos debe mostrar los event
 HU-v02 & \begin{tabular}[c]{@{}l@{}}· Se debe poder filtrar por modos de agrupamiento.\\ · Se debe poder filtrar por categorías.\\ · El mapa debe permitir modificar su nivel de acercamiento.\end{tabular} \\ \hline
 HU-v03 & · El mapa debe actualizarse automáticamente. \\ \hline
 HU-v04 & \begin{tabular}[c]{@{}l@{}}· Debe poder seleccionarse el intervalo.\\ · Los eventos en el mapa deben modificarse según el intervalo \\ que se seleccione.\\ · Debe seleccionarse el intervalo mediante una línea de tiempo.\\ · Debe mostrarse un histograma con los eventos pasados \\ presentes en el sistema.\end{tabular} \\ \hline
-HU-v05 & \begin{tabular}[c]{@{}l@{}}· Debe existir un lugar donde especificar éstos términos.\\ · El sistema debe mostrar qué términos se están utilizando para\\ la búsqueda actual.\end{tabular} \\ \hline
+HU-v05 & \begin{tabular}[c]{@{}l@{}}· Debe existir un lugar donde especificar estos términos.\\ · El sistema debe mostrar qué términos se están utilizando para\\ la búsqueda actual.\end{tabular} \\ \hline
 HU-v06 & \begin{tabular}[c]{@{}l@{}}· Cada evento de categorización diferente debe tener un icono \\ particular.\end{tabular} \\ \hline
 HU-v07 & \begin{tabular}[c]{@{}l@{}}· Deben mostrarse la cantidad de usuarios diferentes que han \\ emitido estados detectados.\\ · Deben mostrarse la cantidad de necesidades detectadas.\\ · Deben mostrarse la cantidad de eventos procesados.\end{tabular} \\ \hline
 HU-v08 & \begin{tabular}[c]{@{}l@{}}· Debe existir un lugar donde realizar el cambio de parámetros.\\ · Debe ser explícito el cambio de los parámetros de \\ funcionamiento en la interfaz.\end{tabular} \\ \hline
 \end{tabular}
 \end{table}
 
-Estas historias fueron manejadas por el equipo de desarrollo como tarjetas dentro de un tablero Kanban, éste consiste en una pizarra, en este caso \textit{online}, donde se separa el trabajo por columnas. Se utilizaron cuatro columnas: 
+Estas historias fueron manejadas por el equipo de desarrollo como tarjetas dentro de un tablero Kanban, el cual consiste en una pizarra, en este caso \textit{online}, donde se separa el trabajo por columnas. Se utilizaron cuatro columnas: 
 
 \begin{itemize}
 \item Por hacer: lista de todos las historias de usuario, divididas en tareas, que no se habían trabajado hasta ese punto del desarrollo.

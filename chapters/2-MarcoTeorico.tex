@@ -1,7 +1,7 @@
 \chapter{Marco teórico y estado del arte}
 \label{cap:MarcTeorico}
 
-Este capítulo busca realizar una contextualización de los conceptos necesarios para entender el problema que se está tratando por medio de una breve reseña de cada uno, además de a conocer la revisión de los trabajos existentes capaces de realizar tareas similares o basadas en principios similares a los planteados por la solución expuesta de éste trabajo.
+Este capítulo busca realizar una contextualización de los conceptos necesarios para entender el problema que se está tratando por medio de una breve reseña de cada uno. Además, se de a conocer la revisión de los trabajos existentes capaces de realizar tareas similares o basadas en principios similares a los planteados por la solución expuesta de este trabajo.
 
 \section{Marco teórico}
 \label{intro:motivacion:marco}
@@ -11,9 +11,9 @@ Se presentan las definiciones de herramientas y técnicas presentados y que sust
 \subsection{Sistemas de procesamiento de \textit{streams}}
 \label{subsec:SPS}
 
-El sistema tradicional de procesamiento, el trabajo por lotes (\textit{batch}), está pensado en que primero los datos son recopilados y almacenados, una vez que ésto se ha hecho pasan a ser procesados, pero ¿qué pasa si este enfoque no sirve y los datos han de ser procesados conforme éstos van llegando? 
+El sistema tradicional de procesamiento, el trabajo por lotes (\textit{batch}), está pensado en que primero los datos son recopilados y almacenados, para luego pasar a ser procesados. Sin embargo, este enfoque introduce una alta latencia en la obtención del resultado deseado, lo que no es útil en casos en que es necesario obtener resultados en tiempo real.
 
-Para realizar este tipo de procesamiento es que existe otro enfoque, el procesamiento de \textit{streams}, este enfoque no quita que se puedan almacenar los datos para un análisis \textit{a posteriori}, pero está pensado para trabajar con datos que llegan al sistema directamente desde la fuente y en gran cantidad y son procesados uno por uno.
+Para realizar este tipo de procesamiento en tiempo real existe otro enfoque, el procesamiento de \textit{streams}, el cual está diseñado para trabajar con datos que llegan al sistema directamente desde la fuente y en gran cantidad y son procesados uno por uno.
 
 Un sistema de procesamiento de \textit{streams} se caracteriza, principalmente, por lo siguiente:
 
@@ -23,9 +23,9 @@ Un sistema de procesamiento de \textit{streams} se caracteriza, principalmente, 
 \item Escalabilidad a través de la distribución eficiente en múltiples procesadores o servidores.
 \end{itemize}
 
-Su funcionamiento es caracterizado por información llegando y es asignada a un nodo, donde sufre alguna transformación al pasar por ellos. 
+Su funcionamiento es caracterizado por datos llegando de manera continua a los cuales se les aplica una o más operaciones las cuales pueden filtrar, agregar information, o transformar los datos entrantes.
 
-Conceptualmente su arquitectura es la de una red de elementos ejecutándose de forma concurrente y que operan el flujo de información que va llegando. La Figura \ref{fig:ArqSPS} presenta cómo es una típica arquitectura de éstos sistemas, \cite{SPExplained}.
+Conceptualmente su arquitectura es un grafo de operaciones que se comunican entre ellas intercambiando flujos de datos. La Figura \ref{fig:ArqSPS} presenta cómo es una típica arquitectura de estos sistemas, \cite{SPExplained}.
 
 \begin{figure}[H]
 	\centering
@@ -35,7 +35,7 @@ Conceptualmente su arquitectura es la de una red de elementos ejecutándose de f
 	\label{fig:ArqSPS}
 \end{figure}
 
-Estos sistemas se enfrentan a algunas dificultades como lo son, por mencionar algunas, la cantidad de información que reciben, la cantidad que son capaces hacer fluir por ellos o \textit{throughput} y el tiempo que demoran en ello (latencia)
+Estos sistemas se enfrentan a algunas dificultades como por ejemplo, la cantidad de información que reciben, la cantidad que son capaces hacer fluir por ellos o \textit{throughput} y el tiempo que demoran en ello (latencia).
 
 Existen variados motores de procesamiento de \textit{streams}, sólo por mencionar algunos de ellos: S4 \cite{NeumeyerS4}, \textit{StreamCloud} \cite{GulisanoStreamCloud}, ESC \cite{SatzgerESC}, \textit{TimeStream} \cite{QianTimeStream}, T-Storm \cite{XuTStorm}, MillWheel \cite{AkidauMillWheel}, Storm \cite{StormFigure}.
 
@@ -43,25 +43,23 @@ Existen variados motores de procesamiento de \textit{streams}, sólo por mencion
 \subsection{Minería de texto}
 \label{subsec:MineriaTexto}
 
-La minería de textos o \textit{text mining} es una rama de la lingüística computacional que trata de obtener información y conocimiento a partir de conjuntos de datos que en principio no tienen un orden o no están dispuestos en origen para transmitir esa informacion, \cite{IvanFernandez}.
-
-Para introducir este concepto es necesario haber pasado primero por entender el concepto de minería de datos o \textit{data mining}.
+La minería de textos o \textit{text mining} es una rama de la lingüística computacional que trata de obtener información y conocimiento a partir de conjuntos de datos que en principio no tienen un orden o no están dispuestos en origen para transmitir esa informacion, \cite{IvanFernandez}. Para explicar este concepto, primero se introduce el concepto de minería de datos o \textit{data mining}.
 
 \subsubsection*{Minería de datos}
 \label{subsubsec:dataMining}
 
-Para la minería de datos los datos son la materia prima, ésta se convierte en información que posteriormente es tratada y utilizada para convertirla en conocimiento. Reune áreas como la estadística, inteligencia artificial, bases de datos (la materia prima), y procesamiento masivo. \cite{LuisMolina} la define como "la integración de un conjunto de áreas que tienen como propósito la identificación de un conocimiento obtenido a partir de las bases de datos que aporten un sesgo hacia la toma de decisión".
+Para la minería de datos los datos son la materia prima, ésta se convierte en información que posteriormente es tratada y utilizada para convertirla en conocimiento. Reune áreas como la estadística, inteligencia artificial, bases de datos, y procesamiento masivo. \cite{LuisMolina} la define como ``\textit{la integración de un conjunto de áreas que tienen como propósito la identificación de un conocimiento obtenido a partir de las bases de datos que aporten un sesgo hacia la toma de decisión}".
 
-La principal diferencia de la minería de datos con respecto a la minería de textos es que la primera utiliza bases de datos como materia prima, mietras la segunda hace uso de documentos para ello.
+La principal diferencia de la minería de datos con respecto a la minería de textos es que la primera utiliza bases de datos como materia prima, mientras la segunda hace uso de documentos para ello.
 
-Una de las aplicaciones de la minería de textos es la clasificación de documentos. Esta práctica consiste en el uso de técnicas de aprendizaje automático para asignar categorías a un determinado texto, para ello existen algoritmos de clasificación con los cuales pueden construirse clasificadores.
+Una de las aplicaciones de la minería de textos es la clasificación de documentos. Esta práctica consiste en el uso de técnicas de aprendizaje automático para asignar categorías a un determinado texto, para ello existen algoritmos de clasificación con los cuales pueden construirse clasificadores capaces de agrupar eventos en categorias pre-establecidas.
 
 \subsubsection*{Clasificadores}
 \label{subsubsec:Classifiers}
 
 En el campo del procesamiento de lenguaje natural el detectar patrones es una parte central. La clasificación es la tarea de seleccionar la etiqueta correcta para una entrada dada. Cada entrada es considerada como aislada de las demás, y el conjunto de etiquetas (o categorías), es definido con anterioridad.
 
-Un clasificador es llamado "supervisado" si ha sido construido a partir de un conjunto de datos de entrenamiento o \textit{corpus} de entrenamiento. La Figura \ref{fig:NPLK} muestra el proceso de entrenamiento y uso de un clasificador. (a) Durante el entrenamiento, un estractor de características es utilizado para convertir cada entrada a un conjunto de característica, éstos capturan la información básica de cada conjunto de entrada que es usada para clasificar. Pares de estos conjuntos y etiquetas son la entrada para el algoritmo que contruye el modelo de clasificación. (b) Durante la predicción se realiza el mismo procedimiento, pero sin entregar como entrada la etiqueta correspondiente, se pasa al modelo generado para obtener su predicción sobre la pertenencia a una etiqueta.
+Un clasificador es llamado ``supervisado" si ha sido construido a partir de un conjunto de datos de entrenamiento o \textit{corpus} de entrenamiento. La Figura \ref{fig:NPLK} muestra el proceso de entrenamiento y uso de un clasificador. (a) Durante el entrenamiento, un extractor de características es utilizado para convertir cada entrada a un conjunto de características, estos capturan la información básica de cada conjunto de entrada que es usada para clasificar. Pares de estos conjuntos y etiquetas son la entrada para el algoritmo que contruye el modelo de clasificación. (b) Durante la predicción se realiza el mismo procedimiento, pero sin entregar como entrada la etiqueta correspondiente, se pasa al modelo generado para obtener su predicción sobre la pertenencia a una etiqueta.
 
 \begin{figure}[H]
 	\centering
@@ -71,15 +69,15 @@ Un clasificador es llamado "supervisado" si ha sido construido a partir de un co
 	\label{fig:NPLK}
 \end{figure}
 
-Para decidir si el modelo de clasificación construido es preciso, éste debe evaluarse. Para ello se ha de tener un conjunto de datos de evaluación. Típicamente corresponde a la misma entrada, donde se evalúa el resultado obtenido por el clasificador con el definido en ésta, separando el conjunto de entrenamiento en dos categorías: los datos de entrenamiento y los datos de evaluación. Comúnmente, se utiliza un 10\% del conjunto total para formar los datos de evaluación.
+El modelo de clasificación coinstruido debe evaluarse para decidir si es preciso. Para ello se requiere un conjunto de datos de evaluación que generalmente corresponden a un subconjunto entrada. El conjunto de entrenamiento se separa en dos categorías: los datos de entrenamiento y los datos de evaluación. Comúnmente, se utiliza un 10\% del conjunto total para formar los datos de evaluación, \cite{NPLK}.
 
-La métrica más simple para evaluar un clasificador es la precisión (\textit{accuracy}), ésta corresponde al ratio de entradas clasificadas correctamente. Matemáticamente:
+La métrica más simple para evaluar un clasificador es la precisión (\textit{accuracy}), la cual corresponde al ratio de entradas clasificadas correctamente. Matemáticamente:
 
 \[
 	Accuracy = \frac{TP}{TP+FP}
 \]
 
-TP y FP corresponden respectivamente a valores correctamente clasificados (\textit{true positives}) y valores clasificados incorrectamente (\textit{false positives}), también conocidos como "Errores tipo I". Adicionalmente a éstos existen otros dos: TN y FN que, respectivamente corresponden a valores correctamente no clasificados como elementos de una etiqueta específica (\textit{true negatives}) y los conocidos como "Errores tipo II", valores que no pertenecen a una etiqueta y han sido clasificados como tales. Con estos valores se pueden obtener dos nuevas métricas: El \textit{recall} y el medida F (\textit{F-Score}).
+TP y FP corresponden respectivamente a valores correctamente clasificados (\textit{true positives}) y valores clasificados incorrectamente (\textit{false positives}), también conocidos como ``Errores tipo I". Adicionalmente, existe otras dos métricas: TN y FN que, respectivamente corresponden a valores correctamente no clasificados como elementos de una etiqueta específica (\textit{true negatives}) y los conocidos como ``Errores tipo II", valores que no pertenecen a una etiqueta y han sido clasificados como tales (\textit{false negatives}). Con estos valores se pueden obtener dos nuevas métricas: El \textit{recall} y el medida F (\textit{F-Score}).
 
 El \textit{recall}, indica el ratio de elementos clasificados correctamente y matemáticamente se define como sigue:
 
@@ -87,7 +85,7 @@ El \textit{recall}, indica el ratio de elementos clasificados correctamente y ma
 	Recall = \frac{TP}{TP+FN}
 \]
 
-Por otro lado la Medida F, combina precisión y \textit{recall} para entregar un puntaje. Está dado, en general, dado por la siguiente función:
+Por otro lado, la medida F combina precisión y \textit{recall} para entregar un puntaje, dado por la siguiente función:
 
 \[
 	F_{\beta} = (1+\beta^{2})\frac{Accuracy · Recall}{(\beta^{2} · Accuracy) + Recall}
@@ -103,32 +101,30 @@ Se dice que es la medida armónica, pues pondera de igual manera ambos ratios, \
 
 Existen diferentes tipos de métodos de aprendizaje de máquina utilizados para construir clasificadores, dentro de ellos existen: \textit{Naïve Bayes}, máxima entropía y árboles de decisión.
 
-En cuanto a los árboles de decisión, éstos corresponden a un diagrama de flujo con el que se decide la etiqueta para una entrada. Los diagramas de flujo consisten en nodos de decisión, los que comprueban los conjuntos de características y las hojas que asignan las etiquetas. El más simple de ellos es llamado un \textit{decision stump}, el cual consiste en sólo un nodo de decisión y múltiples hojas, para construirlo se construye para todas las posibles etiquetas y se calcula la precisión para quedarse con aquellos que alcancen la más alta. Entonces, para construir un árbol de decisión con mayor nivel de generalización se van construyendo múltiples \textit{decision stumps} y usando aquelos con más alta probabilidad.
+Los árboles de decisión corresponden a un diagrama de flujo con el que se decide la etiqueta para una entrada. Los diagramas de flujo consisten en nodos de decisión, los que comprueban los conjuntos de características y las hojas que asignan las etiquetas. El más simple de ellos es llamado un \textit{decision stump}, el cual consiste en sólo un nodo de decisión y múltiples hojas, para construirlo se construye para todas las posibles etiquetas y se calcula la precisión para quedarse con aquellos que alcancen la más alta. Entonces, para construir un árbol de decisión con mayor nivel de generalización se van construyendo múltiples \textit{decision stumps} y usando aquellos con más alta probabilidad.
 
-Para el caso de los clasificadores \textit{Naïve Bayes}, \cite{NaiveBayes2}, cada elemento del vector de características aporta en la determinación de qué etiqueta ha de ser utilizada. Para cada etiqueta se calcula su probabilidad \textit{a priori}, utilizando como referencia la frecuencia de ésta en el conjunto de entrenamiento. Esta probabilidad en conjunto con el aporte de cada elemento del vector determina una probabilidad de pertenencia, se le asigna a la entrada la etiqueta que tenga mayor probabilidad de pertenencia.
+Para el caso de los clasificadores \textit{Naïve Bayes}, \cite{NaiveBayes2}, cada elemento del vector de características aporta en la determinación de qué etiqueta ha de ser utilizada. Para cada etiqueta se calcula su probabilidad \textit{a priori}, utilizando como referencia su frencuencia en el conjunto de entrenamiento. Esta probabilidad en conjunto con el aporte de cada elemento del vector determina una probabilidad de pertenencia, se le asigna a la entrada la etiqueta que tenga mayor probabilidad de pertenencia.
 
-Para el caso de los clasificadores mñaxima entropía, son similares a los clasificadores bayesianos, pero en lugar de utilizar las probabilidades establecer los parámetros del modelo, utiliza técnicas de búsqueda para encontrar parámetros que maximicen el desempeño del clasificador mediante técnicas de optimización iterativa, las que inician los parámetros en valores aleatoreos y los refina mientras se va acercando al óptimo. Su principal desventaja es que toman mucho tiempo en realizar el aprendizaje por el periodo de iteración antes mencionado, \cite{NPLK}.
+Los clasificadores máxima entropía, son similares a los clasificadores bayesianos, pero en lugar de utilizar las probabilidades establecer los parámetros del modelo, utilizan técnicas de búsqueda para encontrar parámetros que maximicen el desempeño del clasificador mediante técnicas de optimización iterativa, las que inician los parámetros en valores aleatorios y los refina mientras se va acercando al óptimo. Su principal desventaja es que toman mucho tiempo en realizar el aprendizaje por el periodo de iteración antes mencionado, \cite{NPLK}.
 
-Existen herramientas que contienen implementciones estos algoritmos, entre otros. Se puede mencionar como ejemplo de ellas \cite{Weka}, acrónimo del inglés \textit{Waikato Envoirment for Knowledge Analysis}, RapidMiner \cite{RapidMiner} y Mallet \cite{Mallet}, acrónimo del inglés \textit{MAchine Learning for LanguagE Toolkit}.
+Existen herramientas que contienen implementaciones de estos algoritmos, entre otros, y permiten generar clasificadores de manera más fácil y rápida. Se puede mencionar como ejemplo \cite{Weka}, acrónimo del inglés \textit{Waikato Envoirment for Knowledge Analysis}, RapidMiner \cite{RapidMiner} y Mallet \cite{Mallet}, acrónimo del inglés \textit{MAchine Learning for LanguagE Toolkit}.
 
-Hablando expecíficamente sobre Mallet, fué desarrollada por \cite{Mallet}, en la Universidad de Massachusetts Amherst, es una herramienta de Java para el procesamiento de lenguaje natural, clasificación de documentos, \textit{clustering}, extracción de información y otras aplicaciones de aprendizaje de máquina sobre texto.
-
-Cuenta con implementaciones de una variedad de algoritmos entre los cuales se encuentran: \textit{Naïve Bayes}, máxima entropía y árboles de decisión. Además incluye herramientas para evaluar el desempeño de clasificadores mediante el uso de métricas más utilizadas.
+En este trabajo se ha utilizado Mallet, herramienta desarrollada por \cite{Mallet}, en la Universidad de Massachusetts Amherst, La herramienta se encuentra en lenguaje Java y realiza procesamiento de lenguaje natural, clasificación de documentos, \textit{clustering}, extracción de información y otras aplicaciones de aprendizaje de máquina sobre texto. Mallet cuenta con implementaciones de una variedad de algoritmos entre los cuales se encuentran: \textit{Naïve Bayes}, máxima entropía y árboles de decisión. Además, incluye herramientas para evaluar el desempeño de clasificadores mediante el uso de métricas más utilizadas.
 
 \subsection{Bases de datos no relacionales}
 \label{subsubsec:BDNoSQL}
 
-Éstas bases de datos se separan de los principios expresados por \cite{CoddSQL}, pues no utilizan el lenguaje SQL, practicamente universal en las bases de datos convencionales. Estas últimas organizan la información en tablas, cada una de ellas tiene un número de columnas o campos especificados por el administrador y  filas correspondiente a los datos. Además estas tablas pueden relacionarse entre sí, con relaciones uno a uno entre los elementos o uno a varios, de manera que mediante consultas que combinan varias tablas pueden obtener información de varias de ellas, estas consultas se realizan mediante un sencillo lenguaje estandarizado.
+Las bases de datos no relacionales se separan de los principios expresados por \cite{CoddSQL}, pues no utilizan el lenguaje SQL, prácticamente universal en las bases de datos convencionales. Estas últimas organizan la información en tablas, cada una de ellas tiene un número de columnas o campos especificados por el administrador y  filas correspondiente a los datos. Además, estas tablas pueden relacionarse entre sí con relaciones uno a uno entre los elementos o uno a varios, de manera que mediante consultas que combinan varias tablas pueden obtener información de varias de ellas, estas consultas se realizan mediante un sencillo lenguaje estandarizado.
 
-Estas bases de datos están diseñadas para mantener la integridad de las relaciones, por ejemplo: una tabla "alumnos" esta relacionada con la tabla "calificaciones" y no pueden haber calificaciones para un alumno innexistente. 
+Las bases de datos tradicionales están diseñadas para mantener la integridad de las relaciones, por ejemplo: una tabla ``alumnos" esta relacionada con la tabla ``calificaciones" y no pueden haber calificaciones para un alumno inexistente. 
 
-El problema del modelo antes mencionado está en que son costosas en términos de rendimiento, dadas las garantías ofrecidas sobre los datos y transacciones. Lo que no es problema en lugares donde la información sea poca o no se utilice tan a menudo, el verdadero problema está cuando la cantidad de información es muy grande, donde el uso de bases de datos relacionales obligan a dedicar mucho esfuero a la optimización para obtener un resultado aceptable.
+El problema del modelo antes mencionado está en que son costosas en términos de rendimiento, dadas las garantías ofrecidas sobre los datos y transacciones. Lo que no es problema en lugares donde la información es limitada y se realizan pocas escrituras, pues éstas son caras computacionalmente. El verdadero problema está cuando la cantidad de información es muy grande, donde el uso de bases de datos relacionales obliga a dedicar mucho esfuerzo a la optimización para obtener un resultado aceptable.
 
-Aproximándose a lo no relacional se renuncia a las tablas perfectamente definidas, que garantizan la integridad y donde todo parece predecible, pero, en cambio, se obtiene rapidez y flexibilidad. En sistema de gestión de base de datos no relacionales como \cite{CassandraNOSQL}, \cite{redisNOSQL}, \cite{MongoDB}, toda la información está en el mismo sitio. Al acceder a los datos de un alumno, siguiendo la línea del ejemplo anterior, toda estará ahi, incluidas sus calificaciones y no existe información relacional, \cite{BDNOSQL}.
+Aproximándose a lo no relacional se renuncia a las tablas perfectamente definidas, que garantizan la integridad y donde todo parece predecible, pero se obtiene rapidez y flexibilidad. En el sistema de gestión de base de datos no relacionales como \cite{CassandraNOSQL}, \cite{redisNOSQL}, \cite{MongoDB}, toda la información está en el mismo sitio. Al acceder a los datos de un alumno, siguiendo la línea del ejemplo anterior, toda estará ahí, incluidas sus calificaciones y no existe información relacional, \cite{BDNOSQL}.
 
-El caso de MongoDB, corresponde es una base de datos no relacional (NoSQL), de código abierto escrita en C++ y está orientada al trabajo en documentos. Lo anterior quiere decir que, en lugar de guardar los datos en tablas, lo hace en documentos y éstos son almacenada en una representación binaria de JSON conocida como BSON.
+El caso de MongoDB, corresponde es una base de datos no relacional (NoSQL), de código abierto escrita en C++ y orientada al trabajo en documentos. Lo anterior quiere decir que en lugar de guardar los datos en tablas, lo hace en documentos, los que son almacenados como una representación binaria de JSON conocida como BSON.
 
-Una de las diferencias fundamentales con respecto a las bases de datos relacionales es que no es necesario que se siga un esquema; en una misma colección - concepto similar a una tabla en las bases de datos relacionales - pueden tener distintos esquemas.
+Una de las diferencias fundamentales con respecto a las bases de datos relacionales es que no es necesario que se siga un esquema; en una misma colección — concepto similar a una tabla en las bases de datos relacionales — se pueden tener distintos esquemas.
 
 MongoDB fue creado para brindar escalabilidad, rendimiento y disponibilidad. Puede ser utilizado en un servidor único como en múltiples. Esto se logra dado que MongoDB brinda un elevado rendimiento, tanto para lectura como para escritura, potenciando la computación en memoria, \cite{MongoDB}.
 
@@ -137,29 +133,29 @@ En pruebas realizando operaciones habituales dentro de las bases de datos, \cite
 \section{Estado del arte}
 \label{intro:motivacion:arte}
 
-El problema a abordar consta de dos tópicos centrales: el procesamiento escalable de eventos en tiempo real y clasificación de eventos. Se comienza señalando desde donde inicia este trabajo, seguido de las impresiones de distintos autores respecto al trabajo en redes sociales (\textit{Twitter} específicamente), continuando con sistemas de procesamiento para flujos de información para concluir con la construcción de clasificadores para etiquetado de datos.
+El problema a abordar consta de tres tópicos centrales: plataformas orientadas a desastres, plataformas de procesamiento escalable y herramientas para la clasificación de eventos. La presente sección aborda los trabajos relacionados con la aplicación que se desea construir en las tres temáticas anteriormente menciondas.
 
 \subsection{Plataformas de procesamiento para desastres}
 \label{arte:PPDesastres}
 
-El \textit{Qatar Computing Research Institute}, es líder a nivel mundial en la creación de herramientas para dar soporte a desastres naturales usando tecnologías de la información, colaborando con grandes organizaciones como Naciones Unidas, Cruz Roja Internacional y UNICEF. Recientemente, han elaborado distintas aplicaciones (\textit{MicroMappers}, \textit{AIDR}, \textit{UAViators}, etc.), para ayudar a darle sentido al gran flujo de información que reciben los centros de ayuda humanitaria (\textit{Big crisis data}), generada por redes sociales, SMS, imágenes satelitales y aéreas tomadas por drones, que de otra forma serían incapaces de analizar.
-Tomando la información, estas aplicaciones unen la ayuda de voluntarios y profesionales digitales, quienes están dispuestos a colaborar a través de internet realizando tareas como identificación o clasificación. Con ésta y el poder del aprendizaje de máquina, se entrenan algoritmos para analizar millones de datos.
+El \textit{Qatar Computing Research Institute} \footnote{http://qcri.com}, es líder a nivel mundial en la creación de herramientas para dar soporte a desastres naturales usando tecnologías de la información, colaborando con grandes organizaciones como Naciones Unidas, Cruz Roja Internacional y UNICEF. Recientemente, han elaborado distintas aplicaciones (\textit{MicroMappers}, \textit{AIDR}, \textit{UAViators}, etc.), para ayudar a darle sentido al gran flujo de información que reciben los centros de ayuda humanitaria (\textit{Big crisis data}), generada por redes sociales, SMS, imágenes satelitales y aéreas tomadas por drones, que de otra forma serían incapaces de analizar.
+Tomando la información, estas aplicaciones unen la ayuda de voluntarios y profesionales digitales, quienes están dispuestos a colaborar a través de Internet realizando tareas como identificación o clasificación. Con ésta y el poder del aprendizaje de máquina, se entrenan algoritmos para analizar millones de datos.
 
-\textit{Micromappers} \cite{MicroMappers}, es una aplicación, creada por \textit{Qatar Computing Research Institute}, que permite a voluntarios digitales etiquetar diferente tipos de información para la ayuda en el proceso de respuesta a desastres y desplegarlos en un mapa. En el caso del terremoto de Nepal por ejemplo, los voluntarios han contribuido revisando miles de \textit{tweets} e imágenes para entregar una evaluación de impacto que ayuda a la toma de decisiones. La evolución de esta herramienta está orientada a integrarse con \textit{AIDR} para que la información obtenida de las personas a través de \textit{crowdsourcing} pueda servir para la automatización de proceso de clasificación mediante aprendizaje de máquina, y así subir al análisis de miles a millones de datos generados situaciones de emergencia.
+\textit{Micromappers} \cite{MicroMappers} es una aplicación creada por \textit{Qatar Computing Research Institute}, que permite a voluntarios digitales etiquetar diferente tipos de información para la ayuda en el proceso de respuesta a desastres y desplegarlos en un mapa. En el caso del terremoto de Nepal por ejemplo, los voluntarios han contribuido revisando miles de \textit{tweets} e imágenes para entregar una evaluación de impacto que ayuda a la toma de decisiones. La evolución de esta herramienta está orientada a integrarse con \textit{AIDR} para que la información obtenida de las personas a través de \textit{crowdsourcing} pueda servir para la automatización de proceso de clasificación mediante aprendizaje de máquina, y así subir al análisis de miles a millones de datos generados situaciones de emergencia. Esta plataforma, a diferencia de lo propuesto en el presente trabajo, es una plataforma genérica de procesamiento de datos de crisis o desastres que no aborda el proceso de detección de necesidades, sino más bien, organizar la información que se genera en las diferentes fuentes de datos utilizada.
 
-\textit{AIDR} (\textit{Artificial Intelligence for Disaster Response}), \cite{AIDR}, delega al aprendizaje de máquina la identificación de contenido durante desastres en \textit{Twitter}. Va más allá de un simple filtro por palabras clave que limitan la búsqueda a ellas y al lenguaje. Está compuesto de tres partes: El colector, el entrenador y el etiquetador. El primero recolecta y almacena los datos, el entrenador construye un etiquetador automático y permite a usuarios realizar esto dado un conjunto de \textit{tweets} capturados por el colector, el etiquetador analiza los \textit{tweets} clasificados por humanos para automáticamente etiquetar nuevos \textit{tweets}.
+\textit{AIDR} (\textit{Artificial Intelligence for Disaster Response}), \cite{AIDR}, delega al aprendizaje de máquina la identificación de contenido durante desastres en \textit{Twitter}. Va más allá de un simple filtro por palabras clave que limitan la búsqueda a ellas y al lenguaje. textit{AIDR} está compuesto de tres partes: el colector, el entrenador y el etiquetador. El primero recolecta y almacena los datos, el entrenador construye un etiquetador automático y permite a usuarios realizar esto dado un conjunto de \textit{tweets} capturados por el colector, el etiquetador analiza los \textit{tweets} clasificados por humanos para automáticamente etiquetar nuevos \textit{tweets}. Esta plataforma no considera un sistema de procesamiento de \textit{streams}, de manera general, plantea una plataforma orientada a cómo generar sistemas automáticos de clasificación de eventos.
 
-\textit{UAViators} \cite{UAViators}, iniciativa también creada por \textit{Qatar Computing Research Institute}, reúne información generada por drones que entregan imágenes para crear conocimiento sobre el área del desastre en tiempo real. Su procesamiento puede entregar información como una estimación de la población afectada, daños en infraestructura de edificios, líneas de electricidad, carreteras, campamentos base, entre otros.
+\textit{UAViators} \cite{UAViators}, iniciativa también creada por \textit{Qatar Computing Research Institute}, reúne información generada por drones que entregan imágenes para crear conocimiento sobre el área del desastre en tiempo real. Su procesamiento puede entregar información como una estimación de la población afectada, daños en infraestructura de edificios, líneas de electricidad, carreteras, campamentos base, entre otros. Esta plataforma posee un objetivo muy diferente al planteado por la solución propuesta en esta memoria, sin embargo ambas soluciones pueden ser complementarias.
 
 \subsection{Procesamiento de datos a gran escala}
 \label{arte:SPS}
 
-Se presentan a continuación los sistemas de procesamiento de datos a gran escala más utilizados en la actualidad, \cite{PMIProfes}.
+En los últimos años, un nuevo paradigma de procesamiento se sumó al ya conocido esquema \textit{map-reduce}. Este nuevo paradigma, a diferencia del anteriormente mencionado, es capaz de procesar informacion online sin requerir de el almacenamiento previo de los datos. Este esquema se adapta de mejor manera la tendencia de extraer conocimiento de las interacciones online de los usuarios. A continuación se presentan algunos de las implementaciones de estos paradigmas de procesamiento.
 
 \subsubsection*{\textit{MapReduce}}
 \label{arte:SPS:mapreduce}
 
-El \textit{framework} de Google \textit{MapReduce}, \cite{DeanMapReduce}, es un modelo de programación diseñado para procesar conjuntos de datos a gran escala en una modalidad orientada al lote (\textit{batch}) o procesamiento \textit{online}. Este sistema esta orientado a programación funcional y utiliza funciones del tipo \textit{map} y \textit{reduce}. \textit{MapReduce} ha logrado gran popularidad en aplicaciones orientadas a grandes volúmenes de datos dado su modelo de programación basado en clave/valor y su escalabilidad. Las soluciones presentadas en  y, \cite{VermaMapReduce}, están orientadas al procesamiento de flujos de datos en línea basadas en \textit{MapReduce}. Los autores en \cite{CondieMapReduce}, proponen modificaciones a \textit{Hadoop}, que es una implementación de \textit{MapReduce} de código abierto, y que permite que los datos sean canalizados entre los operadores haciéndolo mas adecuado a aplicaciones con requerimientos de tiempo real. 
+El \textit{framework} de Google \textit{MapReduce}, \cite{DeanMapReduce}, es un modelo de programación diseñado para procesar conjuntos de datos a gran escala en una modalidad orientada al lote (\textit{batch}) o procesamiento \textit{online}. Este sistema esta orientado a programación funcional y utiliza funciones del tipo \textit{map} y \textit{reduce}. \textit{MapReduce} ha logrado gran popularidad en aplicaciones orientadas a grandes volúmenes de datos dado su modelo de programación basado en clave/valor y su escalabilidad. Las soluciones presentadas en  y, \cite{VermaMapReduce}, están orientadas al procesamiento de flujos de datos en línea basadas en \textit{MapReduce}. Los autores en \cite{CondieMapReduce}, proponen modificaciones a \textit{Hadoop}, que es una implementación de \textit{MapReduce} de código abierto, y que permite que los datos sean canalizados entre los operadores haciéndolo más adecuado a aplicaciones con requerimientos de tiempo real. 
 
 \subsubsection*{Apache S4}
 \label{arte:SPS:s4}
@@ -171,7 +167,7 @@ Actualmente S4 está en fase de incubación en la fundación Apache, pero no ha 
 \subsubsection*{Apache Spark}
 \label{arte:SPS:spark}
 
-\textit{Spark}, \cite{SparkOnline}, es una plataforma de computación de código abierto para análisis y procesos avanzados, que tiene muchas ventajas sobre \textit{Hadoop}. Desde el principio, \textit{Spark} fue diseñado para soportar en memoria algoritmos iterativos que se pudiesen desarrollar sin escribir un conjunto de resultados cada vez que se procesaba un dato. Esta habilidad para mantener todo en memoria es una técnica de computación de alto rendimiento aplicado al análisis avanzado, la cual permite que \textit{Spark} tenga unas velocidades de procesamiento que sean 100 veces más rápidas que las conseguidas utilizando \textit{MapReduce}, \cite{Spark}.
+\textit{Spark}, \cite{SparkOnline}, es una plataforma de computación de código abierto para análisis y procesos avanzados, que tiene muchas ventajas sobre \textit{Hadoop}. Desde el principio, \textit{Spark} fue diseñado para soportar en memoria algoritmos iterativos que se pudiesen desarrollar sin escribir un conjunto de resultados cada vez que se procesaba un dato. Esta habilidad para mantener todo en memoria es una técnica de computación de alto rendimiento aplicado al análisis avanzado, la cual permite que \textit{Spark} tenga unas velocidades de procesamiento que puedan ser hasta 100 veces más rápidas que las conseguidas utilizando \textit{MapReduce}, \cite{Spark}.
 
 \subsubsection*{Apache Storm}
 \label{arte:SPS:storm}
@@ -194,7 +190,7 @@ Oficialmente, una aplicación \textit{storm} es representada como puede verse en
 
 Uno de los puntos fuertes que tiene este sistema, y que está en línea con lo señalado para sistemas de procesamiento de \textit{stream}, es que al crear una topología donde se instancian \textit{bolts} y \textit{spouts}, \textit{Storm} se encarga de escalar el sistema distribuyendo los elementos en sus componentes. Una topología de \textit{Storm} corresponde, en su nivel más alto de abstracción, a un grafo acíclico dirigido, \cite{Storm}.
 
-\textit{Storm} tiene diferentes modos de funcionamiento, referido a la forma en la que se van a compartir los datos entre los componentes. Como modelo de datos, \textit{Storm} utiliza tuplas que son listas de valores con un nombre específico, \cite{Storm}, éstas pueden ser enviadas al siguiente nodo de las siguientes formas:
+\textit{Storm} tiene diferentes modos de funcionamiento, referido a la forma en la que se van a compartir los datos entre los componentes. Como modelo de datos, \textit{Storm} utiliza tuplas que son listas de valores con un nombre asociado, \cite{Storm}. Estas tuplas pueden ser enviadas al siguiente nodo de las siguientes formas:
 
 \begin{itemize}
 \item \textit{Shuffle grouping}: \textit{storm} decide de forma \textit{round robin} la tarea a la que se va a enviar la tupla, de manera que la distribución sea equivalente entre todos los nodos.
@@ -222,20 +218,20 @@ La arquitectura de Storm se divide en tres componentes:
 \label{intro:ea:clasificacion}
 
 Por otra parte, la clasificación de texto en servicios de \textit{microblogging}, como \textit{Twitter} es un problema cuya solución tiene diferentes puntos de vista, los métodos tradicionales incluyen hacer uso de una bolsa de palabras para clasificar según el contenido del texto, construcción de n-gramas para clasificar según términos co-ocurrentes o ubicar el texto en una categoría haciendo uso de técnicas de aprendizaje de máquina o \textit{Machine Learning}, \cite{EventDetection}. 
-Este último método ya ha sido comprobado por diversos autores, entre ellos \cite{Maldonado}, quien utilizó este método para realizar su memoria donde clasificaba \textit{tweets} según sentimientos encontrados en el texto,éstos podian ser positivos, negativos o neutros, para ello hizo uso de un clasificador \textit{Naïve Bayes} y \textit{Support Vector Machine} (SVM). 
+Este último método ya ha sido comprobado por diversos autores, entre ellos \cite{Maldonado}, quien utilizó este método para realizar su memoria donde clasificaba \textit{tweets} según sentimientos encontrados en el texto, estos podian ser positivos, negativos o neutros, para ello hizo uso de un clasificador \textit{Naïve Bayes} y \textit{Support Vector Machine} (SVM). 
 
-En el marco de las jornadas chilenas de la computación \cite{WladdimiroPMI}, propusieron un modelo, desarrollado para el proyecto PMI USA 1204: Despliegue ágil de aplicaciones para desastres \cite{PMIProfes}, donde analizaron el rendimiento de una aplicación de clasificación de necesidades básica al ser implementada en un sistema de procesamiento de \textit{streams} como S4. En el se propone un modelo basado en \textit{Yahoo! S4} donde, haciendo uso del paradigma de procesamiento de \textit{streams} de datos, se forma un grafo cuyos nodos (Elementos de procesamiento o PE, por sus siglas en inglés), dividen el procesamiento en pequeñas tareas fácilmente replicables para paralelizar el \textit{pepeline}. En esa ocación desarrollaron distintos tipos de operadores mencionados a continuación:
+En el marco de las jornadas chilenas de la computación \cite{WladdimiroPMI}, propusieron un modelo, desarrollado para el proyecto PMI USA 1204: Despliegue ágil de aplicaciones para desastres \cite{PMIProfes}, donde analizaron el rendimiento de una aplicación de clasificación de necesidades básica al ser implementada en un sistema de procesamiento de \textit{streams} como S4. En el se propone un modelo basado en \textit{Yahoo! S4} donde, haciendo uso del paradigma de procesamiento de \textit{streams} de datos, se forma un grafo cuyos nodos (Elementos de procesamiento o PE, por sus siglas en inglés), dividen el procesamiento en pequeñas tareas fácilmente replicables para paralelizar el \textit{pipeline}. En esa ocación desarrollaron distintos tipos de operadores mencionados a continuación:
 
 \begin{itemize}
 \item Recolector: haciedo uso de la API de \textit{Twitter} obtiene el \textit{stream} de datos del mismo. 
-\item \textit{Scheduler}: discrimina cada \textit{tweet} según la categoría que pertenece (Información, agua, electricidad o alimento), mediante el uso de una bolsa de palabras y la distancia \textit{Hamming}.
+\item \textit{Scheduler}: discrimina cada \textit{tweet} según la categoría que pertenece (información, agua, electricidad o alimento), mediante el uso de una bolsa de palabras y la distancia \textit{Hamming}.
 \item Filtrado: utilizaron en su trabajo un clasificador basado en \textit{machine learning} para verificar la subjetividad de un \textit{tweet}, por lo que ya esta demostrado que esta herramienta es capaz de categorizar texto, por lo que puede ser aplicada para las entradas de \textit{Twitter}.
 \item Relevancia: identificar si una información es o no confiable haciendo uso de la cantidad de publicaciones del usuario, sus seguidores y a quienes sigue para estimar una reputación del autor.
 \item Ranking: hace uso de la información anterior, decidiendo a qué le entrega mayor importancia.
 \end{itemize}
 
-Los autores concluyeron basándose en la carga computacional la importancia de una replicación adecuada para distribuirla entre los PE, pero no fueron concluyentes en cuánto o qué nivel de replicación es el adecuado o cuándo replicar.
+Los autores concluyeron basándose en la carga computacional la importancia de una replicación adecuada para  distribuir la carga entre los operadores, pero no fueron concluyentes en cuánto o qué nivel de replicación es el adecuado o cuándo replicar.
 
-A modo de comentario se señala que diversos autores, entre los que podemos mencionar a \cite{VanDeVoort}, \cite{EventDetectionInTwitter}, \cite{Maldonado}, han señalado las dificultades que se presentan al trabajar utilizando como entradas los estados públicos (\textit{tweet}) de los usuarios de \textit{Twitter}, dentro de las dificultades señaladas se encuentran, por ejemplo, el acceso a la información; si bien existen accesos públicos a la información éstos son restringidos tanto en cantidad como en tiempo: Este punto de acceso permite acceder a un 1\% de la información generada en un instante, es decir, por cada cien \textit{tweets} sólo puede accederse a uno de ellos. Sólo se permite realizar un número limitado de consultas por intervalo de tiempo, luego de que este límite es alcanzado, se ha de esperar para volver a acceder a los datos del \textit{stream}. Por otro lado existe un punto de acceso pagado denominado \textit{FireHose} el cual entrega libre acceso a la información sin las limitantes anteriormente descritas.
+A modo de comentario se señala que diversos autores, entre los que podemos mencionar a \cite{VanDeVoort}, \cite{EventDetectionInTwitter}, \cite{Maldonado}, han señalado las dificultades que se presentan al trabajar utilizando como entradas los estados públicos (\textit{tweet}) de los usuarios de \textit{Twitter}, dentro de las dificultades señaladas se encuentran, por ejemplo, el acceso a la información; si bien existen accesos públicos a la información estos son restringidos tanto en cantidad como en tiempo: Este punto de acceso permite acceder a un 1\% de la información generada en un instante, es decir, por cada cien \textit{tweets} generados en la red \textit{Twitter} sólo 1 es emitido de manera pública a la API. Además, existe una restricción a la cantidad de elementos que pueden ser obtenidos en un intervalo de tiempo, luego de que este límite es alcanzado, se ha de esperar para volver a acceder a los datos del \textit{stream}. Si se desea trabajar sin estas limitaciones, se puede hacer uso del llamado \textit{FireHose} de \textit{Twitter}, el cual entrega todo el flujo de eventos generados en la red sin limitaciones, sin embargo esta modalidad es de pago.
 
-Por otro lado \cite{VanDeVoort}, señalan que la dificultad radica en el hecho de que cualquier persona puede realizar publicaciones en esta red social, induciendo ruido en la información (considerando el ruido como toda información que aparece junto a la deseada, pero no aporta nueva), además de que, al ser publicaciones de máximo 140 caracteres, es complejo contextualizar el contenido.
+Por otro lado \cite{VanDeVoort}, señalan que la dificultad radica en el hecho de que cualquier persona puede realizar publicaciones en esta red social, induciendo ruido en la información (considerando el ruido como toda información que aparece junto a la deseada, pero no aporta nueva información), además de que, al ser publicaciones de máximo 140 caracteres, es complejo contextualizar el contenido.
