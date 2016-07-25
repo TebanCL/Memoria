@@ -1,7 +1,7 @@
 \chapter{Evaluación del sistema}
 \label{cap:experimentos}
 
-Con el sistema construido resta someterlo a evaluaciones. En especial se evalúa el sistema de detección de necesidades, pues es el corazón del sistema y ha de operar con un flujo de datos constante.
+Con el sistema construido resta someterlo a evaluacion. En especial se evalúa el sistema de detección de necesidades, pues es el corazón del sistema y ha de operar con un flujo de datos constante.
 
 \section{Cumplimiento de requerimientos}
 \label{seC:cumpRequerimientos}
@@ -9,19 +9,19 @@ Con el sistema construido resta someterlo a evaluaciones. En especial se evalúa
 En cuanto a la construcción del \textit{software}, se identificador 12 historias de usuario y se especificaron cada uno de sus criterios de aceptación. Se pasa a detallar por cada historia si ésta fue cumplida o no.
 
 \begin{itemize}
-\item HU-c00: Mediante la construcción de un operador, \textit{spout}, que haciendo uso del \textit{stream} de datos proporcionado por \textit{Twitter} recogiese los datos en tiempo real y la contrucción de un clasificador de texto es que se completo esta historia.
+\item HU-c00: Mediante la construcción de un operador, \textit{Spout}, que haciendo uso del \textit{stream} de datos proporcionado por \textit{Twitter} recogiese los datos en tiempo real y la contrucción de un clasificador de texto es que se completo esta historia.
 \item HU-c01: De igual manera que la historia anterior, haciendo uso de la información de \textit{Twitter}, ésta historia se completó.
 \item HU-c02: Esta historia se completó mediante la construcción del operador filtro de consulta, donde se añadió la capacidad de realizar \textit{query expansion}.
 \item HU-v03: Se implementó mediante el actualizador del modelo de clasificación, dejando al usuario la tarea de etiquetar los datos para formar el conjunto de entrenamiento.
 \item HU-c04: Se implementó mediante una base de datos no relacional en tres colecciones de datos: marcadores, \textit{tweets} y consultas.
-\item HU-v00: Con la contrucción de la aplicación visualizadora, la que permite el despliegue de una interfaz web al usuario esta historia se marcó como completada.
+\item HU-v00: Con la contrucción de la aplicación visualizadora, la que permite el despliegue de una interfaz \textit{Web} al usuario esta historia se marcó como completada.
 \item HU-v01: Mediante el operador de ubicación ésta historia de usuario se completó.
-\item HU-v02: Se implementaron filtros haciendo uso de Javascript a la interfaz, permitiendo realizar veintiún formas de visualización diferentes.
+\item HU-v02: Se implementaron filtros haciendo uso de Javascript a la interfaz, permitiendo realizar veintidós formas de visualización diferentes.
 \item HU-v03: Al igual que la historia anterior, se utilizó Javascript, en específico AJAX, para que, mediante un servicio REST se pudiese actualizar los nuevos marcadores.
-\item HU-v04: Se utilizó una librería externa, \textit{HighCharts}, para la implementación de una línea de tiempo con intervalo deslizante y, mediante un servicio REST, obtener los datos pertenecientes al intervalo seleccionado y cumplir así ésta historia de usuario.
+\item HU-v04: Se utilizó una biblioteca externa, \textit{HighCharts}, para la implementación de una línea de tiempo con intervalo deslizante y, mediante un servicio REST, obtener los datos pertenecientes al intervalo seleccionado y cumplir así ésta historia de usuario.
 \item HU-v05: Se implementó junto con la historia de usuario HU-c02. El filtro de consultas permitía el paso de los \textit{tweets} que tuviesen parte de su contenido alguno de los términos especificados por el usuario.
 \item HU-v06: Se diseñaron 7 iconos para corresponder a cada una de las categorías y completar esta historia, la descripción de estos es entregada por medio de la aplicación de visualización al usuario final.
-\item HU-v07: Mediante la construcción de tres servicios rest que cuenten la cantidad de eventos desde la última consulta se completó esta historia de usuario.
+\item HU-v07: Mediante la construcción de tres servicios REST que cuenten la cantidad de eventos desde la última consulta se completó esta historia de usuario.
 \item HU-v08: Se permitió al usuario el parametrizar la configuración de la aplicación visualizadora, completando así esta historia de usuario.
 \end{itemize}
 
@@ -46,7 +46,7 @@ Los valores expuestos anteriormente son interpretados, respectivamente, como sig
 \item \textit{F-1 Score}: Corresponde al \textit{trade-off} entre \textit{accuracy} y \textit{recall}, al incrementar uno, el otro disminuye en un $F$\% descrito por los valores en la Figura \ref{fig:metricasClass}.
 \end{itemize}
 
-En particular este clasificador cuenta con alta precisión y bajo \textit{recall}, eso significa que el es preciso para clasificar, pero es incapaz de clasificar algunos de los casos particulares de cada clase. Esto se debe al conjunto de entrenamiento utilizado, los datos no están balanceados para cada clase, es decir, la clase A, no tienen la misma cantidad de datos utilizados para entrenar B, esto repercute en que debido a las pocas instancias que tiene el algoritmo para aprender no es capaz de reconocer elementos de la clase con menos elementos. En particular el caso de la clase ``Alimentos", los datos que se utilizaron son del periodo inmediato al evento, por ello no se encontraron demasiados elementos que hagan referencia a la falta de alimento en una población. Específicamente sólo se etiqueto un \textit{tweet} presentado en la Tabla \ref{tab:UnicoEstadoAlimento} dentro de la categoría alimento. Esto se debe al que el el conjunto de \textit{tweets} utilizado corresponde a uno obtenido en el periodo inmediato del evento, probablemente si el conjunto contemplara \textit{tweets} obtenidos un tiempo después de la ocurrencia de éste, la cantidad de elementos clasificados dentro de la categoría alimentos aumentaría.
+En particular este clasificador cuenta con alta precisión y bajo \textit{recall}, eso significa que el es preciso para clasificar, pero es incapaz de clasificar algunos de los casos particulares de cada clase. Esto se debe al conjunto de entrenamiento utilizado, los datos no están balanceados para cada clase, es decir, la clase A, no tienen la misma cantidad de datos utilizados para entrenar B, esto repercute en que debido a las pocas instancias que tiene el algoritmo para aprender no es capaz de reconocer elementos de la clase con menos elementos. En particular el caso de la clase ``Alimentos", los datos que se utilizaron son del periodo inmediato al evento, por ello no se encontraron demasiados elementos que hagan referencia a la falta de alimento en una población. Específicamente sólo se etiqueto un \textit{tweet} presentado en la Tabla \ref{tab:UnicoEstadoAlimento} dentro de la categoría alimento. Esto puede deberse a que el conjunto de \textit{tweets} utilizado corresponde a uno obtenido en el periodo inmediato del evento, probablemente si el conjunto contemplara \textit{tweets} obtenidos un tiempo después de la ocurrencia de éste, la cantidad de elementos clasificados dentro de la categoría alimentos aumentaría.
 
 \begin{table}[H]
 \centering
@@ -76,7 +76,7 @@ En la sección \ref{subsubsec:topologiaSistema} se explicitó cómo están dispu
 \end{figure}
 
 
-La Figura \ref{subsubsec:topologiaSistema} se hace uso de una instancia de \textit{TopologyBuilder}, donde se especifican cada uno de los elementos de la topología. Para el caso de los \textit{bolts} (líneas 6 a la 13), se hace uso del método \textit{setBolt}, al que, además del nombre que tendrá dentro de la topología, se entrega como parámetro una instancia del operador y se esepcifica cuál será su nivel de replicación. Además se especifica el modo en el que se enviaran las tuplas para el procesamiento, en este caso, se hace uso de \textit{shuffle grouping}, para entregarlas de forma \textit{round-robin} y balancear la carga en cada instancia del operador.
+La Figura \ref{subsubsec:topologiaSistema} se hace uso de una instancia de \textit{TopologyBuilder}, donde se especifican cada uno de los elementos de la topología. Para el caso de los \textit{Bolts} (líneas 6 a la 13), se hace uso del método \textit{setBolt}, al que, además del nombre que tendrá dentro de la topología, se entrega como parámetro una instancia del operador y se especifica cuál será su nivel de replicación. Además se especifica el modo en el que se enviaran las tuplas para el procesamiento, en este caso, se hace uso de \textit{shuffle grouping}, para entregarlas de forma \textit{round-robin} y balancear la carga en cada instancia del operador.
 
 \begin{figure}[H]
 	\centering
@@ -246,9 +246,9 @@ Ninguno de los datos contenía información sobre la ubicación, por ello el ope
 \end{tabular}
 \end{table}
 
-Dados los resultados de presumió un error en la implementación, por lo que se revisó el código \textit{bolt} para encontrar el error. 
+Dados los resultados de presumió un error en la implementación, por lo que se revisó el código \textit{Bolt} para encontrar el error. 
 
-Habiéndolo corregido se volvió a comprobar el comportamiento del sistema con el conjunto de 30000 \textit{tweets}. De esta comprobación se obtuvieron los resultados presentes en la Tabla \ref{tab:sistemaCompletoEstadosCorregidos}. Estos muestran que habiendose producido el proceso de identificación, el último operador con las características de filtro, todos los estados pasaron a ser etiquetados y almacenados correctamente con la categorización realizada al ser evaluadas por el clasificador. 
+Habiendolo corregido se volvió a comprobar el comportamiento del sistema con el conjunto de 30000 \textit{tweets}. De esta comprobación se obtuvieron los resultados presentes en la Tabla \ref{tab:sistemaCompletoEstadosCorregidos}. Estos muestran que habiéndose producido el proceso de identificación, el último operador con las características de filtro, todos los estados pasaron a ser etiquetados y almacenados correctamente con la categorización realizada al ser evaluadas por el clasificador. 
 
 Es importante volver a hacer hincapié en que si bien, estos u otros resultados se ven influenciados por los términos que compongan la consulta activa en un determinado momento, también la afectará el contexto de los \textit{tweets} recibidos hasta ese instante, pues con ellos se forma el conjunto de términos más usados, utilizado al expandir la consulta en este mismo operador.
 
@@ -327,9 +327,9 @@ La siguiente gráfica presentada en la Figura \ref{fig:graficoDeTweets} presenta
         \label{fig:graficoDeTweets}
 \end{figure}
 
-Este \textit{peak} en la generación de datos no se ve reflejado como un aumento en la cantidad de datos que llegan al \textit{spout}, pues el la cantidad de mensajes por segundo ingresados por Twitter4J al sistema es constante mientras esté bajo la cuota límite de \textit{Twitter}. En el sistema este incremento efecto se vería reflejado, probablemente, en un aumento de los \textit{tweets} que aprueben el filtro de consultas si se están utilizando términos relacionados a este evento.
+Este \textit{peak} en la generación de datos no se ve reflejado como un aumento en la cantidad de datos que llegan al \textit{spout}, pues el la cantidad de mensajes por segundo ingresados por \textit{Twitter4J} al sistema es constante mientras esté bajo la cuota límite de \textit{Twitter}. En el sistema este incremento efecto se vería reflejado, probablemente, en un aumento de los \textit{tweets} que aprueben el filtro de consultas si se están utilizando términos relacionados a este evento.
 
-Teniendo en consideración lo anterior en cuanto a la cantidad de mensajes, se realizó una recopilación de eventos por un periodo de una hora del \textit{stream} actual de eventos para obtener un total de 150.800 \textit{tweets}. El gráfico presentado en la Figura \ref{fig:graficoAcumulado} presenta la cantidad eventos acumulados en función del tiempo cuya pendiente indica que se reciben 42 eventos por segundo en promedio.
+Teniendo en consideración lo anterior en cuanto a la cantidad de mensajes, se realizó una recopilación de eventos por un periodo de una hora del \textit{stream} actual de eventos para obtener un total de 100.800 \textit{tweets}. El gráfico presentado en la Figura \ref{fig:graficoAcumulado} presenta la cantidad eventos acumulados en función del tiempo cuya pendiente indica que se reciben 42 eventos por segundo en promedio.
 
 \begin{figure}[H]
         \centering
@@ -349,7 +349,7 @@ Haciendo uso de estos resultados se simuló la llegada de los eventos contenidos
         \label{fig:cpuUsage}
 \end{figure}
 
-La gráfica presentada en la Figura \ref{fig:cpuUsage} muestra el uso de la CPU del proceso \textit{DeNe-Core} durante la simulación realizada, se ve gran variación del uso de CPU al comienzo de la operación, esto se debe al uso de un segundo \textit{spout} encargado de emitir los \textit{tweets} almacenados en un archivo del tipo JSON correspondientes al evento del año 2010, esto se aprecia en la Figura \ref{fig:fileOpenClose} que muestra la cantidad de archivos abiertos en el tiempo. Posterior a la carga de los datos al sistema, sin considerar el primer segmento, el uso de CPU se mantiene constante al rededor del 49\% y permanece cercano a ese valor hasta que terminan de procesarse todos los \textit{tweets}, aproximadamente, a 10 minutos desde el inicio de la prueba. Teniendo en consideración que se entregaron 100.000 \textit{tweets} se procesan alrededor de 166 por minuto en esta prueba, eso es aproximadamente un 400\% más de lo que es posible recoger desde el \textit{stream} de \textit{Twitter}, por lo que se espera que en condiciones normales de operación, y dada la limitante del tiempo real, el uso del CPU sea menor al presentado en esta prueba. Siempre teniendo en cuenta que la cantidad de mensajes que alcanzan la mayor parte del sistema están dados por qué halla especificado el usuario en sus términos de búsqueda. Para este caso, se utilizaron los mismos términos especificados anteriormente: ``terremoto", ``Chile" y ``Concepción."
+La gráfica presentada en la Figura \ref{fig:cpuUsage} muestra el uso de la CPU del proceso \textit{DeNe-Core} durante la simulación realizada, se ve gran variación del uso de CPU al comienzo de la operación, esto se debe al uso de un \textit{Spout} alternativo encargado de emitir los \textit{tweets} almacenados en un archivo del tipo JSON correspondientes al evento del año 2010, esto se aprecia en la Figura \ref{fig:fileOpenClose} que muestra la cantidad de archivos abiertos en el tiempo. Posterior a la carga de los datos al sistema, sin considerar el primer segmento, el uso de CPU se mantiene constante al rededor del 49\% y permanece cercano a ese valor hasta que terminan de procesarse todos los \textit{tweets}, aproximadamente, a 10 minutos desde el inicio de la prueba. Teniendo en consideración que se entregaron 100.000 \textit{tweets} se procesan alrededor de 166 por minuto en esta prueba, eso es aproximadamente un 400\% más de lo que es posible recoger desde el \textit{stream} de \textit{Twitter}, por lo que se espera que en condiciones normales de operación, y dada la limitante del tiempo real, el uso del CPU sea menor al presentado en esta prueba. Siempre teniendo en cuenta que la cantidad de mensajes que alcanzan la mayor parte del sistema están dados por qué halla especificado el usuario en sus términos de búsqueda. Para este caso, se utilizaron los mismos términos especificados anteriormente: ``terremoto", ``Chile" y ``Concepción."
 
 A pesar de que esta es una prueba a pequeña escala, ya ha sido validado por otros sistemas la capacidad de escalar de los sistemas de procesamiento como \textit{Storm}, ejemplo de ello son los trabajos realizados por \cite{WladdimiroElastic}, \cite{scalingStorm}, \cite{HowSpotifyScalesStorm}, entre otros.
 
