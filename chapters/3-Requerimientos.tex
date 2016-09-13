@@ -1,7 +1,7 @@
 \chapter{Requerimientos}
 \label{cap:Requerimientos}
 
-Este capítulo detalla los requisitos de las aplicaciones, descritos como historias de usuario, las cuales señalan las necesidades de los clientes. El cliente corresponde a miembros del equipo que lidera el proyecto FONDEF IDeA, código ID15I10560, proyecto orientado a generar herramientas para la gestión de desastres naturales. Los historias de usuario se levantan en reuniones con los investigadores y responsables de aplicaciones del proyecto donde se estipulan las funcionalidades deseables, dichas reuniones tuvieron lugar en el Departamente de Ingeniería informática de la Universidad de Santiago e Chile.
+Este capítulo detalla los requisitos de las aplicaciones, descritos como historias de usuario, las cuales señalan las necesidades de los clientes. El cliente corresponde a miembros del equipo que lidera el proyecto FONDEF IDeA, código ID15I10560, proyecto orientado a generar herramientas para la gestión de desastres naturales. Los historias de usuario se levantan en reuniones con los investigadores y responsables de aplicaciones del proyecto donde se estipulan las funcionalidades deseables, dichas reuniones tuvieron lugar en el Departamente de Ingeniería informática de la Universidad de Santiago de Chile.
 
 \section{Proceso de toma de requerimientos}
 \label{sec:tomaDeRequerimientos}
@@ -18,25 +18,25 @@ Dado el caracter iterativo de la metodología, se definió el siguiente ciclo de
 \item Al contrario de lo señalado por la metodología, no se realiza entrega del \textit{software} generado en estas iteraciones, pues lo que se espera es el \textit{software} final.
 \end{itemize}
 
-A continuación se narra el proceso de obtención de las historias de usuario, este proceso da como resultados la tablas presentadas en la sección \ref{sec:historias} correspondiente a a historias de usuario y sus correspondientes criterios de aceptación.
+A continuación se narra el proceso de obtención de las historias de usuario, este proceso da como resultado las tablas presentadas en la sección \ref{sec:historias} correspondientes a historias de usuario y sus criterios de aceptación.
 
 Las primeras cuatro iteraciones, correspondiente a las cuatro primeras semanas del proyecto, consistieron en \textit{spikes} de investigación para entender, entre otras cosas, el funcionamiento de \textit{Apache Storm}, procesamiento de información para ser categorizada, la captura de \textit{tweets} desde la API y las herramientas para el uso de mapas. 
 
-Teniendo en consideración lo descrito anteriormente, ya desde el inicio se habían identificado algunas de las historias de usuario del sistema: necesidad de un sistema de procesamiento en tiempo real para la detección de necesidades (HU-c000), \textit{Twitter} como fuente de información (HU-c02), interfaz para visualizar la información (HU-v00) y como ésta debiese ser visualizadas (HU-01) y la actualización en tiempo real de los eventos detectados (HU-v03).
+Teniendo en consideración lo descrito anteriormente, ya desde la primera semana de trabajo se habían identificado algunas de las historias de usuario del sistema: necesidad de un sistema de procesamiento en tiempo real para la detección de necesidades (HU-c00), \textit{Twitter} como fuente de información (HU-c02), interfaz para visualizar la información (HU-v00) y el debiese de ser mostrada (HU-01) y la actualización en tiempo real de los eventos detectados (HU-v03).
 
-El primer punto a ser construido la siguiente semana fue el apartado de comunicación (descrito en la sección \ref{sec:diseno:comunicacion}), para ello se añadió un sistema de persitencia para los eventos detectados por el sistema. A partir de aquí se esbozó la arquitectura del sistema descrita en la sección \ref{sec:Arquitectura}, que fue incorportando componentes a medida que se identificaron las demás historias de usuario.
+El primer punto a ser construido la semana siguiente fue la forma de comunicación que exisitiría en el sistema (descrito en la sección \ref{sec:diseno:comunicacion}), para ello se añadió un sistema de persitencia para los eventos detectados por el sistema. A partir de aquí se esbozó la arquitectura del sistema descrita en la sección \ref{sec:Arquitectura}, que fue incorporando componentes a medida que se identificaron las demás historias de usuario.
 
-Con respecto al apartado visual, producto de las iteraciones anteriores ya se contaba con una interfaz donde los eventos podían ser visualizados y actualizados a medida que nuevos eventos llegaban a ella. Para mejorar la experiencia de usuario se solicitó asignar un icono a cada categoría, lo que se plasmó como HU-v06. Además, se solicitó que la configuración del sistema, enfocada en cada cuánto tiempo los eventos se refrescan y por cuánto tiempo son mostrados, producto de ello se generó la HU-v08.
+Con respecto a la visualización, producto de las iteraciones anteriores ya se contaba con una interfaz donde los eventos podían ser visualizados y actualizados a medida que nuevos eventos llegaban a ella. Para mejorar la experiencia de usuario se solicitó asignar un icono a cada categoría, lo que se plasmó como HU-v06. Además, se solicitó que la configuración del sistema, enfocada en cada cuánto tiempo los eventos se incorporarán al mapa y por cuánto tiempo son mostrados, producto de ello se generó la HU-v08.
 
 La semana siguiente se solicitó que existieran diferentes formas de visualización de marcadores; se pidió que, segun el nivel de acercamiento del mapa, los marcadores se agruparan formando \textit{clusters} según categoría, dando origen a la historia HU-v02.
 
 Producto de una charla realizada en la universidad donde se presentó una aplicación construida en la Universidad de Chile, referente a los efectos de desastres en redes sociales, se incorporó una nueva historia sobre una funcionalidad deseable para el sistema, la HU-v04, referente a la existencia de una línea de tiempo que mostrase la cantidad de eventos (necesidades), detectadas por fechas y que pudiesen ser visualizadas en el mapa. Adicionalmente, se señaló que era necesario un medio para que se incorporaran consultas al sistema, de manera de filtrar el flujo de datos de entrada según las necesidades de quien estuviese usando la aplicación, incorporando la HU-v05. Además, se señaló que se quería que el sistema mostrase estadísticas sobre la actual consulta, referentes a la cantidad de eventos encontrados, procesados y usuarios, esto se agregó en la HU-v07.
 
-La siguiente iteración se solicitó la implementación de un método que extendiera la consulta realizada por el usuario (HU-v05), según los datos que se hubiesen obtenido hasta el momento, para ello se gestó la historia de usuario HU-c02.
+En la siguiente iteración se solicitó la implementación de un método que extendiera la consulta realizada por el usuario (HU-v05), según los datos que se hubiesen obtenido hasta el momento, para ello se gestó la historia de usuario HU-c02.
 
 Finalmente, el cliente solicitó un módulo para actualizar el modelo de clasificación utilizado, inicialmente se pidió que fuese automático, pero ante la dificultad técnica de ello, dado que la entrada para el modelo debe ser ingresada por un usuario experto, se sugirió a los clientes realizar un cambio e implementar un actualizador manual del modelo del clasificador, lo cual fue aceptado y se registró como HU-c03.
 
-Es importante señalar que la historia de usuario HU-c00, correspondiente a la detección de necesidades en sí corresponde a la historia más compleja del sistema y está compuesta por la construcción de múltiples operadores que pueden desarrollándose a lo largo del proyecto, por lo que no era posible completarla en una iteración. Lo que se realizó fue presentar avances en la construcción de operadores semanalmente.
+Es importante señalar que la historia de usuario HU-c00, correspondiente a la detección de necesidades en sí corresponde a la historia más compleja del sistema y está compuesta por la construcción de múltiples operadores que fueron desarrollándose a lo largo del proyecto, por lo que no era posible completarla en una iteración. Lo que se realizó fue presentar avances en la construcción de operadores semanalmente.
 
 \section{Historias de usuario y criterios de aceptación}
 \label{sec:historias}
@@ -51,10 +51,10 @@ La sección \ref{sec:tomaDeRequerimientos} referenciaba, según lo descrito por 
 \hline
 \textbf{Identificador} & \multicolumn{1}{c|}{\textbf{Historia de usuario}} \\ \hline
 HU-c00 & \begin{tabular}[c]{@{}l@{}}Como cliente quiero capturar necesidades de la población en tiempo real \\ cuando el país se encuentre en un escenario de catástrofe natural para\\ poder contar con información para asistir a la población afectada.\end{tabular} \\ \hline
-HU-c01 & \begin{tabular}[c]{@{}l@{}}Como cliente quiero que las necesidades detectadas se recojan desde la \\ información generadas en redes sociales como Twitter, dado su caracter \\ informativo.\end{tabular} \\ \hline
+HU-c01 & \begin{tabular}[c]{@{}l@{}}Como cliente quiero que las necesidades detectadas se recojan desde la \\ información generada en redes sociales como Twitter, dado su caracter \\ informativo.\end{tabular} \\ \hline
 HU-c02 & \begin{tabular}[c]{@{}l@{}}Como cliente quiero que la búsqueda de necesidades pueda ser extendida \\ automáticamente para encontrar información adicional que pueda ser de \\ apoyo.\end{tabular} \\ \hline
 HU-c03 & \begin{tabular}[c]{@{}l@{}}Como usuario deseo poder incluir diferentes modelos de clasificación \\ dependiendo de las características del evento a analizar.\end{tabular} \\ \hline
-HU-c04 & \begin{tabular}[c]{@{}l@{}}Como cliente quiero almacenar datos históricos para poder realizar \\ análisis mas a fondo, incluso entre diferentes eventos.\end{tabular} \\ \hline
+HU-c04 & \begin{tabular}[c]{@{}l@{}}Como cliente quiero almacenar datos históricos para poder realizar \\ análisis más a fondo, incluso entre diferentes eventos.\end{tabular} \\ \hline
 \end{tabular}
 \end{table}
 
@@ -66,7 +66,7 @@ HU-c04 & \begin{tabular}[c]{@{}l@{}}Como cliente quiero almacenar datos históri
 \hline
 \textbf{Identificador} & \multicolumn{1}{c|}{\textbf{Historia de usuario}} \\ \hline
 HU-v00 & \begin{tabular}[c]{@{}l@{}}Como usuario quiero una interfaz basada en un mapa geográfico donde\\ se pueda interactuar con la información generada.\end{tabular} \\ \hline
-HU-v01 & \begin{tabular}[c]{@{}l@{}}Como cliente quiero que las necesidades detectadas puedan ser asociadas \\ aun punto en un mapa geográfico para poder identificar el lugar físico de \\ su fuente, esta ubicación debe ser de manera automática, incluso si no se \\ cuenta con los datos de geoubicación.\end{tabular} \\ \hline
+HU-v01 & \begin{tabular}[c]{@{}l@{}}Como cliente quiero que las necesidades detectadas puedan ser asociadas \\ a un punto en un mapa geográfico para poder identificar el lugar físico de \\ su fuente, esta ubicación debe ser de manera automática, incluso si no se \\ cuenta con los datos de geoubicación.\end{tabular} \\ \hline
 HU-v02 & \begin{tabular}[c]{@{}l@{}}Como usuario quiero que puedan aplicarse filtros a la visualización de \\ los puntos de modo que según la distancia entre ellos, cuáles se quieran \\ mostrar y el nivel de acercamiento que tenga el mapa se entreguen \\ diferentes formas de mostrar la información para que la información se \\ visualice con facilidad.\end{tabular} \\ \hline
 HU-v03 & \begin{tabular}[c]{@{}l@{}}Como usuario quiero que la visualización de eventos se realice en tiempo\\ real para tomar decisiones rápidas cuando la situación lo amerite.\end{tabular} \\ \hline
 HU-v04 & \begin{tabular}[c]{@{}l@{}}Como usuario quiero visualizar eventos pasados, además quiero poder \\ seleccionar un intervalo de tiempo y que el sistema muestre todos los \\ eventos que se hayan detectado dentro de aquel intervalo de modo que \\ pueda realizarse una análisis a posteriori de la emergencia.\end{tabular} \\ \hline
@@ -117,13 +117,13 @@ HU-v08 & \begin{tabular}[c]{@{}l@{}}· Debe existir un lugar donde realizar el c
 Estas historias fueron manejadas por el equipo de desarrollo como tarjetas dentro de un tablero Kanban, el cual consiste en una pizarra, en este caso \textit{online}, donde se separa el trabajo por columnas. Se utilizaron cuatro columnas: 
 
 \begin{itemize}
-\item Por hacer: lista de todos las historias de usuario, divididas en tareas, que no se habían trabajado hasta ese punto del desarrollo.
-\item Haciendo: lista de las tareas que estaban en siendo desarrolladas actualmente.
+\item Por hacer: lista de todos las historias de usuario, divididas en tareas, que no se han trabajado hasta ese punto del desarrollo.
+\item Haciendo: lista de las tareas que están en siendo desarrolladas actualmente.
 \item Por revisar: lista de las tareas finalizadas correspondientes a historias de usuario que no habían sido presentadas a los clientes aún.
-\item Hecho: lista de las tareas finalizadas que ya hubieran sido presentadas a los clientes y no generaran nuevos cambios.
+\item Hecho: lista de las tareas finalizadas que ya han sido presentadas a los clientes y no originan cambios.
 \end{itemize}
 
-Además, se utilizó un sistema de colores para las tarjetas del tablero, donde el color verde correspondía a elementos del módulo de visualización y amarillo correspondía a elementos del módulo de procesamiento. Adicionalmente existía el color rojo, el cual acompañaba a uno de los anteriores para señalar un \textit{bug} en aquella tarea que debía ser corregido. 
+Además, se utilizó un sistema de colores para las tarjetas del tablero, donde el color verde corresponde a elementos del módulo de visualización y amarillo corresponde a elementos del módulo de procesamiento. Adicionalmente existe el color rojo, el cual acompaña a uno de los anteriores para señalar un \textit{bug} en aquella tarea que debía ser corregido. 
 
 La Figura \ref{fig:trello} presenta un ejemplo de lo anterior con la captura final del tablero Kanban realizado en la herramienta Trello.
 
@@ -134,3 +134,5 @@ La Figura \ref{fig:trello} presenta un ejemplo de lo anterior con la captura fin
 	\caption[Captura del estado final del tablero Kanban.]{Captura del estado final del tablero Kanban.\\Fuente: Elaboración Propia, (2016)}
 	\label{fig:trello}
 \end{figure}
+
+--- AGREGAR CONCLUSIÓN ---
